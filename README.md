@@ -1,8 +1,8 @@
 # Phat's Independent Development Assignment
-I decide to follow the [Indigo Card Game](https://hyperskill.org/projects/214?track=18) track and better understand creating a card game. Hopefully, I can build a Pokemon card game based on this tutorial.
+I decide to follow the [Indigo Card Game](https://hyperskill.org/projects/214?track=18) track and better understand creating a card game. Hopefully, I can build a game based on this tutorial.
 
 # Reflection
-## Week 4
+## Week 4 [Stage 1 / 5]
 The "Indigo Card Game" track has five stages in total, and I will complete the first stage for this week's work. Most of the topics look familiar to me at a glance. Thus, I decide to go through each material and do the practice to recap my understanding of Kotlin. 
 
 - _Where might I face challenges in the assigned work?_
