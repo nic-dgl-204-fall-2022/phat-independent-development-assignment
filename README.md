@@ -47,3 +47,25 @@ The "Indigo Card Game" track has five stages in total, and I will complete the f
   > - I can write underscores in integers more readable. For example: "1000000" can be re-write as "1_000_000" or "1__000_000".
   > - I can use the "const val" identifier to declare a constant variable. Only primitives and strings are allowed. And it must be declared on the top level, outside of any functions.
 
+## Week 5 [Stage 2 + 3 / 5]
+This week I plan to finish the second and third stages of the Indigo Card Game track. These two stages focus on working with lists and creating gameplay without rules.
+In particular, the second stage is to create a random set of cards and create functions to interact with the list of cards, such as retrieving, subtracting, or adding a new element.
+On the other hand, the third stage is to create a card game where the player and computer take turns playing their cards. The game ends when the table has 52 cards, or the player wants to exit. This stage mostly covers materials about looping through arrays and type safety.
+
+- _Where might I face challenges in the assigned work?_
+
+  > Kotlin provides many convenient functions to work with arrays, which look very complicated to me due to their syntax and usage. Thus, I will find it difficult to work with lists using their utility functions to progress modification or looping. In addition, decomposite actions into functions will be challenging since the requirement is different for each stage.
+
+- _Are things progressing as I expected?_ 
+
+  > The material covers wider than I expected. It covers content about programming knowledge, such as algorithms, big o notation, pseudocode, and more. Because I am verified as known by Jetbrain Academy, I decided to skip them and move to the next materials.
+Besides working with lists, I was introduced to enum and data classes in Kotlin, null safety, and exception handling. Although I have already used them before, I still find them very helpful by giving me a deeper understanding.
+
+- _Is there anything I can, or should, do to make this more successful?_
+
+  > Unlike the first stage, I try to skip any material that I am verified as known by Jetbrain Academy. It saves me more time on unrelated topics and provides me more time to focus on building the project code. However, I did not implement the project code with an OOP style, like creating classes to handle cards. Therefore, I should create an enum or data class for the next stage if it is possible.
+
+- _What did I particularly value in the process and why?_
+
+  > Besides the material about lists and looping, I also learned more about the when statement, enum class, and exception handling from the track. In addition, while working on the project code, I also learn ways to split a list into small fragments by trying to use these methods: ```mapIndexed```, ```take```, ```subList```. 
+  > On the other hand, I try to fulfill each test case for the project code instead of aiming to create a complete project code at the beginning. As a result, I wrote small functions for each feature. Then, I tested them by cases to ensure it was written correctly before going to the next requirement. I learned this technique from the AOC, which is very helpful for debugging. In particular, I find it easier to detect where the bug comes from and what need to refactor. 
