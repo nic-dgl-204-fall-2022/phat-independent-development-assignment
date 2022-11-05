@@ -82,11 +82,11 @@ In the fourth stage, the challenge that I have to face is to understand the game
 ### Stage 5
 In the final stage, the challenge is to create an algorithm for the computer to play "smarter" instead of tossing cards randomly. The given algorithm is very straightforward and depends on the suit, the rank of the top card, and the cards the computer has.
 ###$ Algorithm
-- The key to this algorithm is the priority between suits```("♦", "♥", "♠", "♣")``` and ranks. Cards with the same suit will have a higher priority than the same rank ones.
-- Cards are considered candidate cards when they have the same suit or rank. Otherwise, play a random card on the list.
-- If the table has no cards, cards that share the same suit will be chosen (either one is fine). Otherwise, pick the card that shares the same rank. If no card has duplicate suits or ranks, randomly pick one.
-- If there is more than one candidate card, pick a card from them following the priority rule: suit first, then rank.
-- If there is no candidate card, pick the card as there is no card on the table, which is to pick the card with duplicate suits or ranks in the computer's cards.
+- The key to this algorithm is the priority between suits```("♦", "♥", "♠", "♣")``` and ranks```("A", "1", "2", ...,"J", "Q", "K")```. Cards with the same suit will have a __higher priority__ than the same rank ones.
+- Cards are considered candidate cards when they have the __same suit or rank__. Otherwise, play a random card on the list.
+- If __the table has no cards__, cards that share the same suit will be chosen (either one is fine). Otherwise, pick the card that shares the same rank. If no card has duplicate suits or ranks, randomly pick one.
+- If there is __more than one candidate card__, pick a card from them following the priority rule: ```suit first, then rank```.
+- If there is __no candidate card__, pick the card as there is no card on the table, which is to pick the card with duplicate suits or ranks in the computer's cards.
 
 <hr>
 
@@ -96,7 +96,7 @@ In the final stage, the challenge is to create an algorithm for the computer to 
 
 - _Are things progressing as I expected?_ 
 
-  > The JetBrain Academy needs to be more accurate for testing in these two final stages, especially the expected output strings. Although I did precisely what the requirement expect me to output, I still failed to pass the test given by them. In particular, each time I submitted the code, it failed for separate test cases with different error messages. Fortunately, I found a comment saying they passed on the third submission, even though it failed twice with different test cases and error messages. So I tried it and passed the test without changing anything. Most of the error message is about the wrong output of the score or the top card. However, I believe that my code fulfilled the requirement and passed most of the test cases.
+  > The JetBrain Academy needs to be more accurate for testing in these two final stages, especially the expected output strings. Although I did precisely what the requirement expect me to output, I still failed to pass the test given by them. In particular, each time I submitted the code, it failed for separate test cases with different error messages. Fortunately, I found a comment saying they passed on the third submission, even though it failed twice with different test cases and error messages. So I tried to submit it repeatedly and passed the test without changing anything. Most of the error message is about the wrong output of the score or the top card. However, I believe that my code fulfilled the requirement and passed most of the test cases.
 
 - _Is there anything I can, or should, do to make this more successful?_
   > The code produced for the final stage is very lengthy, which should have been completed with the IntelliJ IDEA instead of the "Code Editor" on the website. In particular, I try to write the code with IntelliJ IDEA and then paste it to the "Code Editor" to submit the solution. However, Hyperskill could not compile it, and errors occurred. It might be a memory issue or something that prevents the editor from compiling my code. Thus, I started synchronizing with the IntelliJ IDEA, which worked smoothly. I should try it since the beginning stages of the track.
