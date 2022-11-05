@@ -63,7 +63,6 @@ fun showCardsOnTable(cards: MutableList<String>) {
     if (cards.size != 0) {
         println("${cards.size} cards on the table, and the top card is ${cards.last()}")
     } else if (cardsWonByPlayer.size + cardsWonByComputer.size != 52) {
-//    } else {
         println("No cards on the table")
     }
 }
@@ -101,7 +100,6 @@ fun playerPlayCard(playerCards: MutableList<String>, showCards: Boolean = true):
 
 fun computerPlayCard(computerCards: MutableList<String>): String {
     println(computerCards.joinToString(" "))
-//    val selected = computerCards.shuffled().first()
     val selected = pickCandidateCard(computerCards)
     println("Computer plays $selected")
 
@@ -112,20 +110,17 @@ fun gameOver() {
     println("Game Over")
 }
 
-
 fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = null) {
     if (isPlayerTurn == null) {
         throw Exception("Can not determine a winner in this turn.")
     }
 
-    if (cardsOnTable.size < 2) return
-
     var winner: String? = null
 
-    // Check the tossed card has the same rank or suit
+    // Check the tossed card has the same rank or suit with the top card
     val tossedCard = cardsOnTable.last()
-    val topCardOnTable = cardsOnTable[cardsOnTable.size - 2]
-    val hasWinnableCard = hasSameRankOrSuit(tossedCard, topCardOnTable)
+    val topCardOnTable = if (cardsOnTable.size >= 2) cardsOnTable[cardsOnTable.size - 2] else ""
+    val hasWinnableCard = if (topCardOnTable.isNotEmpty()) hasSameRankOrSuit(tossedCard, topCardOnTable) else false
 
     if (hasWinnableCard) {
         winner = if (isPlayerTurn) PLAYER_NAME else COMPUTER_NAME
@@ -134,19 +129,21 @@ fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = 
         tableCards.clear()
         showResult()
         lastRoundWinner = winner
-    } // When no one wins and no more cards
-    else if (deckCards.size == 0 && playerCards.size == 0 && computerCards.size == 0) {
+    }
+    // When no one wins and no more cards
+    else if (deckCards.isEmpty() && playerCards.size == 0 && computerCards.size == 0) {
         // Show cards on the table before being cleared
         showCardsOnTable(tableCards)
         // Who won the last round gets the points
         winner = lastRoundWinner ?: whoPlayedFirst
         storeResult(cardsOnTable, winner!!)
         tableCards.clear()
+        return
     }
 }
 
-fun getRank(card: String): String = if (card.length == 3) card.drop(2) else card.drop(1)
-fun getSuit(card: String): String = card.dropLast(1)
+fun getRank(card: String): String = card.dropLast(1)
+fun getSuit(card: String): String = card.last().toString()
 fun hasSameRank(card1: String, card2: String): Boolean = getRank(card1) == getRank(card2)
 fun hasSameSuit(card1: String, card2: String): Boolean = getSuit(card1) == getSuit(card2)
 fun hasSameRankOrSuit (card1: String, card2:String): Boolean = hasSameRank(card1, card2) || hasSameSuit(card1, card2)
@@ -182,6 +179,45 @@ fun showResult() {
     println("Cards: Player ${cardsWonByPlayer.size} - Computer ${cardsWonByComputer.size}")
 }
 
+fun findCardsWithSameSuit(cards: MutableList<String>, suit: String) = cards.filter { getSuit(it) == suit }
+fun findCardsWithSameRank(cards: MutableList<String>, rank: String) = cards.filter { getRank(it) == rank }
+fun findCardsWithDuplicateSuitOrRank(cardsInHands: MutableList<String>): MutableList<String> {
+    val suitsInHands = cardsInHands.map { getSuit(it) }
+    val duplicateSuits = suits.filter {
+        suitsInHands.filter{s -> s == it}.size >= 2
+    }
+    val ranksInHands = cardsInHands.map{ getRank(it) }
+    val duplicateRanks = ranks.filter {
+        ranksInHands.filter{s -> s == it}.size >= 2
+    }
+
+    // Priority: Suit > Rank
+    // If there are two more duplicate SUITS -> Choose one of them
+    if (duplicateSuits.isNotEmpty())
+        return cardsInHands.filter { getSuit(it) in duplicateSuits }.toMutableList()
+
+    // If there are two more duplicate RANKS -> Choose one of them
+    if (duplicateRanks.isNotEmpty())
+        return cardsInHands.filter { getRank(it) in duplicateRanks }.toMutableList()
+
+    // Otherwise, return the origin
+    return cardsInHands
+}
+
+fun findCandidateCards(cardsInHands: MutableList<String>, topCardOnTable: String): MutableList<String> {
+    val candidateCards = mutableListOf<String>()
+    val cardsWithSameSuit = findCardsWithSameSuit(cardsInHands, getSuit(topCardOnTable))
+    val cardsWithSameRank = findCardsWithSameRank(cardsInHands, getRank(topCardOnTable))
+
+    // Priority: Suit > Rank
+    if (cardsWithSameSuit.isNotEmpty()) candidateCards.addAll(cardsWithSameSuit.toMutableList())
+    if (cardsWithSameRank.isNotEmpty()) candidateCards.addAll(cardsWithSameRank.toMutableList())
+
+    // No card has the same rank or suit
+    return candidateCards
+}
+
+
 fun pickCandidateCard(cardsInHands: MutableList<String>): String {
     val topCardOnTable = if (tableCards.isNotEmpty()) tableCards.last() else ""
     // Only one card in hands
@@ -191,58 +227,39 @@ fun pickCandidateCard(cardsInHands: MutableList<String>): String {
 
     // No card on table
     if (tableCards.isEmpty()) {
-        // Toss a random card from the cards with same rank or suit
+        // Toss a random card that have duplicate suits or ranks
         // Otherwise, toss a random card in hands
-        candidateCard = findCardsWithSameSuitOrRank(cardsInHands).shuffled().first()
+        candidateCard = findCardsWithDuplicateSuitOrRank(cardsInHands).shuffled().first()
     } else {
         val candidateCards = findCandidateCards(cardsInHands, topCardOnTable)
-
+//        println("candidateCards: $candidateCards")
         candidateCard = when(candidateCards.size) {
             // No candidate card
             0 -> {
                 // Toss a random card from the cards with same rank or suit
                 // Otherwise, toss a random card in hands
-                findCardsWithSameSuitOrRank(cardsInHands).shuffled().first()
+                findCardsWithDuplicateSuitOrRank(cardsInHands).first()
             }
             // Only one candidate card
             1 -> candidateCards.first()
             else -> {
-                candidateCards.first()
+                val cardsWithSameSuit = findCardsWithSameSuit(candidateCards, getSuit(topCardOnTable))
+                val cardsWithSameRank = findCardsWithSameRank(candidateCards, getRank(topCardOnTable))
+//                println("cardsWithSameSuit: $cardsWithSameSuit")
+//                println("cardsWithSameRank: $cardsWithSameRank")
+                if (cardsWithSameSuit.size > cardsWithSameRank.size) {
+                    cardsWithSameSuit.first()
+                } else if (cardsWithSameSuit.size < cardsWithSameRank.size) {
+                    cardsWithSameRank.first()
+                } else {
+                    candidateCards.first()
+                }
             }
         }
     }
 
     return candidateCard
 }
-
-fun findCandidateCards(cardsInHands: MutableList<String>, topCardOnTable: String): MutableList<String> {
-    var candidateCards = listOf<String>()
-    val cardsWithSameRank = cardsInHands.filter { hasSameRank(it, topCardOnTable) }
-    val cardsWithSameSuit = cardsInHands.filter { hasSameSuit(it, topCardOnTable) }
-
-    candidateCards = candidateCards.plus(cardsWithSameRank)
-    candidateCards = candidateCards.plus(cardsWithSameSuit)
-
-    // No card has the same rank or suit
-    if (candidateCards.isEmpty()) {
-        candidateCards = candidateCards.plus(cardsInHands)
-    }
-
-    return candidateCards.toMutableList()
-}
-
-
-fun findCardsWithSameSuitOrRank(cardsInHands: MutableList<String>): MutableList<String> {
-    val sameSuitCards = cardsInHands.map { getSuit(it) }
-    val sameRankCards = cardsInHands.map{ getRank(it) }
-
-    if (sameSuitCards.isNotEmpty()) return sameSuitCards.toMutableList()
-
-    if (sameRankCards.isNotEmpty()) return sameRankCards.toMutableList()
-
-    return cardsInHands
-}
-
 
 fun main() {
     var isPlayerTurn: Boolean?
