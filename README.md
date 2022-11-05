@@ -69,3 +69,34 @@ Besides working with lists, I was introduced to enum and data classes in Kotlin,
 
   > Besides the material about lists and looping, I also learned more about the when statement, enum class, and exception handling from the track. In addition, while working on the project code, I also learn ways to split a list into small fragments by trying to use these methods: ```mapIndexed```, ```take```, ```subList```. 
   > On the other hand, I try to fulfill each test case for the project code instead of aiming to create a complete project code at the beginning. As a result, I wrote small functions for each feature. Then, I tested them by cases to ensure it was written correctly before going to the next requirement. I learned this technique from the AOC, which is very helpful for debugging. In particular, I find it easier to detect where the bug comes from and what need to refactor. 
+
+## Week 6 [Stage 4 + 5 / 5]
+The two final stages focus on developing rules in the gameplay. In particular, stage 4 requires a scoring system to determine a winner for each round and the final winner. On the other hand, the final stage requires an algorithm to select a candidate card to play instead of picking a random one.
+### Stage 4
+In the fourth stage, the challenge that I have to face is to understand the game rule and the output requirement. Here is what I summarize from the requirement:
+- Before the players toss any card, prompt the message: ```"X cards on the table and the top card is Y"```. If there is no card on the table, then prompt "No cards on the table".
+- Show two players' scores and points whenever one wins the round. Prompt again before the game ends, except when the player decides to exit the game.
+- A round winner will go to whoever tossed the card that has the same rank or suit as the top card on the table. They win all the cards on the table and have points if they have the rank as: "A", "10", "J", "Q", "K". Each will value 1 point; otherwise, they get nothing.
+- Since the cards have four suits: ```"♦", "♥", "♠", "♣"```, the total points of the game will be 20 points according to the suits and ranks. In addition, the game will add extra ```3``` points to whoever has the most won cards during the game. As a result, the game's final points will be ```23```, and the total number of cards will be ```52```.
+
+The JetBrain Academy needs to be more accurate for testing in stage 4. Although I did precisely what the requirement expect me to output, I still failed to pass the test given by them. In particular, each time I submitted the code, it failed for different cases with different error messages and test cases. Fortunately, I found a comment saying they passed on the third submission, even though it failed twice with different error messages. So I tried it and passed the test without changing anything. 
+
+### Stage 5
+[Updating...]
+
+
+- _Where might I face challenges in the assigned work?_
+
+  > These final stages will be challenging since it requires developing rules by implementing the algorithm and applying a scoring system. In particular, I will need to develop an algorithm to pick a card to play instead of randomizing the decision. In addition, I will also need to work with looping and splitting strings to detect ranks and suits between cards.
+
+- _Are things progressing as I expected?_ 
+
+  > 
+
+- _Is there anything I can, or should, do to make this more successful?_
+
+  > 
+
+- _What did I particularly value in the process and why?_
+
+  > 
