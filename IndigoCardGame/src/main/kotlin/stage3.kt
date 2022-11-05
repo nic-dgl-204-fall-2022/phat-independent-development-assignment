@@ -1,14 +1,22 @@
-import java.util.*
-
 const val INITIAL_CARDS_AMOUNT = 4
 const val DEAL_CARDS_AMOUNT = 6
+
+val tableCards = initialTable()
+var playerCards = dealCards(DEAL_CARDS_AMOUNT)
+var computerCards = dealCards(DEAL_CARDS_AMOUNT)
 
 fun chooseTurnToPlay(): Boolean? {
     println("Play first?")
 
-    return when (readlnOrNull()?.lowercase(Locale.getDefault()) ?: "") {
-        "yes" -> true
-        "no" -> false
+    return when (readlnOrNull()?.lowercase() ?: "") {
+        "yes" -> {
+            whoPlayedFirst = PLAYER_NAME
+            true
+        }
+        "no" -> {
+            whoPlayedFirst = COMPUTER_NAME
+            false
+        }
         else -> null
     }
 }
@@ -16,14 +24,18 @@ fun chooseTurnToPlay(): Boolean? {
 fun initialTable(): MutableList<String> {
     val initialCards = deckCards.take(INITIAL_CARDS_AMOUNT)
     deckCards = deckCards.drop(INITIAL_CARDS_AMOUNT).toMutableList()
-    println("Initial cards on the table: ${initialCards.joinToString(" ")}")
 
     return initialCards.toMutableList()
 }
 
 fun showCardsOnTable(cards: MutableList<String>) {
     println()
-    println("${cards.size} cards on the table, and the top card is ${cards.last()}")
+    if (cards.size != 0) {
+        println("${cards.size} cards on the table, and the top card is ${cards.last()}")
+    } else if (cardsWonByPlayer.size + cardsWonByComputer.size != 52) {
+//    } else {
+        println("No cards on the table")
+    }
 }
 
 fun dealCards(amountToDeal: Int): MutableList<String> {
@@ -75,11 +87,10 @@ fun main() {
     println("Indigo Card Game")
     // Shuffle
     deckCards = deckCards.shuffled().toMutableList()
+    // Ask to play first
     do isPlayerTurn = chooseTurnToPlay() while (isPlayerTurn == null)
 
-    val tableCards = initialTable()
-    var playerCards = dealCards(DEAL_CARDS_AMOUNT)
-    var computerCards = dealCards(DEAL_CARDS_AMOUNT)
+    println("Initial cards on the table: ${tableCards.joinToString(" ")}")
 
     showCardsOnTable(tableCards)
     while (!gameOver && tableCards.size <= 52) {
