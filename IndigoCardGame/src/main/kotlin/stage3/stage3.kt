@@ -1,9 +1,31 @@
+package stage3
+
 const val INITIAL_CARDS_AMOUNT = 4
 const val DEAL_CARDS_AMOUNT = 6
+const val PLAYER_NAME = "Player"
+const val COMPUTER_NAME = "Computer"
 
+val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
+val suits = listOf("♦", "♥", "♠", "♣")
+var deckCards = getFullCards()
 val tableCards = initialTable()
 var playerCards = dealCards(DEAL_CARDS_AMOUNT)
 var computerCards = dealCards(DEAL_CARDS_AMOUNT)
+var whoPlayedFirst: String? = null
+val cardsWonByPlayer = mutableListOf<String>()
+val cardsWonByComputer = mutableListOf<String>()
+
+fun getFullCards(): MutableList<String> {
+    val cards = mutableListOf<String>()
+
+    for (suit in suits) {
+        for (rank in ranks) {
+            cards.add("$rank$suit")
+        }
+    }
+
+    return cards
+}
 
 fun chooseTurnToPlay(): Boolean? {
     println("Play first?")
@@ -70,6 +92,7 @@ fun playerPlayCard(playerCards: MutableList<String>, showCards: Boolean = true):
 }
 
 fun computerPlayCard(computerCards: MutableList<String>): String {
+    println(computerCards.joinToString(" "))
     val selected = computerCards.shuffled().first()
     println("Computer plays $selected")
 

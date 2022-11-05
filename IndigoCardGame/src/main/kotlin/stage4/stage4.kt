@@ -1,15 +1,112 @@
+package stage4
+
+const val INITIAL_CARDS_AMOUNT = 4
+const val DEAL_CARDS_AMOUNT = 6
 const val PLAYER_NAME = "Player"
 const val COMPUTER_NAME = "Computer"
 val RANKS_HAS_1POINT = mutableListOf("A", "10", "J", "Q", "K")
 
+val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
+val suits = listOf("♦", "♥", "♠", "♣")
+var deckCards = getFullCards()
+val tableCards = initialTable()
+var playerCards = dealCards(DEAL_CARDS_AMOUNT)
+var computerCards = dealCards(DEAL_CARDS_AMOUNT)
 val cardsWonByPlayer = mutableListOf<String>()
 val cardsWonByComputer = mutableListOf<String>()
-
 // Total points is 23 (20 from cards and extra 3 for having more cards)
 var playerPoints = 0
 var computerPoints = 0
 var whoPlayedFirst: String? = null
 var lastRoundWinner: String? = null
+
+fun getFullCards(): MutableList<String> {
+    val cards = mutableListOf<String>()
+
+    for (suit in suits) {
+        for (rank in ranks) {
+            cards.add("$rank$suit")
+        }
+    }
+
+    return cards
+}
+
+fun chooseTurnToPlay(): Boolean? {
+    println("Play first?")
+
+    return when (readlnOrNull()?.lowercase() ?: "") {
+        "yes" -> {
+            whoPlayedFirst = PLAYER_NAME
+            true
+        }
+        "no" -> {
+            whoPlayedFirst = COMPUTER_NAME
+            false
+        }
+        else -> null
+    }
+}
+
+fun initialTable(): MutableList<String> {
+    val initialCards = deckCards.take(INITIAL_CARDS_AMOUNT)
+    deckCards = deckCards.drop(INITIAL_CARDS_AMOUNT).toMutableList()
+
+    return initialCards.toMutableList()
+}
+
+fun showCardsOnTable(cards: MutableList<String>) {
+    println()
+    if (cards.size != 0) {
+        println("${cards.size} cards on the table, and the top card is ${cards.last()}")
+    } else if (cardsWonByPlayer.size + cardsWonByComputer.size != 52) {
+//    } else {
+        println("No cards on the table")
+    }
+}
+
+fun dealCards(amountToDeal: Int): MutableList<String> {
+    val amount = if (deckCards.size >= amountToDeal) amountToDeal else deckCards.size
+    val dealCards = deckCards.take(amount).toMutableList()
+    deckCards = deckCards.drop(amount).toMutableList()
+
+    return dealCards.toMutableList()
+}
+
+fun showPlayerCards(playerCards: MutableList<String>) {
+    println("Cards in hand: ${
+        playerCards.mapIndexed { index, s ->  "${index + 1})$s" }.joinToString(" ")
+    }")
+}
+
+fun playerPlayCard(playerCards: MutableList<String>, showCards: Boolean = true): String {
+    if (showCards) showPlayerCards(playerCards)
+
+    println("Choose a card to play (1-${playerCards.size}):")
+
+    val choice = readln()
+    val selectedIndex = choice.toIntOrNull() ?: 0
+
+    return when {
+        selectedIndex in 1..playerCards.size -> {
+            return playerCards[selectedIndex - 1]
+        }
+        choice == "exit" -> return "exit"
+        else -> playerPlayCard(playerCards, false)
+    }
+}
+
+fun computerPlayCard(computerCards: MutableList<String>): String {
+    println(computerCards.joinToString(" "))
+    val selected = computerCards.shuffled().first()
+    println("Computer plays $selected")
+
+    return selected
+}
+
+fun gameOver() {
+    println("Game Over")
+}
 
 fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = null) {
     if (isPlayerTurn == null) {
@@ -21,13 +118,11 @@ fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = 
     var winner: String? = null
 
     // Check the tossed card has the same rank or suit
-    val playedCardSuit = getSuit(cardsOnTable.last())
-    val playedCardRank = getRank(cardsOnTable.last())
-    val topCardSuit = getSuit(cardsOnTable[cardsOnTable.size - 2])
-    val topCardRank = getRank(cardsOnTable[cardsOnTable.size - 2])
-    val hasSameSuitOrRank = playedCardSuit == topCardSuit || playedCardRank == topCardRank
+    val tossedCard = cardsOnTable.last()
+    val topCardOnTable = cardsOnTable[cardsOnTable.size - 2]
+    val hasWinnableCard = hasSameRankOrSuit(tossedCard, topCardOnTable)
 
-    if (hasSameSuitOrRank) {
+    if (hasWinnableCard) {
         winner = if (isPlayerTurn) PLAYER_NAME else COMPUTER_NAME
         println("$winner wins cards")
         storeResult(cardsOnTable, winner)
@@ -44,6 +139,12 @@ fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = 
         tableCards.clear()
     }
 }
+
+fun getRank(card: String): String = if (card.length == 3) card.drop(2) else card.drop(1)
+fun getSuit(card: String): String = card.dropLast(1)
+fun hasSameRank(card1: String, card2: String): Boolean = getRank(card1) == getRank(card2)
+fun hasSameSuit(card1: String, card2: String): Boolean = getSuit(card1) == getSuit(card2)
+fun hasSameRankOrSuit (card1: String, card2:String): Boolean = hasSameRank(card1, card2) || hasSameSuit(card1, card2)
 
 fun storeResult(wonCards: MutableList<String>, winner: String) {
     val wonPoints = calculatePoints(wonCards)
@@ -75,10 +176,6 @@ fun showResult() {
     println("Score: Player $playerPoints - Computer $computerPoints")
     println("Cards: Player ${cardsWonByPlayer.size} - Computer ${cardsWonByComputer.size}")
 }
-
-fun getRank(card: String): String = if (card.length == 3) card.drop(2) else card.drop(1)
-
-fun getSuit(card: String): String = card.dropLast(1)
 
 fun main() {
     var isPlayerTurn: Boolean?
