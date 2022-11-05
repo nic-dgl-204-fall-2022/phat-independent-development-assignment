@@ -1,19 +1,22 @@
 package stage4
 
+val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
+val suits = listOf("♦", "♥", "♠", "♣")
+var deckCards =  getFullCards().shuffled()
 const val INITIAL_CARDS_AMOUNT = 4
 const val DEAL_CARDS_AMOUNT = 6
+
+val tableCards = initialTable()
+var playerCards = dealCards(DEAL_CARDS_AMOUNT)
+var computerCards = dealCards(DEAL_CARDS_AMOUNT)
+
 const val PLAYER_NAME = "Player"
 const val COMPUTER_NAME = "Computer"
 val RANKS_HAS_1POINT = mutableListOf("A", "10", "J", "Q", "K")
 
-val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
-val suits = listOf("♦", "♥", "♠", "♣")
-var deckCards = getFullCards()
-val tableCards = initialTable()
-var playerCards = dealCards(DEAL_CARDS_AMOUNT)
-var computerCards = dealCards(DEAL_CARDS_AMOUNT)
 val cardsWonByPlayer = mutableListOf<String>()
 val cardsWonByComputer = mutableListOf<String>()
+
 // Total points is 23 (20 from cards and extra 3 for having more cards)
 var playerPoints = 0
 var computerPoints = 0
@@ -60,7 +63,6 @@ fun showCardsOnTable(cards: MutableList<String>) {
     if (cards.size != 0) {
         println("${cards.size} cards on the table, and the top card is ${cards.last()}")
     } else if (cardsWonByPlayer.size + cardsWonByComputer.size != 52) {
-//    } else {
         println("No cards on the table")
     }
 }
@@ -97,7 +99,6 @@ fun playerPlayCard(playerCards: MutableList<String>, showCards: Boolean = true):
 }
 
 fun computerPlayCard(computerCards: MutableList<String>): String {
-    println(computerCards.joinToString(" "))
     val selected = computerCards.shuffled().first()
     println("Computer plays $selected")
 
@@ -113,14 +114,12 @@ fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = 
         throw Exception("Can not determine a winner in this turn.")
     }
 
-    if (cardsOnTable.size < 2) return
-
     var winner: String? = null
 
-    // Check the tossed card has the same rank or suit
+    // Check the tossed card has the same rank or suit with the top card
     val tossedCard = cardsOnTable.last()
-    val topCardOnTable = cardsOnTable[cardsOnTable.size - 2]
-    val hasWinnableCard = hasSameRankOrSuit(tossedCard, topCardOnTable)
+    val topCardOnTable = if (cardsOnTable.size >= 2) cardsOnTable[cardsOnTable.size - 2] else ""
+    val hasWinnableCard = if (topCardOnTable.isNotEmpty()) hasSameRankOrSuit(tossedCard, topCardOnTable) else false
 
     if (hasWinnableCard) {
         winner = if (isPlayerTurn) PLAYER_NAME else COMPUTER_NAME
@@ -129,19 +128,21 @@ fun findRoundWinner(cardsOnTable: MutableList<String>, isPlayerTurn: Boolean? = 
         tableCards.clear()
         showResult()
         lastRoundWinner = winner
-    } // When no one wins and no more cards
-    else if (deckCards.size == 0 && playerCards.size == 0 && computerCards.size == 0) {
+    }
+    // When no one wins and no more cards
+    else if (deckCards.isEmpty() && playerCards.size == 0 && computerCards.size == 0) {
         // Show cards on the table before being cleared
-        showCardsOnTable(tableCards)
+        println("${tableCards.size} cards on the table, and the top card is ${tableCards.last()}")
         // Who won the last round gets the points
         winner = lastRoundWinner ?: whoPlayedFirst
         storeResult(cardsOnTable, winner!!)
         tableCards.clear()
+        return
     }
 }
 
-fun getRank(card: String): String = if (card.length == 3) card.drop(2) else card.drop(1)
-fun getSuit(card: String): String = card.dropLast(1)
+fun getRank(card: String): String = card.dropLast(1)
+fun getSuit(card: String): String = card.last().toString()
 fun hasSameRank(card1: String, card2: String): Boolean = getRank(card1) == getRank(card2)
 fun hasSameSuit(card1: String, card2: String): Boolean = getSuit(card1) == getSuit(card2)
 fun hasSameRankOrSuit (card1: String, card2:String): Boolean = hasSameRank(card1, card2) || hasSameSuit(card1, card2)
@@ -190,9 +191,9 @@ fun main() {
     println("Initial cards on the table: ${tableCards.joinToString(" ")}")
 
     while (!gameOver) {
-    showCardsOnTable(tableCards)
+        showCardsOnTable(tableCards)
         // No more cards
-        if (deckCards.size == 0 && playerCards.size == 0 && computerCards.size == 0) break
+        if (deckCards.isEmpty() && playerCards.size == 0 && computerCards.size == 0) break
 
         if (isPlayerTurn!!) {
             if (tableCards.size == 0) whoPlayedFirst = PLAYER_NAME
@@ -234,6 +235,6 @@ fun main() {
         }
     }
 
-    if (deckCards.size == 0) showResult()
+    if (deckCards.isEmpty()) showResult()
     gameOver()
 }
