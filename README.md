@@ -79,11 +79,16 @@ In the fourth stage, the challenge that I have to face is to understand the game
 - A round winner will go to whoever tossed the card that has the same rank or suit as the top card on the table. They win all the cards on the table and have points if they have the rank as: "A", "10", "J", "Q", "K". Each will value 1 point; otherwise, they get nothing.
 - Since the cards have four suits: ```"♦", "♥", "♠", "♣"```, the total points of the game will be 20 points according to the suits and ranks. In addition, the game will add extra ```3``` points to whoever has the most won cards during the game. As a result, the game's final points will be ```23```, and the total number of cards will be ```52```.
 
-The JetBrain Academy needs to be more accurate for testing in stage 4. Although I did precisely what the requirement expect me to output, I still failed to pass the test given by them. In particular, each time I submitted the code, it failed for different cases with different error messages and test cases. Fortunately, I found a comment saying they passed on the third submission, even though it failed twice with different error messages. So I tried it and passed the test without changing anything. 
-
 ### Stage 5
-[Updating...]
+In the final stage, the challenge is to create an algorithm for the computer to play "smarter" instead of tossing cards randomly. The given algorithm is very straightforward and depends on the suit, the rank of the top card, and the cards the computer has.
+###$ Algorithm
+- The key to this algorithm is the priority between suits```("♦", "♥", "♠", "♣")``` and ranks. Cards with the same suit will have a higher priority than the same rank ones.
+- Cards are considered candidate cards when they have the same suit or rank. Otherwise, play a random card on the list.
+- If the table has no cards, cards that share the same suit will be chosen (either one is fine). Otherwise, pick the card that shares the same rank. If no card has duplicate suits or ranks, randomly pick one.
+- If there is more than one candidate card, pick a card from them following the priority rule: suit first, then rank.
+- If there is no candidate card, pick the card as there is no card on the table, which is to pick the card with duplicate suits or ranks in the computer's cards.
 
+<hr>
 
 - _Where might I face challenges in the assigned work?_
 
@@ -91,12 +96,11 @@ The JetBrain Academy needs to be more accurate for testing in stage 4. Although 
 
 - _Are things progressing as I expected?_ 
 
-  > 
+  > The JetBrain Academy needs to be more accurate for testing in these two final stages, especially the expected output strings. Although I did precisely what the requirement expect me to output, I still failed to pass the test given by them. In particular, each time I submitted the code, it failed for separate test cases with different error messages. Fortunately, I found a comment saying they passed on the third submission, even though it failed twice with different test cases and error messages. So I tried it and passed the test without changing anything. Most of the error message is about the wrong output of the score or the top card. However, I believe that my code fulfilled the requirement and passed most of the test cases.
 
 - _Is there anything I can, or should, do to make this more successful?_
-
-  > 
+  > The code produced for the final stage is very lengthy, which should have been completed with the IntelliJ IDEA instead of the "Code Editor" on the website. In particular, I try to write the code with IntelliJ IDEA and then paste it to the "Code Editor" to submit the solution. However, Hyperskill could not compile it, and errors occurred. It might be a memory issue or something that prevents the editor from compiling my code. Thus, I started synchronizing with the IntelliJ IDEA, which worked smoothly. I should try it since the beginning stages of the track.
 
 - _What did I particularly value in the process and why?_
 
-  > 
+  > After following this track, I learned a lot about Kotlin idioms and coding conventions, especially string and array processing. In addition, I am more familiar with the IntelliJ IDEA for coding and debugging. On the other hand, I also learned about function decomposition to interact with the code between stages. Because each stage has different outcome requirements, I need to write functions in a way that makes them reusable for the next stage. It saves me more time and ensures no mysterious bugs or errors if I add more features to the code.
