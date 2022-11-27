@@ -1,10 +1,10 @@
 package com.example.plugins
 
-import at.favre.lib.crypto.bcrypt.BCrypt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.example.auth.User
-import com.example.auth.users
+import com.benasher44.uuid.uuid4
+import com.example.DAO.UserDAO
+import com.example.auth.signup
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -22,8 +22,13 @@ fun Application.configureRouting() {
     val audience = environment.config.property("jwt.audience").getString()
 
     routing {
+        signup()
+
         get("/") {
-            call.respondText("Hello World!")
+//            val result = UserCollection().insert("phattran", "\$2a\$12\$jM0CVX.yiaDWAohrQlS1guqIucWqfn2hiRGhaY0hn8qOV3otQbLcC")
+//            println(result.json)
+            println(uuid4().toString())
+            call.respond("result")
         }
         authenticate("auth-jwt") {
             get("/profile") {
@@ -36,21 +41,21 @@ fun Application.configureRouting() {
         }
 
         post("/login") {
-            val user = call.receive<User>()
+            val user = call.receive<UserDAO>()
             // Check username and password
             // ...
-            println(user.username)
-            println(user.password)
-            val userToVerify = users.first()
-            val password = "1234"
-            val hashedPw = BCrypt.withDefaults().hashToString(12, password.toCharArray())
-            println(hashedPw)
-            val result = BCrypt.verifyer().verify(user.password.toCharArray(), userToVerify.password)
-            println(result)
-
-            if (!result.verified) {
-                return@post call.respondText("Username or Password is incorrect.", status = HttpStatusCode.Unauthorized)
-            }
+//            println(user.username)
+//            println(user.password)
+//            val userToVerify = users.first()
+//            val password = "1234"
+//            val hashedPw = BCrypt.withDefaults().hashToString(12, password.toCharArray())
+//            println(hashedPw)
+//            val result = BCrypt.verifyer().verify(user.password.toCharArray(), userToVerify.password)
+//            println(result)
+//
+//            if (!result.verified) {
+//                return@post call.respondText("Username or Password is incorrect.", status = HttpStatusCode.Unauthorized)
+//            }
 
             val token = JWT.create()
                 .withAudience(audience)

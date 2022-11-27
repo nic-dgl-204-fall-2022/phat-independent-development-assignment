@@ -31,6 +31,9 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("at.favre.lib:bcrypt:0.9.0")
+    implementation("org.litote.kmongo:kmongo:4.7.2")
+    implementation("org.litote.kmongo:kmongo-async:4.7.2")
+    implementation("com.benasher44:uuid:0.6.0")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
