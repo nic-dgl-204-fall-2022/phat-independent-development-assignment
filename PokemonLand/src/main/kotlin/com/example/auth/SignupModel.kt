@@ -5,7 +5,7 @@ import com.example.util.QueryResult
 import kotlinx.serialization.Serializable
 
 @Serializable
-class SignupModel(val username: String? = null, val password: String? = null, val confirm: String? = null) {
+class SignupModel(private val username: String? = null, private val password: String? = null, private val confirm: String? = null) {
     fun validate(): String? {
         if (username.isNullOrEmpty()) {
             return "Username is required."

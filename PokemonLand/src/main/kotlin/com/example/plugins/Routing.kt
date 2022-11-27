@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.benasher44.uuid.uuid4
 import com.example.DAO.UserDAO
+import com.example.auth.getProfile
+import com.example.auth.login
 import com.example.auth.signup
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -23,6 +25,7 @@ fun Application.configureRouting() {
 
     routing {
         signup()
+        login(secret, issuer, audience)
 
         get("/") {
 //            val result = UserCollection().insert("phattran", "\$2a\$12\$jM0CVX.yiaDWAohrQlS1guqIucWqfn2hiRGhaY0hn8qOV3otQbLcC")
@@ -31,17 +34,11 @@ fun Application.configureRouting() {
             call.respond("result")
         }
         authenticate("auth-jwt") {
-            get("/profile") {
-
-                val principal = call.principal<JWTPrincipal>()
-                val username = principal!!.payload.getClaim("username").asString()
-                val expiresAt = principal.expiresAt?.time?.minus(System.currentTimeMillis())
-                call.respondText("Hello, $username! Token is expired at $expiresAt ms.")
-            }
+            getProfile()
         }
 
-        post("/login") {
-            val user = call.receive<UserDAO>()
+//        post("/login") {
+//            val user = call.receive<UserDAO>()
             // Check username and password
             // ...
 //            println(user.username)
@@ -57,14 +54,14 @@ fun Application.configureRouting() {
 //                return@post call.respondText("Username or Password is incorrect.", status = HttpStatusCode.Unauthorized)
 //            }
 
-            val token = JWT.create()
-                .withAudience(audience)
-                .withIssuer(issuer)
-                .withClaim("username", user.username)
-                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
-                .sign(Algorithm.HMAC256(secret))
-
-            call.respond(hashMapOf("token" to token))
-        }
+//            val token = JWT.create()
+//                .withAudience(audience)
+//                .withIssuer(issuer)
+//                .withClaim("username", user.username)
+//                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+//                .sign(Algorithm.HMAC256(secret))
+//
+//            call.respond(hashMapOf("token" to token))
+//        }
     }
 }

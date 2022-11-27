@@ -46,7 +46,7 @@ class UserCollection() {
         return insertResult
     }
 
-    fun getUserById(id: String): UserDAO? {
-        return instance.findOne(UserDAO::id eq id)
+    fun getUserByUsername(username: String): UserDAO? {
+        return instance.findOne(UserDAO::username eq username)
     }
 }
