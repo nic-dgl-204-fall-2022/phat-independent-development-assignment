@@ -10,6 +10,7 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.litote.kmongo.json
 
 fun Route.signup() {
     post("/signup") {
@@ -86,7 +87,7 @@ fun Route.getProfile() {
             )
         )
 
-        call.respond(response)
+        call.respond(response.json)
     }
 }
 
