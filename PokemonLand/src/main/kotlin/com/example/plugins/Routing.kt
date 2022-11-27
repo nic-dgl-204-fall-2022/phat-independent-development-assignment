@@ -4,6 +4,7 @@ import com.example.auth.getProfile
 import com.example.auth.login
 import com.example.auth.logout
 import com.example.auth.signup
+import com.example.pokemon.getPokemon
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
@@ -24,6 +25,9 @@ fun Application.configureRouting() {
             authenticate("auth-jwt") {
                 getProfile()
                 logout()
+
+                // Pokemon
+                getPokemon()
             }
         }
     }

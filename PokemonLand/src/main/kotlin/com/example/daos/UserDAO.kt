@@ -39,7 +39,7 @@ class UserCollection() {
         val insertResult = QueryResult(false)
         try {
             val user = UserDAO(id, username.lowercase(), hashedPassword, level = 1, experiencePoints = 0)
-            val result = instance.insertOne(user)
+            instance.insertOne(user)
             insertResult.done = true
             insertResult.data = id
         } catch (e: Exception){
