@@ -92,6 +92,10 @@ fun Route.getProfile() {
 
 fun Route.logout() {
     post("/logout") {
+        val principal = call.principal<JWTPrincipal>()
+        val userId = principal!!.payload.getClaim("id").asString()
+        UserCollection().updateJwtToken(userId, null)
 
+        call.respond(MessageResponse("OK", HttpStatusCode.OK.value))
     }
 }

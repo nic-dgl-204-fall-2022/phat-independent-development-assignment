@@ -57,7 +57,7 @@ class UserCollection() {
         return instance.findOne(UserDAO::username eq username)
     }
 
-    fun updateJwtToken(id: String, newJwtToken: String): UpdateResult {
+    fun updateJwtToken(id: String, newJwtToken: String?): UpdateResult {
         return instance.updateOne(UserDAO::id eq id, setValue(UserDAO::jwtToken, newJwtToken))
     }
 

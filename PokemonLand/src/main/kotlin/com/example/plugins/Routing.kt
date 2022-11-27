@@ -2,6 +2,7 @@ package com.example.plugins
 
 import com.example.auth.getProfile
 import com.example.auth.login
+import com.example.auth.logout
 import com.example.auth.signup
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -22,6 +23,7 @@ fun Application.configureRouting() {
 
             authenticate("auth-jwt") {
                 getProfile()
+                logout()
             }
         }
     }
