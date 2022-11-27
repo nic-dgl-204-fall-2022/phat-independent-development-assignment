@@ -33,7 +33,7 @@ fun Route.signup() {
     }
 }
 
-fun Route.login(secret: String, issuer: String, audience: String) {
+fun Route.login() {
     post("/login") {
         try {
             val loginInput = call.receive<LoginModel>()
@@ -43,12 +43,16 @@ fun Route.login(secret: String, issuer: String, audience: String) {
                 return@post call.respond(message)
             }
 
-            val result = loginInput.login(secret, issuer, audience)
-            call.respond(result)
+            val result = loginInput.login()
+
+            call.respond(hashMapOf(
+                "token" to result
+            ))
         } catch (e: Exception) {
+            println(e)
             call.respond(
                 hashMapOf(
-                    "error" to e.message,
+                    "error" to "Server Error",
                     "statusCode" to HttpStatusCode.InternalServerError.value
                 )
             )

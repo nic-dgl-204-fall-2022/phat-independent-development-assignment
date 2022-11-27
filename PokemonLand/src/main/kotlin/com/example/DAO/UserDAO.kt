@@ -4,10 +4,9 @@ import at.favre.lib.crypto.bcrypt.BCrypt
 import com.benasher44.uuid.uuid4
 import com.example.util.Database
 import com.example.util.QueryResult
+import com.mongodb.client.result.UpdateResult
 import kotlinx.serialization.Serializable
-import org.litote.kmongo.eq
-import org.litote.kmongo.findOne
-import org.litote.kmongo.getCollection
+import org.litote.kmongo.*
 
 @Serializable
 data class UserDAO(
@@ -46,7 +45,19 @@ class UserCollection() {
         return insertResult
     }
 
+    fun getUserById(id: String): UserDAO? {
+        return instance.findOne(UserDAO::id eq id)
+    }
+
     fun getUserByUsername(username: String): UserDAO? {
         return instance.findOne(UserDAO::username eq username)
+    }
+
+    fun updateJwtToken(id: String, newJwtToken: String): UpdateResult {
+        return instance.updateOne(UserDAO::id eq id, setValue(UserDAO::jwtToken, newJwtToken))
+    }
+
+    fun getUserByJwtToken(jwtToken: String): UserDAO? {
+        return instance.findOne(UserDAO::jwtToken eq jwtToken)
     }
 }

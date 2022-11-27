@@ -19,49 +19,19 @@ import java.util.*
 
 
 fun Application.configureRouting() {
-    val secret = environment.config.property("jwt.secret").getString()
-    val issuer = environment.config.property("jwt.issuer").getString()
-    val audience = environment.config.property("jwt.audience").getString()
 
     routing {
-        signup()
-        login(secret, issuer, audience)
+        route("/api") {
+            get("/") {
+                call.respond("Pokemon Land")
+            }
 
-        get("/") {
-//            val result = UserCollection().insert("phattran", "\$2a\$12\$jM0CVX.yiaDWAohrQlS1guqIucWqfn2hiRGhaY0hn8qOV3otQbLcC")
-//            println(result.json)
-            println(uuid4().toString())
-            call.respond("result")
+            signup()
+            login()
+
+            authenticate("auth-jwt") {
+                getProfile()
+            }
         }
-        authenticate("auth-jwt") {
-            getProfile()
-        }
-
-//        post("/login") {
-//            val user = call.receive<UserDAO>()
-            // Check username and password
-            // ...
-//            println(user.username)
-//            println(user.password)
-//            val userToVerify = users.first()
-//            val password = "1234"
-//            val hashedPw = BCrypt.withDefaults().hashToString(12, password.toCharArray())
-//            println(hashedPw)
-//            val result = BCrypt.verifyer().verify(user.password.toCharArray(), userToVerify.password)
-//            println(result)
-//
-//            if (!result.verified) {
-//                return@post call.respondText("Username or Password is incorrect.", status = HttpStatusCode.Unauthorized)
-//            }
-
-//            val token = JWT.create()
-//                .withAudience(audience)
-//                .withIssuer(issuer)
-//                .withClaim("username", user.username)
-//                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
-//                .sign(Algorithm.HMAC256(secret))
-//
-//            call.respond(hashMapOf("token" to token))
-//        }
     }
 }

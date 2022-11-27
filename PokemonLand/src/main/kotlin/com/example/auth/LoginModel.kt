@@ -2,20 +2,24 @@ package com.example.auth
 
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.auth0.jwt.JWT
+import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.example.DAO.UserCollection
+import com.example.DAO.UserDAO
+import de.sharpmind.ktor.EnvConfig
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
+import io.ktor.server.util.*
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
-import kotlin.collections.HashMap
 
 @Serializable
 class LoginModel(private val username: String?, private val password: String?) {
     fun validate(): String? {
+        println(Application::environment)
         if (username.isNullOrEmpty()) {
             return "Username is required."
-        } else if(password.isNullOrEmpty()) {
+        } else if (password.isNullOrEmpty()) {
             return "Password is required."
         }
 
@@ -30,14 +34,26 @@ class LoginModel(private val username: String?, private val password: String?) {
         return null
     }
 
-    fun login(secret: String, issuer: String, audience: String): HashMap<String, String> {
-            val token = JWT.create()
-                .withAudience(audience)
-                .withIssuer(issuer)
-                .withClaim("username", username)
-                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
-                .sign(Algorithm.HMAC256(secret))
+    fun login(): String? {
+        if (username == null) {
+            return null
+        }
 
-        return hashMapOf("token" to token)
+        val user = UserCollection().getUserByUsername(username)
+        var token: String? = null
+
+        if (user != null) {
+            token = JWT.create()
+                .withAudience(EnvConfig.getString("JWT_AUDIENCE"))
+                .withIssuer(EnvConfig.getString("JWT_ISSUER"))
+                .withClaim("id", user.id)
+                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+                .sign(Algorithm.HMAC256(EnvConfig.getString("JWT_SECRET")))
+
+            UserCollection().updateJwtToken(user.id, token.toString())
+
+        }
+
+        return token
     }
 }

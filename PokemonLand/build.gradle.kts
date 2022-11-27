@@ -34,6 +34,7 @@ dependencies {
     implementation("org.litote.kmongo:kmongo:4.7.2")
     implementation("org.litote.kmongo:kmongo-async:4.7.2")
     implementation("com.benasher44:uuid:0.6.0")
+    implementation("de.sharpmind.ktor:ktor-env-config:2.0.1")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
