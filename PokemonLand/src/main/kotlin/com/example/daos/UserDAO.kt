@@ -1,4 +1,4 @@
-package com.example.DAO
+package com.example.daos
 
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.benasher44.uuid.uuid4
@@ -15,7 +15,11 @@ data class UserDAO(
     val hashedPassword: String,
     val level: Int? = null,
     val experiencePoints: Int? = null,
-    val jwtToken: String? = null
+    val jwtToken: String? = null,
+    val name: String? = null,
+    val email: String? = null,
+    val phone: String? = null,
+    val coins: Int? = null,
 ) {
 }
 

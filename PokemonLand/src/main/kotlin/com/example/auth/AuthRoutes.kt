@@ -1,6 +1,8 @@
 package com.example.auth
 
+import com.example.daos.UserCollection
 import com.example.util.MessageResponse
+import com.example.util.ObjectResponse
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -45,9 +47,11 @@ fun Route.login() {
 
             val result = loginInput.login()
 
-            call.respond(hashMapOf(
-                "token" to result
-            ))
+            call.respond(
+                hashMapOf(
+                    "token" to result
+                )
+            )
         } catch (e: Exception) {
             println(e)
             call.respond(
@@ -63,9 +67,26 @@ fun Route.login() {
 fun Route.getProfile() {
     get("/profile") {
         val principal = call.principal<JWTPrincipal>()
-        val username = principal!!.payload.getClaim("username").asString()
-        val expiresAt = principal.expiresAt?.time?.minus(System.currentTimeMillis())
-        call.respondText("Hello, $username! Token is expired at $expiresAt ms.")
+        val userId = principal!!.payload.getClaim("id").asString()
+
+        val user = UserCollection().getUserById(userId)
+            ?: return@get call.respond(MessageResponse("Not Found", statusCode = HttpStatusCode.NotFound.value))
+
+        val response = ObjectResponse(
+            data = hashMapOf(
+                "id" to user.id,
+                "username" to user.username,
+                "level" to user.level.toString(),
+                "experiencePoints" to user.experiencePoints.toString(),
+                "jwtToken" to user.jwtToken,
+                "name" to user.name,
+                "email" to user.email,
+                "phone" to user.phone,
+                "coins" to user.coins.toString()
+            )
+        )
+
+        call.respond(response)
     }
 }
 

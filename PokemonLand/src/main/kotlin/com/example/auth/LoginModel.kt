@@ -2,14 +2,10 @@ package com.example.auth
 
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.example.DAO.UserCollection
-import com.example.DAO.UserDAO
+import com.example.daos.UserCollection
 import de.sharpmind.ktor.EnvConfig
 import io.ktor.server.application.*
-import io.ktor.server.util.*
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.util.*
 
@@ -47,7 +43,7 @@ class LoginModel(private val username: String?, private val password: String?) {
                 .withAudience(EnvConfig.getString("JWT_AUDIENCE"))
                 .withIssuer(EnvConfig.getString("JWT_ISSUER"))
                 .withClaim("id", user.id)
-                .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+                .withExpiresAt(Date(System.currentTimeMillis() + 60_000 * 60))
                 .sign(Algorithm.HMAC256(EnvConfig.getString("JWT_SECRET")))
 
             UserCollection().updateJwtToken(user.id, token.toString())

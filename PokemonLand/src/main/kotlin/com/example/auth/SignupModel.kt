@@ -1,6 +1,6 @@
 package com.example.auth
 
-import com.example.DAO.UserCollection
+import com.example.daos.UserCollection
 import com.example.util.QueryResult
 import kotlinx.serialization.Serializable
 
