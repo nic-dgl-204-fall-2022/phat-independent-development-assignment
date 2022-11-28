@@ -2,6 +2,7 @@ package com.example.explore
 
 import com.example.daos.PokemonCollection
 import com.example.daos.UserCollection
+import com.example.models.BattleModel
 import com.example.models.CatchModel
 import com.example.util.ObjectResponse
 import io.ktor.http.*
@@ -40,5 +41,16 @@ fun Route.catchWildPokemon() {
 }
 
 fun Route.battle() {
+    put("/explore/battle") {
+        val battleInput = call.receive<BattleModel>()
+        val principal = call.principal<JWTPrincipal>()
+        val userId = principal!!.payload.getClaim("id").asString()
+        val result = UserCollection().battle(userId, battleInput.pokemonId, battleInput.wildPokemonId)
 
+        call.respond(
+            ObjectResponse(
+                data = result
+            ).json
+        );
+    }
 }

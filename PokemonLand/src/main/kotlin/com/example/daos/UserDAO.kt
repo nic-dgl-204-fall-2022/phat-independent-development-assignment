@@ -4,6 +4,9 @@ import at.favre.lib.crypto.bcrypt.BCrypt
 import com.benasher44.uuid.uuid4
 import com.example.item.AffectAttributes
 import com.example.item.ItemCollection
+import com.example.item.ItemDAO
+import com.example.item.rewardItems
+import com.example.models.BattleResultModel
 import com.example.models.UseItemModel
 import com.example.models.ItemModel
 import com.example.util.Database
@@ -25,7 +28,7 @@ data class UserDAO(
     val email: String? = null,
     val phone: String? = null,
     val coins: Int? = null,
-    val pokemon: List<String>? = null,
+    var pokemon: List<String>? = null,
     var items: List<ItemModel>? = null
 ) {
 }
@@ -157,9 +160,70 @@ class UserCollection() {
                 }
 
             }
-
         }
 
         return "The pokemon has not captured yet."
+    }
+
+    fun battle(userId: String, pokemonId: String, wildPokemonId: String): BattleResultModel {
+        val user = instance.findOne(UserDAO::id eq userId)
+        val wildPokemon = PokemonCollection().getPokemonById(wildPokemonId)
+        val pokemon = PokemonCollection().getPokemonById(pokemonId)
+        val result: BattleResultModel
+
+        // User not found
+        if (user == null) return BattleResultModel(false, "User not found")
+        // Pokemon Not found
+        if (wildPokemon == null) return BattleResultModel(false, "Wild Pokemon not found")
+        // Not a wild pokemon
+        if (wildPokemon.status != PokemonStatus.WILD) return BattleResultModel(false, "Not a wild pokemon")
+        // Pokemon Not found
+        if (pokemon == null) return BattleResultModel(false, "Send an invalid Pokemon")
+
+        val isOwner = user.pokemon?.contains(pokemon.id) ?: false
+        if (!isOwner) return BattleResultModel(false, "You can't choose this pokemon to fight")
+
+
+        if (pokemon.power > wildPokemon.power) {
+            // Increase pokemon exp
+            val exp = wildPokemon.level * 100
+            PokemonCollection().addExp(pokemonId, exp)
+
+            val earnedItems = this.receiveRewards(user, pokemonId)
+            result = BattleResultModel(true, "You won. Claim your rewards.", exp, earnedItems)
+        } else {
+            result = BattleResultModel(false, "You lost. Become stronger for the next time.")
+        }
+
+        // Remove wild Pokemon
+        PokemonCollection().removePokemonById(wildPokemon.id)
+        // Update user's pokemon
+        user.pokemon = user.pokemon?.filter { it != wildPokemonId }
+        instance.updateOne(UserDAO::id eq userId, setValue(UserDAO::pokemon, user.pokemon))
+
+        return result
+    }
+
+    private fun receiveRewards(user: UserDAO, pokemonId: String): List<ItemModel> {
+        // Random 3 items
+        val randomReward = rewardItems.shuffled().take(3)
+
+        randomReward.forEach {
+            val alreadyHave = user.items?.find { i -> i.id == it.id }
+            if (alreadyHave != null) {
+                user.items?.forEach { i ->
+                    if (i.id == it.id) {
+                        i.amount += 1
+                    }
+                }
+            } else {
+                user.items = user.items?.plus(ItemModel(it.id, 1))
+            }
+        }
+
+        // Add items
+        instance.updateOne(UserDAO::id eq user.id, setValue(UserDAO::items, user.items))
+
+        return randomReward.map { ItemModel(it.id, 1)}
     }
 }

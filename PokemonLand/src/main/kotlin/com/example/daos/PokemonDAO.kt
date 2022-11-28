@@ -1,6 +1,8 @@
 package com.example.daos
 
 import com.benasher44.uuid.uuid4
+import com.example.item.rewardItems
+import com.example.models.ItemModel
 import com.example.util.Database
 import com.example.util.QueryResult
 import com.example.util.capitalize
@@ -8,6 +10,7 @@ import kotlinx.serialization.Serializable
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
+import org.litote.kmongo.setValue
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -29,6 +32,7 @@ data class PokemonDAO(
     var status: PokemonStatus,
     var captureRate: Int? = null,
 ) {
+
 }
 
 class PokemonCollection() {
@@ -40,6 +44,7 @@ class PokemonCollection() {
             "89cd54fa-6744-4cb0-b42b-50ceadb5a28e",
             "Pichu",
             listOf("Electric"),
+            power = 15000,
             level = 10,
             maxExpPoints = 1000,
             status = PokemonStatus.OWNED
@@ -48,6 +53,7 @@ class PokemonCollection() {
             "b6800af1-6076-4cf9-a74d-266d78eb7fec",
             "Pikachu",
             listOf("Electric"),
+            power = 25000,
             level = 16,
             maxExpPoints = 1500,
             status = PokemonStatus.OWNED
@@ -56,6 +62,7 @@ class PokemonCollection() {
             "52830674-de5f-4951-8f09-8803454d4b5c",
             "Raichu",
             listOf("Electric"),
+            power = 45000,
             level = 32,
             maxExpPoints = 3500,
             status = PokemonStatus.OWNED
@@ -64,6 +71,7 @@ class PokemonCollection() {
             "13b55d90-fb4e-4a36-b4e9-044d4ddccf07",
             "Charmander",
             listOf("Fire"),
+            power = 15000,
             level = 10,
             maxExpPoints = 1000,
             status = PokemonStatus.OWNED
@@ -73,6 +81,7 @@ class PokemonCollection() {
                 "ec51b4d0-9e72-40be-a130-3062a5e37dd3",
                 "Bulbasaur",
                 listOf("Grass", "Poison"),
+                power = 15000,
                 level = 10,
                 maxExpPoints = 1000,
                 status = PokemonStatus.OWNED
@@ -81,6 +90,7 @@ class PokemonCollection() {
             "9a688086-4dfe-48a8-9d97-929b95fb7aaf",
             "Squirtle",
             listOf("Water"),
+            power = 15000,
             level = 10,
             maxExpPoints = 1000,
             status = PokemonStatus.OWNED
@@ -89,6 +99,7 @@ class PokemonCollection() {
             "82cdda8a-fc69-488b-945e-8210dae43a82",
             "Caterpie",
             listOf("Bug"),
+            power = 10000,
             level = 10,
             maxExpPoints = 1000,
             status = PokemonStatus.OWNED
@@ -140,6 +151,10 @@ class PokemonCollection() {
         return instance.findOne(PokemonDAO::id eq id)
     }
 
+    fun removePokemonById(id: String): PokemonDAO? {
+        return instance.findOneAndDelete(PokemonDAO::id eq id)
+    }
+
     fun addExp(id: String, expPoints: Int) {
         val pokemon = instance.findOne(PokemonDAO::id eq id)
 
@@ -180,7 +195,7 @@ class PokemonCollection() {
             }
             instance.replaceOne(PokemonDAO::id eq id, pokemon)
             return pokemon
-            
+
         }
 
         return null
