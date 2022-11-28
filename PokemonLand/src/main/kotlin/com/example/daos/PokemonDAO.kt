@@ -27,7 +27,7 @@ data class PokemonDAO(
 class PokemonCollection() {
     private val instance = Database().instance.getCollection<PokemonDAO>("pokemon")
 
-    init {
+    fun initialize() {
         instance.drop()
         val pichu = PokemonDAO(
             "89cd54fa-6744-4cb0-b42b-50ceadb5a28e",
@@ -118,7 +118,6 @@ class PokemonCollection() {
         if (existedPokemon != null) {
             return QueryResult(false, "Name is already taken.")
         }
-
 
         val insertResult = QueryResult(false)
         try {

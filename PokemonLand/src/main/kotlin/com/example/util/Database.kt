@@ -1,5 +1,8 @@
 package com.example.util
 
+import com.example.daos.PokemonCollection
+import com.example.daos.PokemonDAO
+import com.example.item.ItemCollection
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoDatabase
 import de.sharpmind.ktor.EnvConfig
@@ -21,4 +24,5 @@ data class Database(
         )
     ) //normal java driver usage
 ) {
+
 }
