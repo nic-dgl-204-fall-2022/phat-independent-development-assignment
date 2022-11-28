@@ -50,13 +50,16 @@ fun Route.login() {
 
             call.respond(
                 hashMapOf(
+                    "message" to "OK",
+                    "statusCode" to HttpStatusCode.Unauthorized.value.toString(),
                     "token" to result
                 )
             )
         } catch (e: Exception) {
+            println("error ${e.message}")
             call.respond(
                 hashMapOf(
-                    "error" to "Server Error",
+                    "error" to e.message,
                     "statusCode" to HttpStatusCode.InternalServerError.value.toString()
                 )
             )
