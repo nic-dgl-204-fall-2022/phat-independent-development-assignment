@@ -24,7 +24,7 @@ data class ItemDAO(
     val name: String,
     val type: ItemTypes,
     val description: String? = null,
-    val affect: HashMap<AffectAttributes, Int>? = null,
+    val affect: HashMap<AffectAttributes, Int>,
     val imgName: String? = null
 ) {
 
@@ -88,32 +88,6 @@ class ItemCollection() {
                 ),
             )
         )
-    }
-
-    fun insertOne(name: String, type: ItemTypes): QueryResult {
-        val id = uuid4().toString()
-
-        val existedItem = instance.findOne(ItemDAO::name eq name)
-        if (existedItem != null) {
-            return QueryResult(false, "Name is already taken.")
-        }
-
-        val insertResult = QueryResult(false)
-        try {
-            val item = ItemDAO(
-                id,
-                capitalize(name),
-                type
-            )
-
-            instance.insertOne(item)
-            insertResult.done = true
-            insertResult.data = id
-        } catch (e: Exception) {
-            insertResult.error = e.message
-        }
-
-        return insertResult
     }
 
     fun getItems(): List<ItemDAO> {

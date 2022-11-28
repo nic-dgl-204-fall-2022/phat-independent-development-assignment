@@ -54,11 +54,10 @@ fun Route.login() {
                 )
             )
         } catch (e: Exception) {
-            println(e)
             call.respond(
                 hashMapOf(
                     "error" to "Server Error",
-                    "statusCode" to HttpStatusCode.InternalServerError.value
+                    "statusCode" to HttpStatusCode.InternalServerError.value.toString()
                 )
             )
         }

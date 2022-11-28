@@ -96,7 +96,7 @@ class UserCollection() {
                     if (it.id == userItem.id && userItem.amount > 0 && userItem.amount > it.amount) {
                         // Affect to Pokemon
                         val item = ItemCollection().getItemById(it.id)
-                        if (item?.affect != null) {
+                        if (item != null) {
                             when {
                                 // Add EXP
                                 item.affect.contains(AffectAttributes.EXP) -> PokemonCollection().addExp(
@@ -108,19 +108,10 @@ class UserCollection() {
                                     it.pokemonId,
                                     item.affect.getValue(AffectAttributes.POWER)
                                 )
-                                // Catch Pokemon
-                                item.affect.contains(AffectAttributes.CAPTURE) -> PokemonCollection().catch(
-                                    it.pokemonId,
-                                    item.affect.getValue(AffectAttributes.CAPTURE)
-                                )
                             }
 
                             // Decrease amount
-                            if (item.affect.contains(AffectAttributes.CAPTURE)) {
-                                userItem.amount -= 1
-                            } else {
-                                userItem.amount -= it.amount
-                            }
+                            userItem.amount -= it.amount
                         }
 
                     }
@@ -131,14 +122,44 @@ class UserCollection() {
         }
     }
 
-    fun foundPokemon(userId: String, pokemonId: String) {
+    fun foundWildPokemon(userId: String, pokemonId: String) {
         val user = instance.findOne(UserDAO::id eq userId)
 
         if (user != null) {
             val userPokemon = user.pokemon?.plus(pokemonId) ?: listOf(pokemonId)
 
-            println("userPokemon $userPokemon ")
             instance.updateOne(UserDAO::id eq userId, setValue(UserDAO::pokemon, userPokemon))
         }
+    }
+
+    fun catchWildPokemon(userId: String, pokemonId: String, itemId: String): String {
+        val user = instance.findOne(UserDAO::id eq userId)
+        val item = ItemCollection().getItemById(itemId)
+
+        if (user != null && item != null) {
+            val isPokeball = item.affect.contains(AffectAttributes.CAPTURE)
+            if (isPokeball) {
+                val incrementRate = item.affect.getValue(AffectAttributes.CAPTURE)
+                val pokemon = PokemonCollection().catch(pokemonId, incrementRate)
+
+                if (pokemon != null) {
+                    user.items?.forEach {
+                        if (it.id == itemId) {
+                            it.amount -= 1
+                        }
+                    }
+
+                    instance.updateOne(UserDAO::id eq userId, setValue(UserDAO::items, user.items))
+
+                    if (pokemon.status == PokemonStatus.OWNED) {
+                        return "Congratulations, you have a new pokemon."
+                    }
+                }
+
+            }
+
+        }
+
+        return "The pokemon has not captured yet."
     }
 }

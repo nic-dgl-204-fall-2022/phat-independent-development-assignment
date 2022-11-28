@@ -166,24 +166,24 @@ class PokemonCollection() {
         }
     }
 
-    fun catch(id: String, captureRate: Int) {
+    fun catch(id: String, captureRate: Int): PokemonDAO? {
         val pokemon = instance.findOne(PokemonDAO::id eq id)
 
-        if (pokemon != null && captureRate > 0) {
-            if (pokemon.status == PokemonStatus.WILD && pokemon.captureRate != null) {
-                if (pokemon.captureRate!! < 100) {
-                    val currentRate = pokemon.captureRate!! + captureRate
-                    if (currentRate >= 100) {
-                        pokemon.status = PokemonStatus.OWNED
-                        pokemon.captureRate = null
-                    } else {
-                        pokemon.captureRate = currentRate
-                    }
-                }
-            }
+        if (pokemon != null && captureRate > 0 && pokemon.status == PokemonStatus.WILD) {
+            val currentRate = pokemon.captureRate?.plus(captureRate) ?: captureRate
 
+            if (currentRate >= 100) {
+                pokemon.status = PokemonStatus.OWNED
+                pokemon.captureRate = null
+            } else {
+                pokemon.captureRate = currentRate
+            }
             instance.replaceOne(PokemonDAO::id eq id, pokemon)
+            return pokemon
+            
         }
+
+        return null
     }
 }
 
