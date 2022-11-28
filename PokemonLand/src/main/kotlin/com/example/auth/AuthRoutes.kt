@@ -78,12 +78,15 @@ fun Route.getProfile() {
                 "id" to user.id,
                 "username" to user.username,
                 "level" to user.level.toString(),
-                "experiencePoints" to user.experiencePoints.toString(),
+                "expPoints" to user.expPoints.toString(),
+                "maxExpPoints" to user.maxExpPoints.toString(),
                 "jwtToken" to user.jwtToken,
                 "name" to user.name,
                 "email" to user.email,
                 "phone" to user.phone,
-                "coins" to user.coins.toString()
+                "coins" to user.coins.toString(),
+                "pokemon" to user.pokemon,
+                "items" to user.items
             )
         )
 

@@ -14,12 +14,15 @@ data class UserDAO(
     val username: String,
     val hashedPassword: String,
     val level: Int? = null,
-    val experiencePoints: Int? = null,
+    val expPoints: Int? = null,
+    val maxExpPoints: Int? = null,
     val jwtToken: String? = null,
     val name: String? = null,
     val email: String? = null,
     val phone: String? = null,
     val coins: Int? = null,
+    val pokemon: List<String>? = null,
+    val items: List<HashMap<String, Int>>? = null
 ) {
 }
 
@@ -38,7 +41,7 @@ class UserCollection() {
 
         val insertResult = QueryResult(false)
         try {
-            val user = UserDAO(id, username.lowercase(), hashedPassword, level = 1, experiencePoints = 0)
+            val user = UserDAO(id, username.lowercase(), hashedPassword, level = 1, expPoints = 0, maxExpPoints = 1000, coins = 0)
             instance.insertOne(user)
             insertResult.done = true
             insertResult.data = id
