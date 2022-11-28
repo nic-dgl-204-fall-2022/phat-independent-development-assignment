@@ -14,15 +14,20 @@ import com.example.util.QueryResult
 import com.mongodb.client.result.UpdateResult
 import kotlinx.serialization.Serializable
 import org.litote.kmongo.*
+import kotlin.math.exp
+
+enum class Activity {
+    CATCH, BATTLE
+}
 
 @Serializable
 data class UserDAO(
     val id: String,
     val username: String,
     val hashedPassword: String,
-    val level: Int? = null,
-    val expPoints: Int? = null,
-    val maxExpPoints: Int? = null,
+    var level: Int,
+    var expPoints: Int,
+    var maxExpPoints: Int,
     val jwtToken: String? = null,
     val name: String? = null,
     val email: String? = null,
@@ -90,6 +95,30 @@ class UserCollection() {
         return instance.updateOne(UserDAO::id eq id, setValue(UserDAO::jwtToken, newJwtToken))
     }
 
+    private fun addExp(userId: String, expPoints: Int) {
+        val user = instance.findOne(UserDAO::id eq userId)
+
+        if (user?.expPoints != null && expPoints > 0) {
+            val exp = user.expPoints + expPoints
+            if(exp >= user.maxExpPoints) {
+                user.level = user.level.plus(1)
+                user.expPoints = exp - user.maxExpPoints
+                user.maxExpPoints += (user.maxExpPoints * 0.4).toInt()
+            } else {
+                user.expPoints = exp
+            }
+
+            instance.replaceOne(UserDAO::id eq user.id, user)
+        }
+    }
+
+    private fun getActivityRewards(userId: String, activity: Activity) {
+        when (activity) {
+            Activity.CATCH -> this.addExp(userId, 2_000)
+            Activity.BATTLE -> this.addExp(userId, 1_000)
+        }
+    }
+
     fun useItem(userId: String, items: List<UseItemModel>) {
         val user = instance.findOne(UserDAO::id eq userId)
 
@@ -155,10 +184,10 @@ class UserCollection() {
                     instance.updateOne(UserDAO::id eq userId, setValue(UserDAO::items, user.items))
 
                     if (pokemon.status == PokemonStatus.OWNED) {
+                        getActivityRewards(userId, Activity.CATCH)
                         return "Congratulations, you have a new pokemon."
                     }
                 }
-
             }
         }
 
@@ -190,6 +219,7 @@ class UserCollection() {
             PokemonCollection().addExp(pokemonId, exp)
 
             val earnedItems = this.receiveRewards(user, pokemonId)
+            getActivityRewards(userId, Activity.CATCH)
             result = BattleResultModel(true, "You won. Claim your rewards.", exp, earnedItems)
         } else {
             result = BattleResultModel(false, "You lost. Become stronger for the next time.")
