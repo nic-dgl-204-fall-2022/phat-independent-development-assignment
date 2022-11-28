@@ -24,7 +24,12 @@ fun Route.signup() {
 
             val result = signUpInput.signup()
 
-            call.respond(result)
+            call.respond(
+                hashMapOf(
+                    "message" to "OK",
+                    "statusCode" to "201"
+                )
+            )
         } catch (e: Exception) {
             call.respond(
                 hashMapOf(
@@ -51,7 +56,7 @@ fun Route.login() {
             call.respond(
                 hashMapOf(
                     "message" to "OK",
-                    "statusCode" to HttpStatusCode.Unauthorized.value.toString(),
+                    "statusCode" to HttpStatusCode.OK.value.toString(),
                     "token" to result
                 )
             )
