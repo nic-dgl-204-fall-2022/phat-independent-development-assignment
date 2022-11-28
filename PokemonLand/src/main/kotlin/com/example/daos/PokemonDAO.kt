@@ -9,16 +9,17 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
 import java.util.*
+import kotlin.math.roundToInt
 
 @Serializable
 data class PokemonDAO(
     val id: String,
     val name: String,
     val type: List<String>,
-    val Power: Int = 0,
-    val level: Int = 1,
-    val expPoints: Int = 0,
-    val maxExpPoints: Int = 0,
+    var power: Int = 0,
+    var level: Int = 1,
+    var expPoints: Int = 0,
+    var maxExpPoints: Int = 0, // Increase 40% after level up
     var evolutions: List<HashMap<String, String>>? = null,
     val imgName: String? = null
 ) {
@@ -143,5 +144,31 @@ class PokemonCollection() {
 
     fun getPokemonById(id: String): PokemonDAO? {
         return instance.findOne(PokemonDAO::id eq id)
+    }
+
+    fun addExp(id: String, expPoints: Int) {
+        val pokemon = instance.findOne(PokemonDAO::id eq id)
+
+        if (pokemon != null && expPoints > 0) {
+            pokemon.expPoints += expPoints
+
+            if (pokemon.expPoints >= pokemon.maxExpPoints) {
+                pokemon.level += 1
+                pokemon.maxExpPoints += (pokemon.expPoints * 0.4).roundToInt()
+                pokemon.expPoints -= pokemon.maxExpPoints
+            }
+
+            instance.replaceOne(PokemonDAO::id eq id, pokemon)
+        }
+    }
+
+    fun addPower(id: String, powerPoints: Int) {
+        val pokemon = instance.findOne(PokemonDAO::id eq id)
+
+        if (pokemon != null && powerPoints > 0) {
+            pokemon.power += powerPoints
+
+            instance.replaceOne(PokemonDAO::id eq id, pokemon)
+        }
     }
 }

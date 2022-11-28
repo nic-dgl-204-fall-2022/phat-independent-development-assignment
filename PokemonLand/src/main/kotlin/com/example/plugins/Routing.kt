@@ -6,6 +6,7 @@ import com.example.auth.logout
 import com.example.auth.signup
 import com.example.item.getItemById
 import com.example.item.getItems
+import com.example.item.useItems
 import com.example.pokemon.getPokemon
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -34,6 +35,7 @@ fun Application.configureRouting() {
                 // Items
                 getItems()
                 getItemById()
+                useItems()
             }
         }
     }
