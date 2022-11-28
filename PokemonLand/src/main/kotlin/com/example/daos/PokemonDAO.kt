@@ -11,6 +11,10 @@ import org.litote.kmongo.getCollection
 import java.util.*
 import kotlin.math.roundToInt
 
+enum class PokemonStatus {
+    OWNED, WILD
+}
+
 @Serializable
 data class PokemonDAO(
     val id: String,
@@ -21,7 +25,9 @@ data class PokemonDAO(
     var expPoints: Int = 0,
     var maxExpPoints: Int = 0, // Increase 40% after level up
     var evolutions: List<HashMap<String, String>>? = null,
-    val imgName: String? = null
+    val imgName: String? = null,
+    val status: PokemonStatus,
+    val captureRate: Int? = null,
 ) {
 }
 
@@ -35,28 +41,32 @@ class PokemonCollection() {
             "Pichu",
             listOf("Electric"),
             level = 10,
-            maxExpPoints = 1000
+            maxExpPoints = 1000,
+            status = PokemonStatus.OWNED
         )
         val pikachu = PokemonDAO(
             "b6800af1-6076-4cf9-a74d-266d78eb7fec",
             "Pikachu",
             listOf("Electric"),
             level = 16,
-            maxExpPoints = 1500
+            maxExpPoints = 1500,
+            status = PokemonStatus.OWNED
         )
         val raichu = PokemonDAO(
             "52830674-de5f-4951-8f09-8803454d4b5c",
             "Raichu",
             listOf("Electric"),
             level = 32,
-            maxExpPoints = 3500
+            maxExpPoints = 3500,
+            status = PokemonStatus.OWNED
         )
         val charmander = PokemonDAO(
             "13b55d90-fb4e-4a36-b4e9-044d4ddccf07",
             "Charmander",
             listOf("Fire"),
             level = 10,
-            maxExpPoints = 1000
+            maxExpPoints = 1000,
+            status = PokemonStatus.OWNED
         )
         val bulbasaur =
             PokemonDAO(
@@ -64,21 +74,24 @@ class PokemonCollection() {
                 "Bulbasaur",
                 listOf("Grass", "Poison"),
                 level = 10,
-                maxExpPoints = 1000
+                maxExpPoints = 1000,
+                status = PokemonStatus.OWNED
             )
         val squirtle = PokemonDAO(
             "9a688086-4dfe-48a8-9d97-929b95fb7aaf",
             "Squirtle",
             listOf("Water"),
             level = 10,
-            maxExpPoints = 1000
+            maxExpPoints = 1000,
+            status = PokemonStatus.OWNED
         )
         val caterpie = PokemonDAO(
             "82cdda8a-fc69-488b-945e-8210dae43a82",
             "Caterpie",
             listOf("Bug"),
             level = 10,
-            maxExpPoints = 1000
+            maxExpPoints = 1000,
+            status = PokemonStatus.OWNED
         )
 
         val pichuEvolutions = listOf(
@@ -125,7 +138,9 @@ class PokemonCollection() {
             val pokemon = PokemonDAO(
                 id,
                 capitalize(name),
-                type.map { it -> capitalize(it) }
+                type.map { it -> capitalize(it) },
+                status = PokemonStatus.WILD,
+                captureRate = 0
             )
 
             instance.insertOne(pokemon)

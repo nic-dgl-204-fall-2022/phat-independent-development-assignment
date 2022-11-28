@@ -15,7 +15,7 @@ enum class ItemTypes {
 }
 
 enum class AffectAttributes {
-    EXP, POWER
+    EXP, POWER, CAPTURE
 }
 
 @Serializable
@@ -41,13 +41,15 @@ class ItemCollection() {
                     "0c7a63c6-7598-49ad-8c2c-1f86f81f2ba5",
                     "Standard Pokeball",
                     ItemTypes.Pokeball,
-                    "Throw it to wild pokemon and it will capture it for you."
+                    "Throw it to wild pokemon and it will capture it for you.",
+                    hashMapOf(AffectAttributes.CAPTURE to 50)
                 ),
                 ItemDAO(
                     "e99ac306-f8ae-43b4-a0fa-28c263a20709",
                     "Electric Pokeball",
                     ItemTypes.Pokeball,
-                    "Throw it to wild pokemon and it will capture it for you."
+                    "Throw it to wild pokemon and it will capture it for you.",
+                    hashMapOf(AffectAttributes.CAPTURE to 100)
                 ),
                 ItemDAO(
                     "b6eaa392-05eb-4a5f-9d91-83f55fb731e2",

@@ -22,18 +22,19 @@ fun Application.configureRouting() {
                 call.respond("Pokemon Land")
             }
 
+            // Auth
             signup()
             login()
+            //Pokemon
+            getPokemon()
+            // Items
+            getItems()
 
             authenticate("auth-jwt") {
                 getProfile()
                 logout()
 
-                // Pokemon
-                getPokemon()
 
-                // Items
-                getItems()
                 getItemById()
                 useItems()
             }
