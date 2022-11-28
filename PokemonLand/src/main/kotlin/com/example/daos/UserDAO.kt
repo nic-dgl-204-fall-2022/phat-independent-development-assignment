@@ -53,8 +53,12 @@ class UserCollection() {
                 expPoints = 0,
                 maxExpPoints = 1000,
                 coins = 0,
-                items = listOf(ItemModel("b6eaa392-05eb-4a5f-9d91-83f55fb731e2", 1000),
-                    ItemModel("112c9eac-895f-4346-9109-cfcd8a640738", 100)),
+                items = listOf(
+                    ItemModel("b6eaa392-05eb-4a5f-9d91-83f55fb731e2", 1000),
+                    ItemModel("112c9eac-895f-4346-9109-cfcd8a640738", 100),
+                    ItemModel("0c7a63c6-7598-49ad-8c2c-1f86f81f2ba5", 50),
+                    ItemModel("e99ac306-f8ae-43b4-a0fa-28c263a20709", 5),
+                ),
                 pokemon = listOf(
                     "89cd54fa-6744-4cb0-b42b-50ceadb5a28e",
                     "b6800af1-6076-4cf9-a74d-266d78eb7fec",
@@ -90,8 +94,6 @@ class UserCollection() {
             user.items!!.forEach { userItem ->
                 items.forEach {
                     if (it.id == userItem.id && userItem.amount > 0 && userItem.amount > it.amount) {
-                        userItem.amount -= it.amount
-
                         // Affect to Pokemon
                         val item = ItemCollection().getItemById(it.id)
                         if (item?.affect != null) {
@@ -106,13 +108,37 @@ class UserCollection() {
                                     it.pokemonId,
                                     item.affect.getValue(AffectAttributes.POWER)
                                 )
+                                // Catch Pokemon
+                                item.affect.contains(AffectAttributes.CAPTURE) -> PokemonCollection().catch(
+                                    it.pokemonId,
+                                    item.affect.getValue(AffectAttributes.CAPTURE)
+                                )
+                            }
+
+                            // Decrease amount
+                            if (item.affect.contains(AffectAttributes.CAPTURE)) {
+                                userItem.amount -= 1
+                            } else {
+                                userItem.amount -= it.amount
                             }
                         }
+
                     }
                 }
             }
 
             instance.updateOne(UserDAO::id eq user.id, setValue(UserDAO::items, user.items))
+        }
+    }
+
+    fun foundPokemon(userId: String, pokemonId: String) {
+        val user = instance.findOne(UserDAO::id eq userId)
+
+        if (user != null) {
+            val userPokemon = user.pokemon?.plus(pokemonId) ?: listOf(pokemonId)
+
+            println("userPokemon $userPokemon ")
+            instance.updateOne(UserDAO::id eq userId, setValue(UserDAO::pokemon, userPokemon))
         }
     }
 }

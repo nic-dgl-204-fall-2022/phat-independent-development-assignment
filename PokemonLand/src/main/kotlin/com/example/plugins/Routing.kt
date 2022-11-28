@@ -4,6 +4,7 @@ import com.example.auth.getProfile
 import com.example.auth.login
 import com.example.auth.logout
 import com.example.auth.signup
+import com.example.explore.findWildPokemon
 import com.example.item.getItemById
 import com.example.item.getItems
 import com.example.item.useItems
@@ -34,9 +35,12 @@ fun Application.configureRouting() {
                 getProfile()
                 logout()
 
-
+                // Items
                 getItemById()
                 useItems()
+
+                // Explore
+                findWildPokemon()
             }
         }
     }

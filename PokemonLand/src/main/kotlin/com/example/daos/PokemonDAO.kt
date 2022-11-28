@@ -26,8 +26,8 @@ data class PokemonDAO(
     var maxExpPoints: Int = 0, // Increase 40% after level up
     var evolutions: List<HashMap<String, String>>? = null,
     val imgName: String? = null,
-    val status: PokemonStatus,
-    val captureRate: Int? = null,
+    var status: PokemonStatus,
+    var captureRate: Int? = null,
 ) {
 }
 
@@ -125,32 +125,11 @@ class PokemonCollection() {
         )
     }
 
-    fun insertOne(name: String, type: List<String>): QueryResult {
-        val id = uuid4().toString()
+    fun findWildPokemon(): PokemonDAO {
+        val wildPokemon = wildPokemon.shuffled().first()
+        instance.insertOne(wildPokemon)
 
-        val existedPokemon = instance.findOne(PokemonDAO::name eq name)
-        if (existedPokemon != null) {
-            return QueryResult(false, "Name is already taken.")
-        }
-
-        val insertResult = QueryResult(false)
-        try {
-            val pokemon = PokemonDAO(
-                id,
-                capitalize(name),
-                type.map { it -> capitalize(it) },
-                status = PokemonStatus.WILD,
-                captureRate = 0
-            )
-
-            instance.insertOne(pokemon)
-            insertResult.done = true
-            insertResult.data = id
-        } catch (e: Exception) {
-            insertResult.error = e.message
-        }
-
-        return insertResult
+        return wildPokemon
     }
 
     fun getPokemon(): List<PokemonDAO> {
@@ -186,4 +165,80 @@ class PokemonCollection() {
             instance.replaceOne(PokemonDAO::id eq id, pokemon)
         }
     }
+
+    fun catch(id: String, captureRate: Int) {
+        val pokemon = instance.findOne(PokemonDAO::id eq id)
+
+        if (pokemon != null && captureRate > 0) {
+            if (pokemon.status == PokemonStatus.WILD && pokemon.captureRate != null) {
+                if (pokemon.captureRate!! < 100) {
+                    val currentRate = pokemon.captureRate!! + captureRate
+                    if (currentRate >= 100) {
+                        pokemon.status = PokemonStatus.OWNED
+                        pokemon.captureRate = null
+                    } else {
+                        pokemon.captureRate = currentRate
+                    }
+                }
+            }
+
+            instance.replaceOne(PokemonDAO::id eq id, pokemon)
+        }
+    }
 }
+
+
+val wildPokemon = mutableListOf<PokemonDAO>(
+    PokemonDAO(
+        uuid4().toString(),
+        "Venusaur",
+        listOf("Grass", "Posion"),
+        power = 40000,
+        level = 40,
+        maxExpPoints = 4000,
+        status = PokemonStatus.WILD,
+        captureRate = 0,
+    ),
+    PokemonDAO(
+        uuid4().toString(),
+        "Ivysaur",
+        listOf("Grass", "Posion"),
+        power = 15000,
+        level = 15,
+        maxExpPoints = 1500,
+        status = PokemonStatus.WILD,
+        captureRate = 0,
+    ), PokemonDAO(
+        uuid4().toString(),
+        "Charizard",
+        listOf("Fire", "Flying"),
+        power = 50000,
+        level = 50,
+        maxExpPoints = 5500,
+        status = PokemonStatus.WILD
+    ), PokemonDAO(
+        uuid4().toString(),
+        "Metapod",
+        listOf("Bug"),
+        power = 15000,
+        level = 15,
+        maxExpPoints = 1500,
+        status = PokemonStatus.WILD
+    ), PokemonDAO(
+        uuid4().toString(),
+        "Butterfree",
+        listOf("Bug", "Flying"),
+        level = 20,
+        power = 20000,
+        maxExpPoints = 2000,
+        status = PokemonStatus.WILD
+    ), PokemonDAO(
+        uuid4().toString(),
+        "Rattata",
+        listOf("Normal"),
+        power = 10000,
+        level = 10,
+        maxExpPoints = 1000,
+        status = PokemonStatus.WILD
+    )
+)

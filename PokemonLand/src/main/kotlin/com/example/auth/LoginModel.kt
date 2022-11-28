@@ -43,7 +43,7 @@ class LoginModel(private val username: String?, private val password: String?) {
                 .withAudience(EnvConfig.getString("JWT_AUDIENCE"))
                 .withIssuer(EnvConfig.getString("JWT_ISSUER"))
                 .withClaim("id", user.id)
-                .withExpiresAt(Date(System.currentTimeMillis() + 60_000 * 60))
+                .withExpiresAt(Date(System.currentTimeMillis() + 60_000 * 60 * 24))
                 .sign(Algorithm.HMAC256(EnvConfig.getString("JWT_SECRET")))
 
             UserCollection().updateJwtToken(user.id, token.toString())
