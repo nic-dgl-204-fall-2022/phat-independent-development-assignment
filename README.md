@@ -24,7 +24,7 @@ Consumable items recharge the trainer and pokemon's stamina and have limited usa
 This shop sells game items such as Pokeball, Mystic, and Consumable items. In particular, it costs the trainer gold to purchase those items. In addition, trainers can trade their items here and receive gold in return.
 
 ### Rewards
-When the trainer beats a wild pokemon, they will gain experience points for the pokemon and themself. In addition, they also receive gold and a random item.
+When the trainer beats a wild pokemon, they will gain experience points for the pokemon and themselves. In addition, they also receive gold and a random item.
 
 ### Explore (*)
 A trainer might find nearby wild pokemon while using this feature. Whenever a trainer finds a wild pokemon, they can either beat them for rewards or choose to use Pokeball to catch them. If they lose, they will not lose anything, including game resources such as health and mana points.
