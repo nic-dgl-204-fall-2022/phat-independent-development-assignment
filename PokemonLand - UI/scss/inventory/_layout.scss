@@ -1,0 +1,10 @@
+@use '../globals' as g;
+@use '../util' as u;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: u.rem(54);
+}

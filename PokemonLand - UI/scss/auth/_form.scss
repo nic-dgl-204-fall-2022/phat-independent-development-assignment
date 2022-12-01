@@ -1,0 +1,72 @@
+@use "../globals" as g;
+@use "../util" as u;
+
+.form {
+	width: 46rem;
+	margin: 1rem auto;
+	display: flex;
+	flex-direction: column;
+
+	&__container {
+		padding: 3rem 4.5rem;
+		background: g.$secondary-color;
+		border-radius: 2rem;
+	}
+
+	&__input-group {
+        @include g.input-group;
+        
+	}
+
+	&__label {
+		color: #fff;
+		font-size: 1.5rem;
+
+		&:not(:last-child) {
+			margin-bottom: 1rem;
+		}
+	}
+
+	&__input[type="text"],
+	&__input[type="password"] {
+        @include g.text-input;
+        border-radius: 2rem;
+	}
+
+	&__input[type="checkbox"] {
+        @include g.checkbox-input;
+	}
+
+	&__ref-link {
+		padding-inline: 0.5rem;
+		text-align: right;
+		font-size: 1.25rem;
+
+		a {
+			color: g.$black;
+			font-weight: bold;
+			font-style: italic;
+			text-decoration: underline;
+		}
+	}
+
+	&__submit-btn {
+		border: none;
+		outline: none;
+		font-size: 1.75rem;
+		font-family: u.$heading-font;
+		font-weight: bold;
+		color: #fff;
+		padding: 1.1rem 3.5rem;
+		margin: 1rem auto;
+		background-color: g.$primary-color;
+		border-radius: 3rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: g.$light-blue;
+            transition: 0.3s ease-in-out;
+        }
+	}
+}
+

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=KoHo:ital,wght@0,400;0,700;1,400;1,700&family=Mali:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <script src="https://kit.fontawesome.com/35da3bfca1.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../dist/css/catch.css">
+
+  <title>Explore - Pokemon Land</title>
+</head>
+
+<body>
+  <!-- Flex Container -->
+  <div class="flex-container">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="navbar__logo">
+        <img src="../../dist/img/logo.png" alt="Pokemon Land Logo">
+      </div>
+
+      <nav class="navbar__nav">
+        <ul class="navbar__nav__list">
+          <li class="navbar__nav__list__item profile">
+            <a href="../auth/profile.html" class="navbar__nav__list__item__link"><i class="fa-solid fa-user"></i></a>
+          </li>
+          <li class="navbar__nav__list__item">
+            <a href="../pokemon/index.html" class="navbar__nav__list__item__link">Pokemon</a>
+          </li>
+          <li class="navbar__nav__list__item ">
+            <a href="../inventory/index.html" class="navbar__nav__list__item__link">Inventory</a>
+          </li>
+          <li class="navbar__nav__list__item active">
+            <a href="../explore/index.html" class="navbar__nav__list__item__link ">Explore</a>
+          </li>
+          <li class="navbar__nav__list__item">
+            <a href="../shop/index.html" class="navbar__nav__list__item__link">Shop</a>
+          </li>
+        </ul>
+      </nav>
+    </header><!-- End Navbar -->
+
+    <main>
+      <div class="container">
+        <!-- Catch -->
+        <div id="catch" class="catch show">
+          <!-- Catch Container -->
+          <div class="modal__container catch__container">
+            <div class="modal__header catch__header">
+              <h2>Choose your Pokeball</h2>
+              <a href="#" class="modal__header__close-btn">
+                <i class="fa-solid fa-xmark"></i>
+              </a>
+            </div>
+
+            <!-- Content -->
+            <div class="modal__content catch__content">
+              <!-- Stats -->
+              <div class="pokemon-stats catch__stats">
+                <!-- Card -->
+                <div class="pokemon-stats__card card catch__card">
+                  <div class="card__content catch__card__content">
+                    <div class="pokemon-status">
+                      <img src="../../dist/img/pokemon-status/sniper-gray.png" alt="Wild status background">
+                      <span class="pokemon-status__desc">Wild</span>
+                    </div>
+
+                    <div class="card__level catch__card_level">
+                      <span>Lv.16</span>
+                    </div>
+
+                    <div class="card__pokemon_img catch__card__img">
+                      <img src="../../dist/img/pikachu.svg" alt="Pikachu">
+                    </div>
+
+                    <div class="card__power catch__card__power">
+                      <i class="fa-solid fa-bolt"></i>
+                      <span>Power:</span>
+                      <span>10,000</span>
+                    </div>
+                  </div>
+
+                  <div class="card__footer catch__card__footer">
+                    <p>Pikachu</p>
+                  </div>
+                </div><!-- End Stats-->
+              </div><!-- End Pokemon-->
+
+              <!-- Pokeball List -->
+              <div class="modal__content--full catch__pokeball-list">
+                <!-- Pokemon -->
+                <div id="pokemon-list" class="item-container show">
+                  <!-- List -->
+                  <div class="items-list">
+                    <!-- Item -->
+                    <button id="pokeball-1" class="items-list__item pokeball">
+                      <div class="items-list__item__select-box">
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                      <div class="items-list__item__img-holder">
+                        <img src="../../dist/img/standard-pokeball-640.png" alt="Apple">
+                      </div>
+                      <div class="items-list__item__details">
+                        <p class="items-list__item__details__name">Standard Pokeball</p>
+                        <p class="items-list__item__details__affect">Capture Rate: <span>50%</span></p>
+                        <p class="items-list__item__details__quantity">Amount: <span>5</span></p>
+                      </div>
+                    </button><!-- End Item -->
+                    <!-- Item -->
+                    <button id="pokeball-2" class="items-list__item pokeball">
+                      <div class="items-list__item__select-box">
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                      <div class="items-list__item__img-holder">
+                        <img src="../../dist/img/electric-pokeball-640.png" alt="Apple">
+                      </div>
+                      <div class="items-list__item__details">
+                        <p class="items-list__item__details__name">Standard Pokeball</p>
+                        <p class="items-list__item__details__affect">Capture Rate: <span>100%</span></p>
+                        <p class="items-list__item__details__quantity">Amount: <span>5</span></p>
+                      </div>
+                    </button><!-- End Item -->
+                  </div><!-- End List -->
+                </div><!-- End Pokemon -->
+              </div><!-- End Pokeball list -->
+            </div><!-- End Content -->
+
+            <div class="modal__footer group-btn">
+              <a class="group-btn__button__outline-btn self-align-left" href="./index.html">Back</a>
+              <a id="use-pokeball-btn" class="group-btn__button__primary-btn" href="#!">Use</a>
+            </div>
+
+          </div><!-- End Catch Container -->
+        </div><!-- End Catch pokemon -->
+
+        <!-- Successful Result -->
+        <div id="result-success" class="catch result">
+          <div class="modal__container result__container">
+            <div class="modal__header result__header">
+              <h2>Congratulations! You have a new Pokemon</h2>
+              <a href="./index.html" class="modal__header__close-btn">
+                <i class="fa-solid fa-xmark"></i>
+              </a>
+            </div>
+
+            <!-- Content -->
+            <div class="modal__content result__content">
+              <!-- Stats -->
+              <div class="pokemon-stats result__stats">
+                <!-- Card -->
+                <div class="pokemon-stats__card card result__card">
+                  <div class="card__content result__card__content">
+                    <div class="pokemon-status">
+                      <img src="../../dist/img/pokemon-status/sniper-green.png" alt="Wild status background">
+                      <span class="pokemon-status__desc">New</span>
+                    </div>
+
+                    <div class="card__level result__card_level">
+                      <span>Lv.16</span>
+                    </div>
+
+                    <div class="card__pokemon_img result__card__img">
+                      <img src="../../dist/img/pikachu.svg" alt="Pikachu">
+                    </div>
+
+                    <div class="card__power result__card__power">
+                      <i class="fa-solid fa-bolt"></i>
+                      <span>Power:</span>
+                      <span>10,000</span>
+                    </div>
+                  </div>
+
+                  <div class="card__footer result__card__footer">
+                    <p>Pikachu</p>
+                  </div>
+                </div><!-- End Stats-->
+              </div><!-- End Pokemon-->
+
+              <!-- Pokemon Info -->
+              <div class="pokemon-info result__info">
+                <div class="pokemon-info__row result__info__row">
+                  <div class="pokemon-info__height">
+                    <h5>Height</h5>
+                    <span>1'04"</span>
+                  </div>
+                  <div class="pokemon-info__weight">
+                    <h5>Weight</h5>
+                    <span>1'04"</span>
+                  </div>
+                  <div class="pokemon-info__gender">
+                    <h5>Gender</h5>
+                    <span><i class="fa-solid fa-mars"></i></span>
+                  </div>
+                </div>
+                <div class="pokemon-info__row result__info__row">
+                  <div class="pokemon-info__type">
+                    <h5>Type</h5>
+                    <div>
+                      <span>Electric</span>
+                    </div>
+                  </div>
+                  <div class="pokemon-info__caught-by">
+                    <h5>Caught by</h5>
+                    <ul>
+                      <li>
+                        <img src="../../dist/img/standard-pokeball.png" alt="Standard Pokeball">
+                      </li>
+                      <li>
+                        <img src="../../dist/img/electric-pokeball.png" alt="Electric Pokeball">
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="pokemon-info__row result__info__row">
+                  <h5>Evolutions</h5>
+                  <div class="pokemon-info__evolutions">
+                    <div class="pokemon-info__evolutions__item">
+                      <div class="pokemon-info__evolutions__item__img">
+                        <img src="../../dist/img/pichu.svg" alt="Pichu">
+                      </div>
+                      <span class="pokemon-info__evolutions__item__name">Pichu</span>
+                      <span class="pokemon-info__evolutions__item__levels">Level 1-16</span>
+                    </div>
+                    <div class="pokemon-info__evolutions__item">
+                      <div class="pokemon-info__evolutions__item__img">
+                        <img src="../../dist/img/pikachu.svg" alt="Pikachu">
+                      </div>
+                      <span class="pokemon-info__evolutions__item__name">Pikachu</span>
+                      <span class="pokemon-info__evolutions__item__levels">Level 16-32</span>
+                    </div>
+                    <div class="pokemon-info__evolutions__item">
+                      <div class="pokemon-info__evolutions__item__img">
+                        <img src="../../dist/img/raichu.svg" alt="Raichu">
+                      </div>
+                      <span class="pokemon-info__evolutions__item__name">Raichu</span>
+                      <span class="pokemon-info__evolutions__item__levels">Level 32+</span>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Pokemon Info -->
+            </div><!-- End Modal Content -->
+
+            <div class="modal__footer group-btn">
+              <a class="group-btn__button__outline-btn self-align-left" href="./index.html">Exit</a>
+              <a class="group-btn__button__primary-btn" href="./index.html">Keep Finding</a>
+            </div>
+          </div><!-- End Successful Result -->
+        </div><!-- End Successful Result -->
+
+        <!-- Failed Result -->
+        <div id="result-fail" class="catch result">
+          <div class="modal__container result__container">
+            <div class="modal__header result__header">
+              <h2>Oh no, it ran away.</h2>
+              <a href="./index.html" class="modal__header__close-btn">
+                <i class="fa-solid fa-xmark"></i>
+              </a>
+            </div>
+
+            <!-- Content -->
+            <div class="modal__content result__content failed-result">
+              <!-- Stats -->
+              <div class="pokemon-stats result__stats">
+                <!-- Card -->
+                <div class="pokemon-stats__card card result__card fade">
+                  <div class="card__content result__card__content">
+                    <div class="pokemon-status">
+                      <img src="../../dist/img/pokemon-status/sniper-gray.png" alt="Wild status background">
+                      <span class="pokemon-status__desc">Wild</span>
+                    </div>
+
+                    <div class="card__level result__card_level">
+                      <span>Lv.16</span>
+                    </div>
+
+                    <div class="card__pokemon_img result__card__img">
+                      <img src="../../dist/img/pikachu.svg" alt="Pikachu">
+                    </div>
+
+                    <div class="card__power result__card__power">
+                      <i class="fa-solid fa-bolt"></i>
+                      <span>Power:</span>
+                      <span>10,000</span>
+                    </div>
+                  </div>
+
+                  <div class="card__footer result__card__footer">
+                    <p>Pikachu</p>
+                  </div>
+                </div><!-- End Stats-->
+
+              </div><!-- End Pokemon-->
+
+              <!-- Pokemon Info -->
+              <div class="pokemon-info result__info">
+                <div class="result__ran-away">
+                  <span>Escaped</span>
+                </div>
+                <p class="result__info__message">It seems like your Pokeball can't hold the Pokemon. Try a <b>stronger
+                    Pokeball</b> next time.</p>
+              </div><!-- End Pokemon Info -->
+            </div><!-- End Modal Content -->
+
+            <div class="modal__footer group-btn">
+              <a class="group-btn__button__outline-btn self-align-left" href="./index.html">Exit</a>
+              <a class="group-btn__button__primary-btn" href="./catch.html">Keep Finding</a>
+            </div>
+          </div><!-- End Successful Result -->
+        </div><!-- End Failed Result -->
+
+      </div><!-- End Container -->
+
+      <footer>&copy;2022 Pokémon. &copy;1995 - 2022 Nintendo/Creatures Inc./GAME FREAK inc. TM, &copy;Nintendo.
+      </footer>
+    </main>
+  </div><!-- End Flex Container -->
+  <script src="../js/global.js"></script>
+  <script src="./catch.js"></script>
+</body>
+
+</html>
