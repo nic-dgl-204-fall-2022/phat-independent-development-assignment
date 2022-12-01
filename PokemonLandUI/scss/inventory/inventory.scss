@@ -1,0 +1,164 @@
+@forward "../style";
+@use "../globals" as g;
+@use "../util" as u;
+@forward "./layout";
+
+.card {
+	&__item-amount {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-top: u.rem(10);
+
+		p {
+			text-align: center;
+		}
+
+		span {
+			display: block;
+			font-weight: bold;
+			color: g.$success-color;
+			font-size: u.rem(21);
+		}
+	}
+
+	&__item-img {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		@include u.breakpoint(xlarge) {
+			width: u.em(120);
+			height: u.em(158);
+		}
+
+		img {
+			width: 100%;
+		}
+	}
+}
+
+.modal {
+	.left-col {
+		&__footer p {
+			padding: 0;
+		}
+
+		&__amount {
+			margin: u.rem(10);
+			padding: u.rem(15);
+			border: 1px solid g.$secondary-color;
+			border-radius: u.rem(10);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+			p {
+				text-align: center;
+				font-weight: bold;
+				font-size: u.rem(20);
+				margin: 0;
+
+				span {
+					color: g.$primary-color;
+				}
+			}
+		}
+	}
+
+	.right-col {
+		h3 {
+			font-size: u.rem(30);
+			margin-bottom: u.rem(18);
+		}
+
+		p {
+			line-height: u.rem(28);
+			font-size: u.rem(18);
+			text-align: justify;
+		}
+
+		&__content {
+			grid-column: span 3;
+
+			.right-col__affect {
+				margin-top: u.rem(50);
+
+				p {
+					padding: 0 u.rem(30);
+					font-weight: bold;
+
+					i {
+						color: #fff;
+						padding: u.rem(8);
+						border-radius: 50%;
+						background-color: g.$success-color;
+						font-weight: bold;
+						margin-right: u.rem(3);
+					}
+
+					span {
+						color: g.$primary-color;
+						font-size: u.rem(24);
+						margin-left: u.rem(10);
+					}
+				}
+			}
+		}
+	}
+}
+
+.item-container__amount {
+	margin-right: u.rem(32);
+	display: flex;
+	grid-gap: u.rem(15);
+	margin: u.rem(15) 0;
+	padding: u.rem(15);
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 2px solid g.$secondary-color;
+	border-top: 2px solid g.$secondary-color;
+
+	label {
+		font-size: u.rem(20);
+		font-weight: bold;
+	}
+
+	&__max {
+		margin-left: u.rem(15);
+		color: g.$black;
+		font-size: u.rem(25);
+		font-weight: 700;
+	}
+
+	&__input {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		input[type="number"] {
+			width: u.rem(100);
+			border: 3px solid g.$secondary-color;
+			border-radius: u.rem(5);
+			padding: u.rem(5);
+			font-size: u.rem(21);
+			text-align: center;
+            font-weight: bold;
+            color: g.$secondary-color;
+		}
+	}
+
+	&__item-img {
+		display: inline-block;
+		width: u.rem(30);
+		height: u.rem(30);
+		margin-left: u.rem(20);
+		justify-self: center;
+
+		img {
+			width: 100%;
+		}
+	}
+}

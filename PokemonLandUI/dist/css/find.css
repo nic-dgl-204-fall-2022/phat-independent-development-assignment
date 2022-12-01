@@ -1,0 +1,2080 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "KoHo", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Mali", sans-serif;
+  margin-top: 0;
+}
+
+a, a:active, a:visited {
+  text-decoration: none;
+}
+
+.card__content {
+  width: 100%;
+  border: 4px solid #393E7D;
+  border-radius: 0.3125rem 0.3125rem 0 0;
+  padding: 3.25rem 3.25rem 1.25rem 3.25rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card__level {
+  font-weight: bold;
+}
+.card__footer {
+  border: 2px solid #393E7D;
+  border-radius: 0 0 1.5625rem 1.5625rem;
+  width: 100%;
+  padding: 0.9375rem;
+  background-color: #393E7D;
+}
+.card__footer p {
+  font-family: "Mali", sans-serif;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin: 0;
+  text-align: center;
+  color: #fff;
+}
+.card.hoverable:hover {
+  cursor: pointer;
+}
+.card.hoverable:hover .card__content,
+.card.hoverable:hover .card__footer {
+  border-color: #E5446D;
+  transition: 0.4s ease-in-out;
+  box-shadow: 0.3125rem 0.625rem rgba(229, 68, 109, 0.1);
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  visibility: hidden;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8%;
+}
+.modal.show {
+  display: flex;
+  visibility: visible;
+}
+.modal__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media (min-width: 118.75em) {
+  .modal__container {
+    width: 72.625em;
+  }
+}
+.modal__header {
+  background-color: #393E7D;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.875rem;
+}
+.modal__header h2 {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+}
+.modal__header__close-btn, .modal__header__back-btn {
+  color: #fff;
+  font-size: 1.625rem;
+}
+.modal__header__close-btn:hover, .modal__header__back-btn:hover {
+  color: #E5446D;
+}
+.modal__header__titles {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.modal__header__titles__link {
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: "Mali", sans-serif;
+  padding: 0.875rem 3.375rem;
+}
+.modal__header__titles__link:hover {
+  background-color: #E5446D;
+  transition: 0.4s ease-in-out;
+}
+.modal__header__titles__item.active .modal__header__titles__link {
+  background-color: #E5446D;
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+.modal__content {
+  padding: 1.25rem 4.5625rem;
+  background-color: #fff;
+  border: 3px solid #393E7D;
+  border-radius: 0 0 1.5625rem 1.5625rem;
+  display: grid;
+  grid-template-columns: 1.5fr 4fr;
+  grid-template-rows: 1fr;
+}
+.modal__content .left-col__card {
+  margin: 1.5625rem 0;
+}
+.modal__content .left-col__group-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0.625rem;
+}
+.modal__content .left-col__group-button__button {
+  display: block;
+  padding: 0.3125rem 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #3F88C5;
+  color: #fff;
+  border: 3px solid transparent;
+  border-radius: 1.875rem;
+  text-align: center;
+}
+.modal__content .left-col__group-button__button.active {
+  background-color: #E5446D;
+}
+.modal__content .left-col__group-button__button:first-child {
+  margin-bottom: 0.625rem;
+}
+.modal__content .left-col__group-button__button.disabled {
+  cursor: not-allowed;
+  background-color: #707070;
+}
+.modal__content .left-col__group-button__button:hover:not(.modal__content .left-col__group-button__button.disabled) {
+  border-color: #393E7D;
+  background-color: #fff;
+  color: #393E7D;
+}
+.modal__content .right-col {
+  padding: 3.125rem 5.3125rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1.5625rem 0;
+}
+.modal__content .right-col h5 {
+  font-family: "Mali", sans-serif;
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 1.25rem;
+}
+.modal__content .right-col__row {
+  display: flex;
+  flex-direction: row;
+}
+.modal__content .right-col__row:nth-child(1) {
+  grid-column: 1/4;
+  justify-content: space-between;
+}
+.modal__content .right-col__row:nth-child(1) span {
+  display: block;
+  text-align: center;
+  color: #E5446D;
+  font-weight: bold;
+  font-size: 1.625rem;
+}
+.modal__content .right-col__row:nth-child(2) {
+  grid-column: 1/4;
+  justify-content: space-between;
+}
+.modal__content .right-col__row:nth-child(2) .pokemon-info__type div {
+  background-color: #393E7D;
+  padding: 0.5625rem 2.125rem;
+}
+.modal__content .right-col__row:nth-child(2) .pokemon-info__type div span {
+  color: #fff;
+  font-weight: bold;
+}
+.modal__content .right-col__caught-by {
+  margin-left: 0;
+}
+.modal__content .right-col__caught-by ul {
+  display: flex;
+  flex-direction: row;
+}
+.modal__content .right-col__caught-by ul li:not(:last-child) {
+  margin-right: 1.5625rem;
+}
+.modal__content .right-col__row:nth-child(3) {
+  grid-column: 1/4;
+  display: flex;
+  flex-direction: column;
+}
+.modal__content .right-col__evolutions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal__content .right-col__evolutions__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal__content .right-col__evolutions__item__name {
+  font-family: "Mali", sans-serif;
+  font-weight: bold;
+  font-size: 1.4375rem;
+  text-transform: capitalize;
+  color: #E5446D;
+  margin-top: 0.625rem;
+}
+.modal__content .right-col__evolutions__item__img {
+  border: 3px solid #393E7D;
+  border-radius: 50%;
+  padding: 0.9375rem;
+}
+.modal__content .right-col__evolutions__item__img img {
+  width: 5.625em;
+  height: 4.9375em;
+}
+.modal__content .right-col__evolutions__item__levels {
+  font-size: 1.25rem;
+  margin-top: 0.3125rem;
+  font-weight: bold;
+}
+.modal__content--full {
+  grid-column: 1/-1;
+}
+.modal__content .item-container {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 3.4375rem;
+}
+.modal__content .item-container.show {
+  display: flex;
+}
+.modal__content .item-container .items-list {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 1.875rem 0;
+  padding: 1.25rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+.modal__content .item-container .items-list__item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  outline: none;
+  border: 3px solid #393E7D;
+  border-radius: 0.9375rem;
+}
+.modal__content .item-container .items-list__item:hover, .modal__content .item-container .items-list__item.selected {
+  border-color: #E5446D;
+}
+.modal__content .item-container .items-list__item__select-box {
+  position: absolute;
+  top: calc(-1 * 0.625rem);
+  right: calc(-1 * 0.625rem);
+  width: 1.5625rem;
+  height: 1.5625rem;
+  border: 3px solid #393E7D;
+  border-radius: 1.25rem;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__content .item-container .items-list__item__select-box i {
+  color: #fff;
+  display: none;
+}
+.modal__content .item-container .items-list__item.selected .items-list__item__select-box {
+  background-color: #2E933C;
+  border-color: #2E933C;
+}
+.modal__content .item-container .items-list__item.selected .items-list__item__select-box i {
+  display: block;
+}
+.modal__content .item-container .items-list__item__img-holder {
+  padding: 1.875rem;
+}
+.modal__content .item-container .items-list__item__img-holder img {
+  width: 7.5rem;
+}
+.modal__content .item-container .items-list__item__details {
+  padding: 1.4375rem;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 0.9375rem 0;
+  width: 100%;
+}
+.modal__content .item-container .items-list__item__details p {
+  margin: 0;
+}
+.modal__content .item-container .items-list__item__details__name {
+  font-family: "Mali", sans-serif;
+  color: #E5446D;
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+.modal__content .item-container .items-list__item__details__affect {
+  font-size: 1.5625rem;
+}
+.modal__content .item-container .items-list__item__details__affect span.max-value {
+  margin: 0 0.625rem;
+  font-weight: bold;
+  color: #1B1B1E;
+  font-weight: bold;
+}
+.modal__content .item-container .items-list__item__details__affect span.expected-value {
+  margin: 0 0.625rem;
+  font-weight: bold;
+  color: #3F88C5;
+}
+.modal__content .item-container .items-list__item__details__affect span.additional-value {
+  margin: 0 0.625rem;
+  font-weight: bold;
+  color: #2E933C;
+  display: none;
+}
+.modal__content .item-container .items-list__item__details__affect span.additional-value.show {
+  display: inline-block;
+}
+.modal__content .item-container .items-list__item__details__amount {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal__content .item-container .items-list__item__details__amount label {
+  font-size: 1.5625rem;
+}
+.modal__content .item-container .items-list__item__details__amount__input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  grid-gap: 0 1.25rem;
+}
+.modal__content .item-container .items-list__item__details__amount__input > * {
+  display: inline-block;
+}
+.modal__content .item-container .items-list__item__details__amount__input__max {
+  color: #3F88C5;
+  font-size: 1.5625rem;
+  font-weight: 700;
+}
+.modal__content .item-container .items-list__item__details__amount__input input[type=number] {
+  width: 5rem;
+  border: 3px solid #393E7D;
+  border-radius: 0.3125rem;
+  padding: 0.3125rem;
+  font-size: 1.5625rem;
+  text-align: center;
+}
+.modal__content .item-container__footer {
+  grid-column: 2/span 1;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+.modal__content .item-container__footer__button--submit {
+  outline: none;
+  border: none;
+  background-color: #E5446D;
+  padding: 0.9375rem 5rem;
+  font-size: 1.5rem;
+  border-radius: 2.625rem;
+  color: #fff;
+  font-weight: bold;
+  font-family: "Mali", sans-serif;
+}
+.modal__content .item-container__footer__button--submit:hover {
+  background-color: #3F88C5;
+  transition: 0.4s ease-in-out;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 3px solid #393E7D;
+  border-top-right-radius: 1.625rem;
+  border-bottom-right-radius: 1.625rem;
+  border-bottom-left-radius: 1.625rem;
+}
+.tabs__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 2rem 0 0;
+}
+.tabs__list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tabs__list__item.active .tabs__list__link {
+  background-color: #393E7D;
+}
+.tabs__list__item:not(.tabs__list__item.active) .tabs__list__link:hover {
+  border-bottom-color: #E5446D;
+}
+.tabs__list__link {
+  display: block;
+  padding: 0.9375rem 5rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  background-color: #3F88C5;
+  border-bottom: 5px solid transparent;
+}
+.tabs__content {
+  padding: 4.0625rem 3.25rem;
+  display: flex;
+  flex-direction: row;
+}
+.tabs__items {
+  display: none;
+  width: 100%;
+  align-items: center;
+}
+@media (min-width: 118.75em) {
+  .tabs__items {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row;
+    grid-gap: 6.25rem;
+  }
+}
+.tabs__items.show {
+  display: grid;
+}
+.tabs__item {
+  grid-column: span 1;
+}
+.tabs .amount {
+  display: inline-block;
+}
+.tabs .amount p {
+  border: 2px solid #393E7D;
+  border-radius: 0.5rem;
+  padding: 0.375rem 1.375rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #393E7D;
+  margin: 0;
+}
+.tabs .amount--current {
+  color: #E5446D;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.flex-container main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.flex-container main h1 {
+  margin: auto;
+  font-size: 5.25rem;
+  text-align: center;
+  text-transform: capitalize;
+  color: #E5446D;
+}
+.flex-container main .container {
+  margin-bottom: 6.25rem;
+}
+.flex-container footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  padding: 1rem;
+  font-size: 0.9rem;
+  background: #1B1B1E;
+  color: #fff;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (min-width: 118.75em) {
+  .navbar {
+    padding: 2rem 3.375rem;
+  }
+}
+.navbar__logo {
+  width: 4.5rem;
+  height: 4.5rem;
+  display: none;
+}
+.navbar__logo img {
+  width: 100%;
+}
+.navbar.auth .navbar__nav {
+  width: auto;
+}
+.navbar.auth .navbar__logo {
+  display: block;
+}
+.navbar.auth .navbar__nav__list__item {
+  border: 3px solid #393E7D;
+}
+.navbar.auth .navbar__nav__list__item.active {
+  background: #393E7D;
+}
+.navbar.auth .navbar__nav__list__item.active > .navbar__nav__list__item__link {
+  color: #fff;
+}
+.navbar:not(.navbar.auth) {
+  background-color: #393E7D;
+}
+.navbar__nav {
+  width: 100%;
+}
+.navbar__nav__list {
+  display: flex;
+  align-items: center;
+}
+.navbar__nav__list__item {
+  width: 12.7rem;
+  height: 4rem;
+  border-radius: 2rem;
+  text-align: center;
+  background-color: #fff;
+  border: 3px solid transparent;
+}
+.navbar__nav__list__item:hover {
+  border-color: #E5446D;
+}
+.navbar__nav__list__item:hover .navbar__nav__list__item__link {
+  color: #E5446D;
+}
+.navbar__nav__list__item:not(:last-child) {
+  margin-right: 1.2rem;
+}
+.navbar__nav__list__item:last-child {
+  margin-left: auto;
+}
+.navbar__nav__list__item.active {
+  background-color: #E5446D;
+}
+.navbar__nav__list__item.active .navbar__nav__list__item__link {
+  color: #fff;
+}
+.navbar__nav__list__item.profile {
+  width: 3.6875rem;
+  height: 3.6875rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.navbar__nav__list__item.profile i {
+  font-size: 1.875rem;
+  line-height: 3.75rem;
+}
+.navbar__nav__list__item__link {
+  font-family: "Mali", sans-serif;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 0.9rem 2rem;
+  font-weight: bold;
+  display: block;
+  color: #393E7D;
+}
+.navbar__nav__list__item__link:hover {
+  color: #393E7D;
+  transition: 0.3s ease-out;
+}
+
+.loading {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 0.625rem;
+  margin: 1rem 0;
+}
+.loading.show {
+  display: flex;
+}
+.loading img {
+  width: 1.875rem;
+}
+
+.pokemon-status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: calc(-1 * 3.75rem);
+  left: calc(-1 * 3.125rem);
+}
+.pokemon-status__desc {
+  display: block;
+  position: absolute;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.group-btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 2rem;
+}
+.group-btn__button__outline-btn {
+  background-color: #393E7D;
+  font-family: "Mali", sans-serif;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.4rem;
+  padding: 1rem 3.375rem;
+  border-radius: 2.125rem;
+  border: 4px solid #393E7D;
+  background-color: #fff;
+  color: #393E7D;
+}
+.group-btn__button__outline-btn:not(:last-child) {
+  margin-right: 1rem;
+}
+.group-btn__button__outline-btn:hover {
+  background-color: #fff;
+  color: #393E7D;
+  border: 4px solid #E5446D;
+  transition: 0.3s ease-in-out;
+}
+.group-btn__button__outline-btn.self-align-left {
+  margin-right: auto;
+}
+.group-btn__button__primary-btn {
+  background-color: #393E7D;
+  font-family: "Mali", sans-serif;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.4rem;
+  padding: 1rem 3.375rem;
+  border-radius: 2.125rem;
+  border: 4px solid #393E7D;
+}
+.group-btn__button__primary-btn:not(:last-child) {
+  margin-right: 1rem;
+}
+.group-btn__button__primary-btn:hover {
+  background-color: #fff;
+  color: #393E7D;
+  border: 4px solid #E5446D;
+  transition: 0.3s ease-in-out;
+}
+
+.primary-btn, .outline-btn {
+  background-color: #393E7D;
+  font-family: "Mali", sans-serif;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.4rem;
+  padding: 1rem 3.375rem;
+  border-radius: 2.125rem;
+  border: 4px solid #393E7D;
+}
+.primary-btn:hover, .outline-btn:hover {
+  background-color: #fff;
+  color: #393E7D;
+  border: 4px solid #E5446D;
+  transition: 0.3s ease-in-out;
+}
+
+.outline-btn {
+  background-color: #fff;
+  color: #393E7D;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: "KoHo", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Mali", sans-serif;
+  margin-top: 0;
+}
+
+a, a:active, a:visited {
+  text-decoration: none;
+}
+
+.card__content {
+  width: 100%;
+  border: 4px solid #393E7D;
+  border-radius: 0.3125rem 0.3125rem 0 0;
+  padding: 3.25rem 3.25rem 1.25rem 3.25rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__level {
+  font-weight: bold;
+}
+
+.card__footer {
+  border: 2px solid #393E7D;
+  border-radius: 0 0 1.5625rem 1.5625rem;
+  width: 100%;
+  padding: 0.9375rem;
+  background-color: #393E7D;
+}
+
+.card__footer p {
+  font-family: "Mali", sans-serif;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin: 0;
+  text-align: center;
+  color: #fff;
+}
+
+.card.hoverable:hover {
+  cursor: pointer;
+}
+
+.card.hoverable:hover .card__content,
+.card.hoverable:hover .card__footer {
+  border-color: #E5446D;
+  transition: 0.4s ease-in-out;
+  box-shadow: 0.3125rem 0.625rem rgba(229, 68, 109, 0.1);
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  visibility: hidden;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8%;
+}
+
+.modal.show {
+  display: flex;
+  visibility: visible;
+}
+
+.modal__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 118.75em) {
+  .modal__container {
+    width: 72.625em;
+  }
+}
+.modal__header {
+  background-color: #393E7D;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.875rem;
+}
+
+.modal__header h2 {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+}
+
+.modal__header__close-btn, .modal__header__back-btn {
+  color: #fff;
+  font-size: 1.625rem;
+}
+
+.modal__header__close-btn:hover, .modal__header__back-btn:hover {
+  color: #E5446D;
+}
+
+.modal__header__titles {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__header__titles__link {
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: "Mali", sans-serif;
+  padding: 0.875rem 3.375rem;
+}
+
+.modal__header__titles__link:hover {
+  background-color: #E5446D;
+  transition: 0.4s ease-in-out;
+}
+
+.modal__header__titles__item.active .modal__header__titles__link {
+  background-color: #E5446D;
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+
+.modal__content {
+  padding: 1.25rem 4.5625rem;
+  background-color: #fff;
+  border: 3px solid #393E7D;
+  border-radius: 0 0 1.5625rem 1.5625rem;
+  display: grid;
+  grid-template-columns: 1.5fr 4fr;
+  grid-template-rows: 1fr;
+}
+
+.modal__content .left-col__card {
+  margin: 1.5625rem 0;
+}
+
+.modal__content .left-col__group-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0.625rem;
+}
+
+.modal__content .left-col__group-button__button {
+  display: block;
+  padding: 0.3125rem 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #3F88C5;
+  color: #fff;
+  border: 3px solid transparent;
+  border-radius: 1.875rem;
+  text-align: center;
+}
+
+.modal__content .left-col__group-button__button.active {
+  background-color: #E5446D;
+}
+
+.modal__content .left-col__group-button__button:first-child {
+  margin-bottom: 0.625rem;
+}
+
+.modal__content .left-col__group-button__button.disabled {
+  cursor: not-allowed;
+  background-color: #707070;
+}
+
+.modal__content .left-col__group-button__button:hover:not(.modal__content .left-col__group-button__button.disabled) {
+  border-color: #393E7D;
+  background-color: #fff;
+  color: #393E7D;
+}
+
+.modal__content .right-col {
+  padding: 3.125rem 5.3125rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1.5625rem 0;
+}
+
+.modal__content .right-col h5 {
+  font-family: "Mali", sans-serif;
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 1.25rem;
+}
+
+.modal__content .right-col__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal__content .right-col__row:nth-child(1) {
+  grid-column: 1/4;
+  justify-content: space-between;
+}
+
+.modal__content .right-col__row:nth-child(1) span {
+  display: block;
+  text-align: center;
+  color: #E5446D;
+  font-weight: bold;
+  font-size: 1.625rem;
+}
+
+.modal__content .right-col__row:nth-child(2) {
+  grid-column: 1/4;
+  justify-content: space-between;
+}
+
+.modal__content .right-col__row:nth-child(2) .pokemon-info__type div {
+  background-color: #393E7D;
+  padding: 0.5625rem 2.125rem;
+}
+
+.modal__content .right-col__row:nth-child(2) .pokemon-info__type div span {
+  color: #fff;
+  font-weight: bold;
+}
+
+.modal__content .right-col__caught-by {
+  margin-left: 0;
+}
+
+.modal__content .right-col__caught-by ul {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal__content .right-col__caught-by ul li:not(:last-child) {
+  margin-right: 1.5625rem;
+}
+
+.modal__content .right-col__row:nth-child(3) {
+  grid-column: 1/4;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__content .right-col__evolutions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__content .right-col__evolutions__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content .right-col__evolutions__item__name {
+  font-family: "Mali", sans-serif;
+  font-weight: bold;
+  font-size: 1.4375rem;
+  text-transform: capitalize;
+  color: #E5446D;
+  margin-top: 0.625rem;
+}
+
+.modal__content .right-col__evolutions__item__img {
+  border: 3px solid #393E7D;
+  border-radius: 50%;
+  padding: 0.9375rem;
+}
+
+.modal__content .right-col__evolutions__item__img img {
+  width: 5.625em;
+  height: 4.9375em;
+}
+
+.modal__content .right-col__evolutions__item__levels {
+  font-size: 1.25rem;
+  margin-top: 0.3125rem;
+  font-weight: bold;
+}
+
+.modal__content--full {
+  grid-column: 1/-1;
+}
+
+.modal__content .item-container {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 3.4375rem;
+}
+
+.modal__content .item-container.show {
+  display: flex;
+}
+
+.modal__content .item-container .items-list {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 1.875rem 0;
+  padding: 1.25rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+.modal__content .item-container .items-list__item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  outline: none;
+  border: 3px solid #393E7D;
+  border-radius: 0.9375rem;
+}
+
+.modal__content .item-container .items-list__item:hover, .modal__content .item-container .items-list__item.selected {
+  border-color: #E5446D;
+}
+
+.modal__content .item-container .items-list__item__select-box {
+  position: absolute;
+  top: calc(-1 * 0.625rem);
+  right: calc(-1 * 0.625rem);
+  width: 1.5625rem;
+  height: 1.5625rem;
+  border: 3px solid #393E7D;
+  border-radius: 1.25rem;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content .item-container .items-list__item__select-box i {
+  color: #fff;
+  display: none;
+}
+
+.modal__content .item-container .items-list__item.selected .items-list__item__select-box {
+  background-color: #2E933C;
+  border-color: #2E933C;
+}
+
+.modal__content .item-container .items-list__item.selected .items-list__item__select-box i {
+  display: block;
+}
+
+.modal__content .item-container .items-list__item__img-holder {
+  padding: 1.875rem;
+}
+
+.modal__content .item-container .items-list__item__img-holder img {
+  width: 7.5rem;
+}
+
+.modal__content .item-container .items-list__item__details {
+  padding: 1.4375rem;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 0.9375rem 0;
+  width: 100%;
+}
+
+.modal__content .item-container .items-list__item__details p {
+  margin: 0;
+}
+
+.modal__content .item-container .items-list__item__details__name {
+  font-family: "Mali", sans-serif;
+  color: #E5446D;
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.modal__content .item-container .items-list__item__details__affect {
+  font-size: 1.5625rem;
+}
+
+.modal__content .item-container .items-list__item__details__affect span.max-value {
+  margin: 0 0.625rem;
+  font-weight: bold;
+  color: #1B1B1E;
+  font-weight: bold;
+}
+
+.modal__content .item-container .items-list__item__details__affect span.expected-value {
+  margin: 0 0.625rem;
+  font-weight: bold;
+  color: #3F88C5;
+}
+
+.modal__content .item-container .items-list__item__details__affect span.additional-value {
+  margin: 0 0.625rem;
+  font-weight: bold;
+  color: #2E933C;
+  display: none;
+}
+
+.modal__content .item-container .items-list__item__details__affect span.additional-value.show {
+  display: inline-block;
+}
+
+.modal__content .item-container .items-list__item__details__amount {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__content .item-container .items-list__item__details__amount label {
+  font-size: 1.5625rem;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  grid-gap: 0 1.25rem;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input > * {
+  display: inline-block;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input__max {
+  color: #3F88C5;
+  font-size: 1.5625rem;
+  font-weight: 700;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input input[type=number] {
+  width: 5rem;
+  border: 3px solid #393E7D;
+  border-radius: 0.3125rem;
+  padding: 0.3125rem;
+  font-size: 1.5625rem;
+  text-align: center;
+}
+
+.modal__content .item-container__footer {
+  grid-column: 2/span 1;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+
+.modal__content .item-container__footer__button--submit {
+  outline: none;
+  border: none;
+  background-color: #E5446D;
+  padding: 0.9375rem 5rem;
+  font-size: 1.5rem;
+  border-radius: 2.625rem;
+  color: #fff;
+  font-weight: bold;
+  font-family: "Mali", sans-serif;
+}
+
+.modal__content .item-container__footer__button--submit:hover {
+  background-color: #3F88C5;
+  transition: 0.4s ease-in-out;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 3px solid #393E7D;
+  border-top-right-radius: 1.625rem;
+  border-bottom-right-radius: 1.625rem;
+  border-bottom-left-radius: 1.625rem;
+}
+
+.tabs__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 2rem 0 0;
+}
+
+.tabs__list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tabs__list__item.active .tabs__list__link {
+  background-color: #393E7D;
+}
+
+.tabs__list__item:not(.tabs__list__item.active) .tabs__list__link:hover {
+  border-bottom-color: #E5446D;
+}
+
+.tabs__list__link {
+  display: block;
+  padding: 0.9375rem 5rem;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  background-color: #3F88C5;
+  border-bottom: 5px solid transparent;
+}
+
+.tabs__content {
+  padding: 4.0625rem 3.25rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs__items {
+  display: none;
+  width: 100%;
+  align-items: center;
+}
+
+@media (min-width: 118.75em) {
+  .tabs__items {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-flow: row;
+    grid-gap: 6.25rem;
+  }
+}
+.tabs__items.show {
+  display: grid;
+}
+
+.tabs__item {
+  grid-column: span 1;
+}
+
+.tabs .amount {
+  display: inline-block;
+}
+
+.tabs .amount p {
+  border: 2px solid #393E7D;
+  border-radius: 0.5rem;
+  padding: 0.375rem 1.375rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #393E7D;
+  margin: 0;
+}
+
+.tabs .amount--current {
+  color: #E5446D;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.flex-container main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flex-container main h1 {
+  margin: auto;
+  font-size: 5.25rem;
+  text-align: center;
+  text-transform: capitalize;
+  color: #E5446D;
+}
+
+.flex-container main .container {
+  margin-bottom: 6.25rem;
+}
+
+.flex-container footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  padding: 1rem;
+  font-size: 0.9rem;
+  background: #1B1B1E;
+  color: #fff;
+  text-align: center;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 118.75em) {
+  .navbar {
+    padding: 2rem 3.375rem;
+  }
+}
+.navbar__logo {
+  width: 4.5rem;
+  height: 4.5rem;
+  display: none;
+}
+
+.navbar__logo img {
+  width: 100%;
+}
+
+.navbar.auth .navbar__nav {
+  width: auto;
+}
+
+.navbar.auth .navbar__logo {
+  display: block;
+}
+
+.navbar.auth .navbar__nav__list__item {
+  border: 3px solid #393E7D;
+}
+
+.navbar.auth .navbar__nav__list__item.active {
+  background: #393E7D;
+}
+
+.navbar.auth .navbar__nav__list__item.active > .navbar__nav__list__item__link {
+  color: #fff;
+}
+
+.navbar:not(.navbar.auth) {
+  background-color: #393E7D;
+}
+
+.navbar__nav {
+  width: 100%;
+}
+
+.navbar__nav__list {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__nav__list__item {
+  width: 12.7rem;
+  height: 4rem;
+  border-radius: 2rem;
+  text-align: center;
+  background-color: #fff;
+  border: 3px solid transparent;
+}
+
+.navbar__nav__list__item:hover {
+  border-color: #E5446D;
+}
+
+.navbar__nav__list__item:hover .navbar__nav__list__item__link {
+  color: #E5446D;
+}
+
+.navbar__nav__list__item:not(:last-child) {
+  margin-right: 1.2rem;
+}
+
+.navbar__nav__list__item:last-child {
+  margin-left: auto;
+}
+
+.navbar__nav__list__item.active {
+  background-color: #E5446D;
+}
+
+.navbar__nav__list__item.active .navbar__nav__list__item__link {
+  color: #fff;
+}
+
+.navbar__nav__list__item.profile {
+  width: 3.6875rem;
+  height: 3.6875rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__nav__list__item.profile i {
+  font-size: 1.875rem;
+  line-height: 3.75rem;
+}
+
+.navbar__nav__list__item__link {
+  font-family: "Mali", sans-serif;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 0.9rem 2rem;
+  font-weight: bold;
+  display: block;
+  color: #393E7D;
+}
+
+.navbar__nav__list__item__link:hover {
+  color: #393E7D;
+  transition: 0.3s ease-out;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  grid-row-gap: 0.9375rem;
+  padding: 3.375rem;
+}
+
+.container .pokemon {
+  margin-bottom: 3.25rem;
+}
+
+@media (min-width: 118.75em) {
+  .container .pokemon {
+    padding: 3.375rem 3.375rem 0 3.375rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    grid-gap: 6.25rem 9.375rem;
+  }
+}
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  visibility: hidden;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+  visibility: visible;
+}
+
+.modal__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 118.75em) {
+  .modal__container {
+    width: 72.625em;
+  }
+}
+.modal__header {
+  background-color: #393E7D;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.875rem;
+}
+
+.modal__header h2 {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 1.5rem;
+}
+
+.modal__header__close-btn, .modal__header__back-btn {
+  color: #fff;
+  font-size: 1.625rem;
+}
+
+.modal__header__close-btn:hover, .modal__header__back-btn:hover {
+  color: #E5446D;
+}
+
+.modal__header__titles {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__header__titles__link {
+  color: #fff;
+  font-size: 1.5rem;
+  font-family: "Mali", sans-serif;
+  padding: 0.875rem 3.375rem;
+}
+
+.modal__header__titles__link:hover {
+  background-color: #E5446D;
+  transition: 0.4s ease-in-out;
+}
+
+.modal__header__titles__item.active .modal__header__titles__link {
+  background-color: #E5446D;
+  border-left: 3px solid #fff;
+  border-right: 3px solid #fff;
+}
+
+.modal__content {
+  padding: 1.25rem 4.5625rem;
+  background-color: #fff;
+  border: 3px solid #393E7D;
+  border-radius: 0 0 1.5625rem 1.5625rem;
+}
+
+.modal__content__card {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr;
+}
+
+.modal__content .pokemon-stats {
+  padding-top: 1.25rem;
+}
+
+.modal__content .pokemon-stats__experience {
+  margin-top: 0.625rem;
+  padding: 0.9375rem;
+  border: 1px solid #393E7D;
+  border-radius: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content .pokemon-stats__experience p {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin: 0 0 0.625rem 0;
+}
+
+.modal__content .pokemon-stats__experience p span {
+  color: #E5446D;
+}
+
+.modal__content .pokemon-stats__experience__bars {
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #1B1B1E;
+  position: relative;
+}
+
+.modal__content .pokemon-stats__experience__bars::before {
+  content: "";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #2E933C;
+  border-radius: 5px;
+}
+
+.modal__content .pokemon-stats__experience__bars.with-expected::after {
+  content: "";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #2E933C;
+  border-radius: 5px;
+  width: 20%;
+  left: 48%;
+  background-color: #E5446D;
+  border-radius: 0 5px 5px 0;
+}
+
+.modal__content .pokemon-stats__group-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 0.625rem;
+}
+
+.modal__content .pokemon-stats__group-button__button {
+  display: block;
+  padding: 0.3125rem 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #3F88C5;
+  color: #fff;
+  border: 3px solid transparent;
+  border-radius: 1.875rem;
+  text-align: center;
+}
+
+.modal__content .pokemon-stats__group-button__button.active {
+  background-color: #E5446D;
+}
+
+.modal__content .pokemon-stats__group-button__button:first-child {
+  margin-bottom: 0.625rem;
+}
+
+.modal__content .pokemon-stats__group-button__button.disabled {
+  cursor: not-allowed;
+  background-color: #707070;
+}
+
+.modal__content .pokemon-stats__group-button__button:hover:not(.modal__content .pokemon-stats__group-button__button.disabled) {
+  border-color: #393E7D;
+  background-color: #fff;
+  color: #393E7D;
+}
+
+.modal__content .pokemon-info {
+  padding: 3.125rem 5.3125rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1.5625rem 0;
+}
+
+.modal__content .pokemon-info h5 {
+  font-family: "Mali", sans-serif;
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 1.25rem;
+}
+
+.modal__content .pokemon-info__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal__content .pokemon-info__row:nth-child(1) {
+  grid-column: 1/4;
+  justify-content: space-between;
+}
+
+.modal__content .pokemon-info__row:nth-child(1) span {
+  display: block;
+  text-align: center;
+  color: #E5446D;
+  font-weight: bold;
+  font-size: 1.625rem;
+}
+
+.modal__content .pokemon-info__row:nth-child(2) {
+  grid-column: 1/4;
+  justify-content: space-between;
+}
+
+.modal__content .pokemon-info__row:nth-child(2) .pokemon-info__type div {
+  background-color: #393E7D;
+  padding: 0.5625rem 2.125rem;
+}
+
+.modal__content .pokemon-info__row:nth-child(2) .pokemon-info__type div span {
+  color: #fff;
+  font-weight: bold;
+}
+
+.modal__content .pokemon-info__caught-by {
+  margin-left: 0;
+}
+
+.modal__content .pokemon-info__caught-by ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content .pokemon-info__caught-by ul li:not(:last-child) {
+  margin-right: 0.9375rem;
+}
+
+.modal__content .pokemon-info__row:nth-child(3) {
+  grid-column: 1/4;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__content .pokemon-info__evolutions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__content .pokemon-info__evolutions__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content .pokemon-info__evolutions__item__name {
+  font-family: "Mali", sans-serif;
+  font-weight: bold;
+  font-size: 1.4375rem;
+  text-transform: capitalize;
+  color: #E5446D;
+  margin-top: 0.625rem;
+}
+
+.modal__content .pokemon-info__evolutions__item__img {
+  border: 3px solid #393E7D;
+  border-radius: 50%;
+  padding: 0.9375rem;
+}
+
+.modal__content .pokemon-info__evolutions__item__img img {
+  width: 5.625em;
+  height: 4.9375em;
+}
+
+.modal__content .pokemon-info__evolutions__item__levels {
+  font-size: 1.25rem;
+  margin-top: 0.3125rem;
+  font-weight: bold;
+}
+
+.modal__content .item-container {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 3.4375rem;
+}
+
+.modal__content .item-container.show {
+  display: flex;
+}
+
+.modal__content .item-container .items-list {
+  display: flex;
+  flex-direction: column;
+  grid-gap: 1.875rem 0;
+  padding: 1.25rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 50vh;
+}
+
+.modal__content .item-container .items-list__item {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 3px solid #393E7D;
+  border-radius: 0.9375rem;
+}
+
+.modal__content .item-container .items-list__item:hover, .modal__content .item-container .items-list__item.selected {
+  border-color: #E5446D;
+}
+
+.modal__content .item-container .items-list__item__select-box {
+  position: absolute;
+  top: calc(-1 * 0.625rem);
+  right: calc(-1 * 0.625rem);
+  width: 1.5625rem;
+  height: 1.5625rem;
+  border: 3px solid #393E7D;
+  border-radius: 1.25rem;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal__content .item-container .items-list__item__select-box i {
+  color: #fff;
+  display: none;
+}
+
+.modal__content .item-container .items-list__item.selected .items-list__item__select-box {
+  background-color: #2E933C;
+  border-color: #2E933C;
+}
+
+.modal__content .item-container .items-list__item.selected .items-list__item__select-box i {
+  display: block;
+}
+
+.modal__content .item-container .items-list__item__img-holder {
+  padding: 1.875rem;
+}
+
+.modal__content .item-container .items-list__item__img-holder img {
+  width: 7.5rem;
+}
+
+.modal__content .item-container .items-list__item__details {
+  padding: 1.4375rem;
+  display: flex;
+  flex-direction: column;
+  grid-gap: 0.9375rem 0;
+  width: 100%;
+}
+
+.modal__content .item-container .items-list__item__details p {
+  margin: 0;
+}
+
+.modal__content .item-container .items-list__item__details__name {
+  font-family: "Mali", sans-serif;
+  color: #E5446D;
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.modal__content .item-container .items-list__item__details__affect {
+  font-size: 1.5625rem;
+}
+
+.modal__content .item-container .items-list__item__details__affect span {
+  color: #2E933C;
+  font-weight: bold;
+}
+
+.modal__content .item-container .items-list__item__details__amount {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__content .item-container .items-list__item__details__amount label {
+  font-size: 1.5625rem;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  grid-gap: 0 1.25rem;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input > * {
+  display: inline-block;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input__increase, .modal__content .item-container .items-list__item__details__amount__input__decrease {
+  border: 1px solid #1B1B1E;
+  padding: 0.3125rem;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input__max {
+  color: #3F88C5;
+  font-size: 1.5625rem;
+  font-weight: 700;
+}
+
+.modal__content .item-container .items-list__item__details__amount__input input[type=number] {
+  width: 5rem;
+  border: 3px solid #393E7D;
+  border-radius: 0.3125rem;
+  padding: 0.3125rem;
+  font-size: 1.5625rem;
+  text-align: center;
+}
+
+.modal__content .item-container__footer {
+  grid-column: 1/3;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+}
+
+.modal__content .item-container__footer__button--submit {
+  outline: none;
+  border: none;
+  background-color: #E5446D;
+  padding: 0.9375rem 5rem;
+  font-size: 1.5rem;
+  border-radius: 2.625rem;
+  color: #fff;
+  font-weight: bold;
+  font-family: "Mali", sans-serif;
+}
+
+.modal__content .item-container__footer__button--submit:hover {
+  background-color: #3F88C5;
+  transition: 0.4s ease-in-out;
+}
+
+.card__level {
+  position: absolute;
+  top: calc(-1 * 0.8125rem);
+  right: calc(-1 * 1.5625rem);
+  background-color: #3F88C5;
+  border-radius: 1.375rem;
+}
+@media (min-width: 118.75em) {
+  .card__level {
+    max-width: 5.125em;
+    max-height: 1.9375em;
+  }
+}
+.card__level span {
+  padding: 0.4375rem 1.5625rem;
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: #fff;
+  text-transform: capitalize;
+}
+@media (min-width: 118.75em) {
+  .card__pokemon_img img {
+    width: 10.3125em;
+    height: 13em;
+  }
+}
+.card__power {
+  font-size: 1.1875rem;
+  font-weight: bold;
+  color: #393E7D;
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.card__power > * {
+  display: inline-block;
+}
+.card__power > *:not(:last-child) {
+  margin-right: 0.3125rem;
+}
+.card__power i {
+  color: #E5446D;
+  line-height: 1.1875rem;
+}
+.card__power > span:last-child {
+  color: #E5446D;
+  font-size: 1.5625rem;
+}
+
+.find {
+  padding: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.find.show {
+  display: flex;
+}
+.find__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.find .unknown-pokemon {
+  margin: 2rem;
+  width: 25em;
+  height: 21.875em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(57, 62, 125, 0.2);
+  border-radius: 100%;
+}
+.find .unknown-pokemon__search__img {
+  display: none;
+}
+.find .unknown-pokemon__search__img.show {
+  display: block;
+}
+.find__footer {
+  margin-top: 2rem;
+}
+.find__footer__button {
+  padding: 1rem 3.75rem;
+  background-color: #E5446D;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.4375rem;
+  border-radius: 4rem;
+}
+.find__footer__button:hover {
+  background-color: #393E7D;
+  transition: 0.4s ease-in-out;
+}
+.find__footer__button.disabled {
+  background-color: #707070;
+}
+
+.found {
+  display: none;
+  margin: 4rem;
+}
+.found.show {
+  display: block;
+}
+.found__content {
+  align-items: center;
+}
+.found__info {
+  margin-left: 2rem;
+}
+.found__card__content {
+  position: relative;
+}/*# sourceMappingURL=find.css.map */

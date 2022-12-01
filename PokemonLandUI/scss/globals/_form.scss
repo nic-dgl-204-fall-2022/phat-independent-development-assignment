@@ -1,0 +1,54 @@
+@use "../util" as u;
+@use "./colors" as c;
+
+@mixin input-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: u.rem(28);
+}
+
+@mixin form-label {
+	font-family: u.$heading-font;
+	font-size: u.rem(30);
+	display: block;
+	margin-bottom: u.rem(10);
+	font-weight: bold;
+}
+
+@mixin checkbox-label {
+    flex-direction: row;
+    align-items: center;
+}
+
+@mixin text-input($border-color: transparent) {
+	padding: 1rem 2rem;
+	border: none;
+	font-size: 1.3rem;
+	border: 2px solid $border-color;
+
+	&:focus {
+		outline: none;
+		border: 2px solid c.$primary-color;
+	}
+}
+
+@mixin checkbox-input {
+    margin: 0 1rem 0 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: c.$primary-color;
+}
+
+@mixin form-error {
+    padding: u.rem(10) u.rem(15);
+    background-color: rgba(c.$primary-color, .9);
+    color: #fff;
+    font-weight: bold;
+    font-size: .9rem;
+    display: none;
+    margin-bottom: 0;
+
+    &.show {
+        display: block;
+    }
+}

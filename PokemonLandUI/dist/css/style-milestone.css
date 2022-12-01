@@ -1,0 +1,145 @@
+/* 
+    1. Global styles
+    2. Header
+    3. Tech
+    4. Feature
+    5. Mockups
+    6. References
+*/
+
+/* ===== 1. Global styles ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Krub', sans-serif;
+    background-color: var(--light-gray);
+}
+
+:root {
+    --red: #EE6352;
+    --dark-blue: #1B1F3B;
+    --light-blue: #4D9DE0;
+    --light-purple: #C874D9;
+    --light-gray: #EEF1EF;
+    --light-yellow: #F2E3BC;
+    --green: #69995D;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'KoHo', sans-serif;
+}
+
+main {
+    padding: 2em;
+}
+
+section {
+    margin-bottom: 1.5em;
+}
+
+section h2 {
+    padding-left: 10px;
+    border-left: 5px solid var(--dark-blue);
+    color: var(--red);
+}
+
+section p {
+    padding: 0 2em;
+    line-height: 1.6;
+}
+
+figure {
+    margin: 0
+}
+/* ===== 2. Header ===== */
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+header p {
+    font-size: 1.2em;
+}
+
+header p:last-child {
+    color: var(--dark-blue);
+    font-weight: bold;
+}
+
+/* ===== 3. Tech ===== */
+#tech {
+    display: flex;
+    flex-direction: column;
+}
+
+.tech-items {
+    width: 60%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 360px);
+    grid-template-rows: 1fr;
+    justify-content: center;
+}
+
+.tech-items img {
+    max-width: 30%;
+}
+
+/* ===== 4. Feature ===== */
+.feature-items {
+    padding: 3em 1em;
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: stretch;
+    border-bottom: 3px dashed var(--green);
+}
+
+.feature-card {
+    margin-right: 2em;
+    border-radius: 20px;
+    background-color: var(--light-yellow);
+    border: 3px solid var(--dark-blue);
+}
+
+.feature-card h3{
+    color: var(--red);
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.feature-description {
+    padding: 1em 0;
+    border-top: 3px solid var(--dark-blue);
+}
+
+.wire-frame-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    grid-auto-flow: row;
+    grid-gap: 2em;
+}
+
+.wire-frame-container img {
+    width: 100%;
+    height: 90%;
+}
+
+.wire-frame-container figcaption {
+    padding: 10px;
+    font-weight: bold;
+    color: var(--red)
+}

@@ -1,0 +1,90 @@
+@use "../globals" as g;
+@use "../util" as u;
+@forward "../style";
+@forward "./";
+@import "../pokemon/pokemon";
+
+.find {
+	padding: u.rem(32);
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	display: none;
+
+    &.show {
+        display: flex;
+    }
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.unknown-pokemon {
+		margin: u.rem(32);
+		width: u.em(400);
+		height: u.em(350);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: rgba(g.$secondary-color, 0.2);
+		border-radius: 100%;
+
+        
+
+		&__search__img{
+            display:  none;
+
+            &.show {
+                display: block;
+
+            }
+		}
+	}
+
+	&__footer {
+		margin-top: u.rem(32);
+
+		&__button {
+			padding: u.rem(16) u.rem(60);
+			background-color: g.$primary-color;
+			color: #fff;
+			font-weight: bold;
+			font-size: u.rem(23);
+			border-radius: u.rem(64);
+
+			&:hover {
+				background-color: g.$secondary-color;
+				transition: 0.4s ease-in-out;
+			}
+
+            &.disabled {
+                background-color: g.$gray;
+            }
+		}
+	}
+}
+
+.found {
+	display: none;
+    margin: u.rem(64);
+	&.show {
+		display: block;
+	}
+
+	&__content {
+        align-items: center;
+	}
+
+	&__info {
+		margin-left: u.rem(32);
+	}
+
+	&__card {
+		&__content {
+			position: relative;
+		}
+	}
+}
