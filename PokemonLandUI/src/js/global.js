@@ -5,9 +5,9 @@ const SERVER_API_ROUTES = {
 
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";
 const CLIENT_PAGES = {
-	loginPage: `${CLIENT_ORIGIN_URL}/auth/login.html`,
-	signupPage: `${CLIENT_ORIGIN_URL}/auth/signup.html`,
-	profilePage: `${CLIENT_ORIGIN_URL}/auth/profile.html`,
+	loginPage: `${CLIENT_ORIGIN_URL}/login.html`,
+	signupPage: `${CLIENT_ORIGIN_URL}/signup.html`,
+	profilePage: `${CLIENT_ORIGIN_URL}/profile.html`,
 	pokemonPage: `${CLIENT_ORIGIN_URL}/pokemon/index.html`,
 };
 const JWT_STORAGE_NAME = "pkm-jwt";

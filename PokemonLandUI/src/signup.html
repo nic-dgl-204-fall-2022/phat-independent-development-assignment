@@ -10,24 +10,24 @@
   <link
     href="https://fonts.googleapis.com/css2?family=KoHo:ital,wght@0,400;0,700;1,400;1,700&family=Mali:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../../dist/css/login.css">
-  <title>Log In - Pokemon Land</title>
+  <link rel="stylesheet" href="../dist/css/signup.css">
+  <title>Sign Up - Pokemon Land</title>
 </head>
 
 <body>
   <div class="flex-container">
     <header>
       <div class="navbar auth">
-        <a href="../index.html" class="navbar__logo">
-          <img src="../../dist/img/logo.png" alt="Pokemon Land Logo">
+        <a href="./index.html" class="navbar__logo">
+          <img src="../dist/img/logo.png" alt="Pokemon Land Logo">
         </a>
 
         <nav class="navbar__nav">
           <ul class="navbar__nav__list">
-            <li class="navbar__nav__list__item active">
+            <li class="navbar__nav__list__item">
               <a href="./login.html" class="navbar__nav__list__item__link">Log In</a>
             </li>
-            <li class="navbar__nav__list__item">
+            <li class="navbar__nav__list__item active">
               <a href="./signup.html" class="navbar__nav__list__item__link">Sign Up</a>
             </li>
           </ul>
@@ -38,35 +38,47 @@
     <main>
       <div class="container">
         <h1>Pokémon Land</h1>
-        <!-- Login Form -->
-        <form id="login-form" action="#" method="POST">
+
+        <!-- Instruction -->
+        <div class="instruction">
+          <p class="instruction__text">Your username is only valid when:</p>
+          <ul class="instruction__list">
+            <li class="instruction__list__item">It contains from <span class="instruction__text--bold">6</span> to <span
+                class="instruction__text--bold">30</span> characters.</li>
+            <li class="instruction__list__item">It contains only <span class="instruction__text--bold">numbers and
+                letters</span>.</li>
+          </ul>
+        </div><!-- End Instruction -->
+
+        <!-- Signup Form -->
+        <form action="#!" method="POST">
           <div class="form">
             <div class="form__container">
               <div class="form__input-group">
                 <label for="username" class="form__label">Username</label>
-                <input type="text" id="username" class="form__input" placeholder="Username" value="phattran">
+                <input type="text" id="username" class="form__input" placeholder="Username">
               </div>
               <div class="form__input-group">
                 <label for="password" class="form__label">Password</label>
-                <input type="password" id="password" class="form__input" placeholder="******" value="123123">
+                <input type="password" id="password" class="form__input" placeholder="******">
               </div>
               <div class="form__input-group">
-                <input type="checkbox" id="remember-me" class="form__input">
-                <label for="remember-me" class="form__label">Keep me logged in</label>
+                <label for="confirm-password" class="form__label">Confirm</label>
+                <input type="password" id="confirm-password" class="form__input" placeholder="******">
               </div>
             </div>
-            <p class="form__ref-link">Don't have an account? <a href="./signup.html">Sign up here</a></p>
+            <p class="form__ref-link">Already have an account? <a href="./login.html">Log in here</a></p>
 
-            <button type="submit" class="form__submit-btn">Log In</button>
-          </div><!-- End Login Form -->
+            <button type="submit" class="form__submit-btn">Sign Up</button>
+          </div><!-- End Signup Form -->
         </form>
 
         <!-- Validation -->
         <div class="validation">
           <div class="validation__error show">
-            <p class="validation__error__message">Username or Password is incorrect.</p>
+            <p class="validation__error__message">Username is already taken.</p>
           </div>
-          <img src="../../dist/img/pikachu.svg" alt="Pikachu" class="validation__img">
+          <img src="../dist/img/pikachu.svg" alt="Pikachu" class="validation__img">
         </div><!-- End Validation -->
       </div>
 
@@ -74,9 +86,6 @@
       </footer>
     </main>
   </div>
-  
-  <script src="../js/global.js"></script>
-  <script src="../js/login.js"></script>
 </body>
 
 </html>
