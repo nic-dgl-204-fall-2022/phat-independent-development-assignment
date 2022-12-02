@@ -11,7 +11,7 @@ const mysticCards = document.querySelectorAll(".hoverable.mystic-item");
 const consumableCards = document.querySelectorAll(".hoverable.consumable-item");
 
 // Modal
-const pokeballModal = document.getElementById("pokeball-modal");
+const itemModal = document.getElementById("item-modal");
 const mysticItemModal = document.getElementById("mystic-item-modal");
 const consumableItemModal = document.getElementById("consumable-item-modal");
 const choosePokemonModal = document.getElementById("choose-pokemon-modal");
@@ -146,6 +146,11 @@ function addPokeBallItems(pokeballItems) {
 	const pokeballItemsContainer = document.getElementById("pokeball-items");
 	pokeballItems.forEach((pokeball) => {
 		const pkbItem = createItemElement(pokeball);
+		// Trigger Open Item Modal
+		pkbItem.addEventListener("click", (e) => {
+			itemModal.classList.add("show");
+			displayItemInModal(pokeball);
+		});
 		pokeballItemsContainer.appendChild(pkbItem);
 	});
 }
@@ -154,6 +159,11 @@ function addMysticItems(mysticItems) {
 	const mysticItemsContainer = document.getElementById("mystic-items");
 	mysticItems.forEach((mystic) => {
 		const mysticItem = createItemElement(mystic);
+		// Trigger Open Item Modal
+		mysticItem.addEventListener("click", (e) => {
+			itemModal.classList.add("show");
+			displayItemInModal(mystic);
+		});
 		mysticItemsContainer.appendChild(mysticItem);
 	});
 }
@@ -162,8 +172,146 @@ function addConsumableItems(consumableItems) {
 	const consumableItemsContainer = document.getElementById("consumable-items");
 	consumableItems.forEach((consumable) => {
 		const consumableItem = createItemElement(consumable);
+		// Trigger Open Item Modal
+		consumableItem.addEventListener("click", (e) => {
+			itemModal.classList.add("show");
+			displayItemInModal(consumable);
+		});
 		consumableItemsContainer.appendChild(consumableItem);
 	});
+}
+
+function displayItemInModal(item) {
+	// Buy Button
+	const leftColBuyBtnContainer = document.createElement("div");
+	leftColBuyBtnContainer.className = "left-col__group-button";
+	const buyButton = document.createElement("a");
+	buyButton.href = "./shop.html";
+	buyButton.className = "left-col__group-button__button";
+	buyButton.textContent = "Buy";
+	leftColBuyBtnContainer.appendChild(buyButton);
+
+	// Amount
+	const leftColAmount = document.createElement("div");
+	leftColAmount.className = "left-col__amount";
+	const itemAmount = document.createElement("p");
+	itemAmount.innerHTML = `Amount <span>${item.amount}</span>`;
+	leftColAmount.appendChild(itemAmount);
+
+	// Card Footer
+	const cardFooterContainer = document.createElement("div");
+	cardFooterContainer.className = "card__footer";
+	const itemName = document.createElement("p");
+	itemName.textContent = item.name;
+	cardFooterContainer.appendChild(itemName);
+
+	// Image
+	const itemImgContainer = document.createElement("div");
+	itemImgContainer.classList = "card__item-img";
+	const itemImg = document.createElement("img");
+	itemImg.src = `../../dist/img/items/${item.imgName}`;
+	itemImg.alt = item.name;
+	itemImgContainer.appendChild(itemImg);
+
+	// Card Content
+	const leftCardContent = document.createElement("div");
+	leftCardContent.className = "card__content";
+	leftCardContent.appendChild(itemImgContainer);
+	leftCardContent.appendChild(cardFooterContainer);
+
+	// Left Column Card
+	const leftColCard = document.createElement("div");
+	leftColCard.className = "left-col__card card";
+	leftColCard.appendChild(leftCardContent);
+	leftColCard.appendChild(cardFooterContainer);
+
+	// Left Column Container
+	const leftColContainer = document.createElement("div");
+	leftColContainer.className = "left-col";
+	leftColContainer.appendChild(leftColCard);
+	leftColContainer.appendChild(leftColAmount);
+	leftColContainer.appendChild(leftColBuyBtnContainer);
+
+	// Right Column Header
+	const rightColH2 = document.createElement("h2");
+	rightColH2.textContent = "Description";
+	const rightColText = document.createElement("p");
+	rightColText.textContent = item.description;
+	// Right Column Affect
+	const rightColAffectContainer = document.createElement("div");
+	rightColAffectContainer.className = "right-col__affect";
+	const rightColAffectTitle = document.createElement("h3");
+	rightColAffectTitle.textContent = "Affect";
+	const rightColAffectValue = document.createElement("p");
+	const affectKey = Object.keys(item.affect)[0];
+	rightColAffectValue.innerHTML = `<i class="fa-solid fa-angles-up"></i>${affectKey} <span>+${item.affect[affectKey]}</span>`;
+	rightColAffectContainer.appendChild(rightColAffectTitle);
+	rightColAffectContainer.appendChild(rightColAffectValue);
+
+	// Right Column content
+	const rightColContent = document.createElement("div");
+	rightColContent.className = "right-col__content";
+	rightColContent.appendChild(rightColH2);
+	rightColContent.appendChild(rightColText);
+	rightColContent.appendChild(rightColAffectContainer);
+
+	// Right Column
+	const rightColContainer = document.createElement("div");
+	rightColContainer.className = "right-col";
+	rightColContainer.appendChild(rightColContent);
+
+	// Wrapper
+	const wrapperElement = document.getElementById("item-modal-content");
+    wrapperElement.innerHTML = ``
+	wrapperElement.appendChild(leftColContainer);
+	wrapperElement.appendChild(rightColContainer);
+	//     <div class="left-col">
+	//     <!-- Card-->
+	//     <div class="left-col__card card">
+	//       <div class="card__content">
+	//         <div class="card__item-img">
+	//           <img src="../../dist/img/standard-pokeball-640.png" alt="Pikachu">
+	//         </div>
+
+	//         <div class="card__item-amount"></div>
+	//       </div>
+
+	//       <div class="card__footer">
+	//         <p>Standard Pokeball</p>
+	//       </div>
+	//     </div><!-- End Card-->
+
+	//     <!-- Card  -->
+	//     <div class="left-col__amount">
+	//       <p>Amount <span>5</span></p>
+	//     </div>
+
+	//     <div class="left-col__group-button">
+	//       <a class="left-col__group-button__button" href="./shop.html">Buy</a>
+	//     </div>
+	//   </div>
+
+	//   <!-- Pokeball Info -->
+	//   <div class="right-col">
+	//     <div class="right-col__content">
+	//       <h2>Description</h2>
+	//       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, ut expedita, animi nobis
+	//         quibusdam sit, iste delectus suscipit excepturi dolorum cupiditate neque non a perspiciatis ducimus unde
+	//         voluptatum minus tenetur assumenda illum ad labore autem hic? Dolore sapiente placeat, blanditiis
+	//         possimus sit consectetur laudantium nemo modi excepturi est quasi minus explicabo, magnam quam
+	//         perferendis facilis atque magni praesentium facere? Facere blanditiis eveniet hic deserunt aperiam
+	//         temporibus eos, explicabo laborum assumenda? Veniam quia neque est itaque excepturi. Illo, earum dolorem
+	//         architecto esse voluptate, ullam commodi laboriosam ipsam ea labore dolores nihil error, enim maxime
+	//         magnam voluptas voluptatum numquam odit laudantium quam.</p>
+	//       <div class="right-col__affect">
+	//         <h3>Affect</h3>
+	//         <p>
+	//           <i class="fa-solid fa-angles-up"></i>
+	//           Capture Rate <span>+50</span>
+	//         </p>
+	//       </div>
+	//     </div>
+	//   </div><!-- End Pokemon Info -->
 }
 
 async function main() {
