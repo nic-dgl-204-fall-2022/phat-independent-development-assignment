@@ -110,7 +110,7 @@ fun Route.getProfile() {
                 "coins" to user.coins.toString(),
                 "pokemon" to user.pokemon,
                 "items" to user.items
-            )
+            ).json
         )
 
         call.respond(response.json)

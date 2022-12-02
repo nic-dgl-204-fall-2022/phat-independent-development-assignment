@@ -14,16 +14,16 @@ fun Route.getPokemon() {
         val pokemon = PokemonCollection().getPokemon()
         val response = hashMapOf(
             "message" to "OK",
-            "statusCode" to HttpStatusCode.OK.value,
-            "data" to pokemon
+            "statusCode" to "200",
+            "data" to pokemon.json
         )
-        call.respond(pokemon)
+        call.respond(ObjectResponse(data = pokemon.json))
     }
 
     get("/pokemon/{id?}") {
         val pokemonId = call.parameters["id"] ?: return@get call.respond(MessageResponse("Not Found", 404))
         val pokemon = PokemonCollection().getPokemonById(pokemonId)
-        val response = pokemon?.let { it1 -> ObjectResponse(data = it1) }
+        val response = pokemon?.let { it1 -> ObjectResponse(data = it1.json) }
         call.respond(
             response!!.json
         )

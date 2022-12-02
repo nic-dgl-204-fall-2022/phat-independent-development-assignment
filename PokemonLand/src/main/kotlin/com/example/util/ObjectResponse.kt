@@ -8,6 +8,6 @@ import kotlinx.serialization.Serializable
 data class ObjectResponse(
     val message: String = "OK",
     val statusCode: Int = HttpStatusCode.OK.value,
-    @Contextual val data: Any
+    @Contextual val data: String
 ) {
 }

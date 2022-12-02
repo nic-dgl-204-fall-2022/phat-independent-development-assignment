@@ -15,9 +15,9 @@ import org.litote.kmongo.json
 fun Route.getItems() {
     get("/item") {
         val items = ItemCollection().getItems()
-        val response = ObjectResponse(data = items)
+        val response = ObjectResponse(data = items.json)
         call.respond(
-            response.json
+            response
         )
     }
 
@@ -27,10 +27,14 @@ fun Route.getItemById() {
     get("/item/{id?}") {
         val itemId = call.parameters["id"] ?: return@get call.respond(MessageResponse("Not Found", 404))
         val item = ItemCollection().getItemById(itemId)
-        val response = item?.let { it1 -> ObjectResponse(data = it1) }
-        call.respond(
-            response!!.json
-        )
+        if (item != null) {
+            val response = ObjectResponse(data = item.json)
+            call.respond(
+                response
+            )
+        } else {
+            call.respond(MessageResponse("Not found", 404))
+        }
     }
 }
 
