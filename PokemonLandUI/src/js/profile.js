@@ -47,10 +47,6 @@ async function main() {
 			nameInputElement.value = responseData.name;
 			emailInputElement.value = responseData.email;
 			phone.value = responseData.phone;
-
-            // Save pokemonIds and items
-            pokemonIdList = responseData.pokemon
-            itemIdList = responseData.items
 		}
         
 	} catch (error) {

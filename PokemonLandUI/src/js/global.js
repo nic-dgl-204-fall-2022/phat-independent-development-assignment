@@ -3,6 +3,8 @@ const SERVER_API_ROUTES = {
 	loginRoute: `${SERVER_API_ORIGIN_URL}/login`,
 	signupRoute: `${SERVER_API_ORIGIN_URL}/signup`,
 	profileRoute: `${SERVER_API_ORIGIN_URL}/profile`,
+	itemRoute: `${SERVER_API_ORIGIN_URL}/item`,
+	pokemonRoute: `${SERVER_API_ORIGIN_URL}/pokemon`,
 };
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";
 const CLIENT_PAGES = {
@@ -112,9 +114,3 @@ function closeAllModals() {
 closeModalButtons.forEach((button) => {
 	button.addEventListener("click", closeAllModals);
 });
-
-// ==== Pokemon ====
-let pokemonIdList = [];
-
-// ==== Item ====
-let itemIdList = [];
