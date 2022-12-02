@@ -5,6 +5,7 @@ import io.ktor.server.auth.jwt.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.example.daos.UserCollection
+import com.example.util.MessageResponse
 import de.sharpmind.ktor.EnvConfig
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -34,7 +35,7 @@ fun Application.configureSecurity() {
                 } else null
             }
             challenge { defaultScheme, realm ->
-                call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
+                call.respond(MessageResponse("Token is not valid or has expired", 401))
             }
         }
     }
