@@ -133,7 +133,9 @@ function createPokemonStats(pokemon, hasUseItemBtn = false) {
 		closeAllModals();
 		document.getElementById("use-items-modal")?.classList.add("show");
 	});
-	useItemContainer.appendChild(useItemBtn);
+	if (pokemon.status === "OWNED") {
+		useItemContainer.appendChild(useItemBtn);
+	}
 
 	// Pokemon Stats Element
 	const pkmStatsContainer = document.createElement("div");
@@ -386,30 +388,30 @@ async function main() {
 				useItems.push({
 					id: item.id.split("item-")[1],
 					amount: parseInt(item.value),
-                    pokemonId: selectedPokemon.id
+					pokemonId: selectedPokemon.id,
 				});
 			}
 		});
-        console.log(useItems)
-        try {
-            const rawResponse = await fetch(SERVER_API_ROUTES.useItemRoute, {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`
-                },
-                body: JSON.stringify(useItems)
-            });
-    
-            const content = await rawResponse.json();
-            if (content.message == "OK" && content.statusCode.toString() === "200") {
-                // Close 
-                redirectTo(CLIENT_PAGES.pokemonPage)
-            }
-        } catch (error) {
-            console.log(error)
-        }
+		console.log(useItems);
+		try {
+			const rawResponse = await fetch(SERVER_API_ROUTES.useItemRoute, {
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${jwtToken}`,
+				},
+				body: JSON.stringify(useItems),
+			});
+
+			const content = await rawResponse.json();
+			if (content.message == "OK" && content.statusCode.toString() === "200") {
+				// Close
+				redirectTo(CLIENT_PAGES.pokemonPage);
+			}
+		} catch (error) {
+			console.log(error);
+		}
 	});
 }
 

@@ -6,6 +6,7 @@ const SERVER_API_ROUTES = {
 	itemRoute: `${SERVER_API_ORIGIN_URL}/item`,
 	useItemRoute: `${SERVER_API_ORIGIN_URL}/item/use`,
 	pokemonRoute: `${SERVER_API_ORIGIN_URL}/pokemon`,
+	findRoute: `${SERVER_API_ORIGIN_URL}/explore/find`,
 };
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";
 const CLIENT_PAGES = {
