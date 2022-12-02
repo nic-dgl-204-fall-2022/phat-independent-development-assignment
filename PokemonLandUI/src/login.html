@@ -62,9 +62,12 @@
         </form>
 
         <!-- Validation -->
-        <div class="validation">
-          <div class="validation__error show">
-            <p class="validation__error__message">Username or Password is incorrect.</p>
+        <div id="validation-message" class="validation">
+          <div class="validation__error ">
+            <p id="error-message" class="validation__error__message"></p>
+          </div>
+          <div class="validation__success show">
+            <p id="success-message" class="validation__success__message"></p>
           </div>
           <img src="../dist/img/pikachu.svg" alt="Pikachu" class="validation__img">
         </div><!-- End Validation -->
@@ -74,7 +77,7 @@
       </footer>
     </main>
   </div>
-  
+
   <script src="./js/global.js"></script>
   <script src="./js/login.js"></script>
 </body>

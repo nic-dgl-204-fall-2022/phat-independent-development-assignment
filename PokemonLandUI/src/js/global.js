@@ -18,6 +18,11 @@ function isLoggedIn() {
 	const jwtToken = localStorage.getItem(JWT_STORAGE_NAME);
 	if (jwtToken && JSON.parse(jwtToken).token != null) {
 		return true;
+	} else {
+		const sessionJwt = sessionStorage.getItem(JWT_STORAGE_NAME);
+		if (sessionJwt && JSON.parse(sessionJwt).token != null) {
+			return true;
+		}
 	}
 
 	return false;
@@ -28,13 +33,24 @@ function getJwtToken() {
 	if (!isLoggedIn) {
 		return null;
 	}
-	const jwtToken = JSON.parse(localStorage.getItem(JWT_STORAGE_NAME));
-	return jwtToken.token;
+	const jwtToken = localStorage.getItem(JWT_STORAGE_NAME);
+	if (jwtToken && JSON.parse(jwtToken).token != null) {
+		return JSON.parse(jwtToken).token;
+	} else {
+		const sessionJwt = sessionStorage.getItem(JWT_STORAGE_NAME);
+		if (sessionJwt && JSON.parse(sessionJwt).token != null) {
+			return JSON.parse(sessionJwt).token;
+		}
+	}
 }
 
 // Set Jwt Token
-function setJwtToken(token) {
-	localStorage.setItem(JWT_STORAGE_NAME, JSON.stringify({ token }));
+function setJwtToken(token, saveInLocalStorage = false) {
+	if (saveInLocalStorage) {
+		localStorage.setItem(JWT_STORAGE_NAME, JSON.stringify({ token }));
+	} else {
+		sessionStorage.setItem(JWT_STORAGE_NAME, JSON.stringify({ token }));
+	}
 }
 
 // Redirect to
@@ -44,6 +60,37 @@ function redirectTo(page) {
 
 function isProtectedURL(currentUrl) {
 	return Object.values(CLIENT_PAGES).findIndex((url) => url == currentUrl) != -1;
+}
+
+// ===== Show / Hide Validation Messages =====
+function toggleErrorMessage(show = false, errorMsg = "") {
+	if (show) {
+		validationElement.classList.add("show");
+		errorContainerBlock.classList.add("show");
+		errorMessage.textContent = errorMsg;
+	} else {
+		validationElement.classList.remove("show");
+		errorContainerBlock.classList.remove("show");
+		errorMessage.textContent = "";
+	}
+
+	successContainerBlock.classList.remove("show");
+	successMessage.textContent = "";
+}
+
+function toggleSuccessMessage(show = false, successMsg = "") {
+	if (show) {
+		validationElement.classList.add("show");
+		successContainerBlock.classList.add("show");
+		successMessage.textContent = successMsg;
+	} else {
+		validationElement.classList.remove("show");
+		successContainerBlock.classList.remove("show");
+		successMessage.textContent = "";
+	}
+
+	errorContainerBlock.classList.remove("show");
+	errorMessage.textContent = "";
 }
 
 // ===== Handle Modals =====

@@ -5,36 +5,6 @@ const errorMessage = document.getElementById("error-message");
 const successContainerBlock = document.querySelector(".validation__success");
 const successMessage = document.getElementById("success-message");
 
-function toggleErrorMessage(show = false, errorMsg = "") {
-	if (show) {
-		validationElement.classList.add("show");
-		errorContainerBlock.classList.add("show");
-		errorMessage.textContent = errorMsg;
-	} else {
-		validationElement.classList.remove("show");
-		errorContainerBlock.classList.remove("show");
-		errorMessage.textContent = "";
-	}
-
-	successContainerBlock.classList.remove("show");
-	successMessage.textContent = "";
-}
-
-function toggleSuccessMessage(show = false, successMsg = "") {
-	if (show) {
-		validationElement.classList.add("show");
-		successContainerBlock.classList.add("show");
-		successMessage.textContent = successMsg;
-	} else {
-		validationElement.classList.remove("show");
-		successContainerBlock.classList.remove("show");
-		successMessage.textContent = "";
-	}
-
-	errorContainerBlock.classList.remove("show");
-	errorMessage.textContent = "";
-}
-
 signupForm.addEventListener("submit", async (e) => {
 	e.preventDefault();
 	toggleErrorMessage(false);
