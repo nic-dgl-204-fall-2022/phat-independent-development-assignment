@@ -147,12 +147,87 @@ function createPokemonStats(pokemon, hasUseItemBtn = false) {
 	return pkmStatsContainer;
 }
 
-async function main() {
-	// ==== Pokemon ====
-	let pokemonIdList = [];
-	// ==== Item ====
-	let itemIdList = [];
+function createItemElement(item) {
+	// Select box
+	const selectBoxContainer = document.createElement("div");
+	selectBoxContainer.className = "items-list__item__select-box";
+	selectBoxContainer.innerHTML = `<i class="fa-solid fa-check"></i>`;
 
+	// Image
+	const itemImgContainer = document.createElement("div");
+	itemImgContainer.className = "items-list__item__img-holder";
+	const itemImg = document.createElement("img");
+	itemImg.src = `../../dist/img/items/${item.imgName}`;
+	itemImg.alit = item.name;
+	itemImgContainer.appendChild(itemImg);
+
+	// Details
+	const itemDetailContainer = document.createElement("div");
+	itemDetailContainer.className = "items-list__item__details";
+	// Name
+	const itemName = document.createElement("p");
+	itemName.className = "items-list__item__details__name";
+	itemName.textContent = item.name;
+	// Affect
+	const itemAffect = document.createElement("p");
+	itemAffect.className = "items-list__item__details__affect";
+	const affectName = Object.keys(item.affect)[0];
+	itemAffect.innerHTML = `${affectName} <span>+${item.affect[affectName]}</span>`;
+	// Amount
+	const amountContainer = document.createElement("div");
+	amountContainer.className = "items-list__item__details__amount";
+	// label
+	const amountLabel = document.createElement("label");
+	amountLabel.textContent = "Amount:";
+	// input container
+	const amountInputContainer = document.createElement("div");
+	amountInputContainer.className = "items-list__item__details__amount__input";
+	// input
+	const amountInput = document.createElement("input");
+	amountInput.type = "number";
+	amountInput.value = 0;
+	amountInput.id = `item-${item.id}`;
+	amountInput.className = "item-amount";
+	amountInput.min = 0;
+	amountInput.name = item.name;
+	// Set select box checked
+	amountInput.addEventListener("change", (e) => {
+		const { value, id } = e.target;
+
+		const containerId = id.split("item-")[1];
+		const containerElement = document.getElementById(containerId);
+
+		if (value > 0) {
+			containerElement.classList.add("selected");
+		} else {
+			containerElement.classList.remove("selected");
+		}
+	});
+	// max amount
+	const maxAmount = document.createElement("span");
+	maxAmount.className = "items-list__item__details__amount__input__max";
+	maxAmount.textContent = ` / ${item.amount}`;
+	amountInputContainer.appendChild(amountInput);
+	amountInputContainer.appendChild(maxAmount);
+	amountContainer.appendChild(amountLabel);
+	amountContainer.appendChild(amountInputContainer);
+	itemDetailContainer.appendChild(itemName);
+	itemDetailContainer.appendChild(itemAffect);
+	itemDetailContainer.appendChild(amountContainer);
+
+	// Container
+	const itemContainer = document.createElement("div");
+	itemContainer.className = "items-list__item";
+	itemContainer.id = item.id;
+	itemContainer.appendChild(selectBoxContainer);
+	itemContainer.appendChild(itemImgContainer);
+	itemContainer.appendChild(itemDetailContainer);
+
+	return itemContainer;
+}
+
+async function main() {
+	// Check jwt token
 	const loggedIn = isLoggedIn();
 	if (!loggedIn) {
 		return redirectTo(CLIENT_PAGES.loginPage);
@@ -215,6 +290,7 @@ async function main() {
 	const backToPokemonModalButton = document.getElementById("back-to-pokemon-modal-btn");
 	const pokemonCards = document.querySelectorAll(".card.hoverable");
 	const pokemonModal = document.getElementById("pokemon-modal");
+	let selectedPokemon;
 
 	// Handle back buttons
 	backToPokemonModalButton.addEventListener("click", (e) => {
@@ -227,9 +303,9 @@ async function main() {
 		element.addEventListener("click", () => {
 			pokemonModal.classList.add("show");
 			const pokemonId = element.parentNode.id;
-			const pokemon = pokemonList.find((pkm) => pkm.id === pokemonId);
+			selectedPokemon = pokemonList.find((pkm) => pkm.id === pokemonId);
 
-			if (pokemon === -1) {
+			if (selectedPokemon === -1 || !selectedPokemon) {
 				return;
 			}
 
@@ -239,7 +315,7 @@ async function main() {
 			// Add pokemon stats to modals
 			pkmStatsContainer.forEach((e) => {
 				const hasUseItemBtn = e.id === "pokemon-modal-stats";
-				const pkmStatsCard = createPokemonStats(pokemon, hasUseItemBtn);
+				const pkmStatsCard = createPokemonStats(selectedPokemon, hasUseItemBtn);
 
 				e.appendChild(pkmStatsCard);
 			});
@@ -247,12 +323,33 @@ async function main() {
 	});
 
 	// Use items Modal
-	// const useItemsModal = document.getElementById("use-items-modal");
-	// const openUseItemsModalButton = document.getElementById("open-use-items-modal-btn");
-	// openUseItemsModalButton.addEventListener("click", (e) => {
-	// 	closeAllModals();
-	// 	useItemsModal.classList.add("show");
-	// });
+	const itemList = await getItems();
+	const ownedItems = await getOwnedItems(jwtToken);
+	let usableItems = itemList
+		.map((item) => {
+			const existed = ownedItems.findIndex((i) => i.id === item.id);
+			if (existed !== -1) {
+				return { ...item, amount: ownedItems[existed].amount };
+			}
+		})
+		.filter((i) => i); // Clear undefined values
+
+	// Show list of consumable items
+	const consumableItemsList = document.getElementById("consumable-items-list");
+	consumableItemsList.innerHTML = ``;
+	const consumableItems = usableItems.filter((i) => i.type === "ConsumableItems");
+	consumableItems.forEach((item) => {
+		const itemElement = createItemElement(item);
+		consumableItemsList.appendChild(itemElement);
+	});
+	// Show list of mystic items
+	const mysticItemsList = document.getElementById("mystic-items-list");
+	mysticItemsList.innerHTML = ``;
+	const mysticItems = usableItems.filter((i) => i.type === "MysticItems");
+	mysticItems.forEach((item) => {
+		const itemElement = createItemElement(item);
+		mysticItemsList.appendChild(itemElement);
+	});
 
 	// Show content for items
 	const openConsumableBtn = document.getElementById("open-consumable-items");
@@ -276,21 +373,43 @@ async function main() {
 		openConsumableBtn.parentElement.classList.remove("active");
 	});
 
-	// Select items
-	const itemInputs = document.querySelectorAll("input.item-amount");
+	// Handle use items
+	const useItemsForm = document.getElementById("use-items-form");
+	useItemsForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
 
-	itemInputs.forEach((itemInput) => {
-		itemInput.addEventListener("change", (e) => {
-			const { value, id } = e.target;
-			const containerId = `item-${id.split("-amount")[0]}`;
-			const containerElement = document.getElementById(containerId);
-
-			if (value > 0) {
-				containerElement.classList.add("selected");
-			} else {
-				containerElement.classList.remove("selected");
+		// Get amount of inputs
+		const useItemInputs = document.querySelectorAll(".item-amount");
+		const useItems = [];
+		await useItemInputs.forEach(async (item) => {
+			if (item.value > 0) {
+				useItems.push({
+					id: item.id.split("item-")[1],
+					amount: parseInt(item.value),
+                    pokemonId: selectedPokemon.id
+				});
 			}
 		});
+        console.log(useItems)
+        try {
+            const rawResponse = await fetch(SERVER_API_ROUTES.useItemRoute, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`
+                },
+                body: JSON.stringify(useItems)
+            });
+    
+            const content = await rawResponse.json();
+            if (content.message == "OK" && content.statusCode.toString() === "200") {
+                // Close 
+                redirectTo(CLIENT_PAGES.pokemonPage)
+            }
+        } catch (error) {
+            console.log(error)
+        }
 	});
 }
 

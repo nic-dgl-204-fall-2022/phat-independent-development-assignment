@@ -865,6 +865,10 @@ a, a:active, a:visited {
 .modal__content .pokemon-info__caught-by ul li:not(:last-child) {
   margin-right: 0.9375rem;
 }
+.modal__content .pokemon-info__caught-by ul img {
+  width: 3.125rem;
+  height: 3.125rem;
+}
 .modal__content .pokemon-info__row:nth-child(3) {
   grid-column: 1/4;
   display: flex;

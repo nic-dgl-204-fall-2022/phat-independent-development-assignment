@@ -125,10 +125,10 @@
                 <h5>Caught by</h5>
                 <ul>
                   <li>
-                    <img src="../../dist/img/standard-pokeball.png" alt="Standard Pokeball">
+                    <img src="../../dist/img/items/standard-pokeball.png" alt="Standard Pokeball">
                   </li>
                   <li>
-                    <img src="../../dist/img/electric-pokeball.png" alt="Electric Pokeball">
+                    <img src="../../dist/img/items/electric-pokeball.png" alt="Electric Pokeball">
                   </li>
                 </ul>
               </div>
@@ -142,7 +142,7 @@
 
     <!-- Use Items Modal -->
     <div id="use-items-modal" class="modal">
-      <form action="#!" method="get">
+      <form id="use-items-form" action="#!" method="get">
         <!-- Modal Container -->
         <div class="modal__container">
           <!-- Modal Header -->
@@ -173,50 +173,7 @@
             <!-- Items -->
             <div id="consumable-items" class="item-container show">
               <!-- List -->
-              <div class="items-list">
-                <!-- Item -->
-                <div id="item-apple" class="items-list__item">
-                  <div class="items-list__item__select-box">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                  <div class="items-list__item__img-holder">
-                    <img src="../../dist/img/apple.png" alt="Apple">
-                  </div>
-                  <div class="items-list__item__details">
-                    <p class="items-list__item__details__name">Apple</p>
-                    <p class="items-list__item__details__affect">EXP: <span>+100</span></p>
-                    <div class="items-list__item__details__amount">
-                      <label for="apple-amount">Amount:</label>
-                      <div class="items-list__item__details__amount__input">
-                        <input type="number" class="item-amount" name="apple-amount" id="apple-amount" min="0"
-                          value="0">
-                        <span class="items-list__item__details__amount__input__max">/ 26</span>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Item -->
-
-                <!-- Item -->
-                <div id="item-burger" class="items-list__item">
-                  <div class="items-list__item__select-box">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                  <div class="items-list__item__img-holder">
-                    <img src="../../dist/img/burger.png" alt="Burger">
-                  </div>
-                  <div class="items-list__item__details">
-                    <p class="items-list__item__details__name">Burger</p>
-                    <p class="items-list__item__details__affect">EXP: <span>+100</span></p>
-                    <div class="items-list__item__details__amount">
-                      <label for="burger-amount">Amount:</label>
-                      <div class="items-list__item__details__amount__input">
-                        <input type="number" class="item-amount" name="burger-amount" id="burger-amount" min="0"
-                          value="0">
-                        <span class="items-list__item__details__amount__input__max">/ 26</span>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Item -->
+              <div id="consumable-items-list" class="items-list">
               </div><!-- End List -->
             </div><!-- End Items -->
             <!-- End Consumable -->
@@ -225,94 +182,7 @@
             <!-- Items -->
             <div id="mystic-items" class="item-container">
               <!-- List -->
-              <div class="items-list">
-                <!-- Item -->
-                <div id="item-electric-medal" class="items-list__item">
-                  <div class="items-list__item__select-box">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                  <div class="items-list__item__img-holder">
-                    <img src="../../dist/img/electric-medal.png" alt="Electric Medal">
-                  </div>
-                  <div class="items-list__item__details">
-                    <p class="items-list__item__details__name">Electric Medal</p>
-                    <p class="items-list__item__details__affect">Power: <span>+1,000</span></p>
-                    <div class="items-list__item__details__amount">
-                      <label for="electric-medal-amount">Amount:</label>
-                      <div class="items-list__item__details__amount__input">
-                        <input type="number" class="item-amount" name="electric-medal-amount" id="electric-medal-amount"
-                          min="0" value="0">
-                        <span class="items-list__item__details__amount__input__max">/ 10</span>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Item -->
-
-                <!-- Item -->
-                <div id="item-ghost-medal" class="items-list__item">
-                  <div class="items-list__item__select-box">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                  <div class="items-list__item__img-holder">
-                    <img src="../../dist/img/ghost-medal.png" alt="Ghost Medal">
-                  </div>
-                  <div class="items-list__item__details">
-                    <p class="items-list__item__details__name">Ghost Medal</p>
-                    <p class="items-list__item__details__affect">Power: <span>+1,000</span></p>
-                    <div class="items-list__item__details__amount">
-                      <label for="ghost-medal-amount">Amount:</label>
-                      <div class="items-list__item__details__amount__input">
-                        <input type="number" class="item-amount" name="ghost-medal-amount" id="ghost-medal-amount"
-                          min="0" value="0">
-                        <span class="items-list__item__details__amount__input__max">/ 10</span>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Item -->
-
-                <!-- Item -->
-                <div id="item-fire-medal" class="items-list__item">
-                  <div class="items-list__item__select-box">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                  <div class="items-list__item__img-holder">
-                    <img src="../../dist/img/fire-medal.png" alt="Fire Medal">
-                  </div>
-                  <div class="items-list__item__details">
-                    <p class="items-list__item__details__name">Fire Medal</p>
-                    <p class="items-list__item__details__affect">Power: <span>+1,000</span></p>
-                    <div class="items-list__item__details__amount">
-                      <label for="fire-medal-amount">Amount:</label>
-                      <div class="items-list__item__details__amount__input">
-                        <input type="number" class="item-amount" name="fire-medal-amount" id="fire-medal-amount" min="0"
-                          value="0">
-                        <span class="items-list__item__details__amount__input__max">/ 10</span>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Item -->
-
-                <!-- Item -->
-                <div id="item-grass-medal" class="items-list__item">
-                  <div class="items-list__item__select-box">
-                    <i class="fa-solid fa-check"></i>
-                  </div>
-                  <div class="items-list__item__img-holder">
-                    <img src="../../dist/img/grass-medal.png" alt="Grass Medal">
-                  </div>
-                  <div class="items-list__item__details">
-                    <p class="items-list__item__details__name">Grass Medal</p>
-                    <p class="items-list__item__details__affect">Power: <span>+1,000</span></p>
-                    <div class="items-list__item__details__amount">
-                      <label for="grass-medal-amount">Amount:</label>
-                      <div class="items-list__item__details__amount__input">
-                        <input type="number" class="item-amount" name="grass-medal-amount" id="grass-medal-amount"
-                          min="0" value="0">
-                        <span class="items-list__item__details__amount__input__max">/ 10</span>
-                      </div>
-                    </div>
-                  </div>
-                </div><!-- End Item -->
+              <div id="mystic-items-list" class="items-list">
               </div><!-- End List -->
 
             </div><!-- End Items -->

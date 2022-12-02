@@ -4,7 +4,6 @@ import at.favre.lib.crypto.bcrypt.BCrypt
 import com.benasher44.uuid.uuid4
 import com.example.item.AffectAttributes
 import com.example.item.ItemCollection
-import com.example.item.ItemDAO
 import com.example.item.rewardItems
 import com.example.models.BattleResultModel
 import com.example.models.UseItemModel
@@ -14,7 +13,6 @@ import com.example.util.QueryResult
 import com.mongodb.client.result.UpdateResult
 import kotlinx.serialization.Serializable
 import org.litote.kmongo.*
-import kotlin.math.exp
 
 enum class Activity {
     CATCH, BATTLE
@@ -135,12 +133,12 @@ class UserCollection() {
                                 // Add EXP
                                 item.affect.contains(AffectAttributes.EXP) -> PokemonCollection().addExp(
                                     it.pokemonId,
-                                    item.affect.getValue(AffectAttributes.EXP)
+                                    item.affect.getValue(AffectAttributes.EXP) * it.amount
                                 )
                                 // Add Power
                                 item.affect.contains(AffectAttributes.POWER) -> PokemonCollection().addPower(
                                     it.pokemonId,
-                                    item.affect.getValue(AffectAttributes.POWER)
+                                    item.affect.getValue(AffectAttributes.POWER) * it.amount
                                 )
                             }
 

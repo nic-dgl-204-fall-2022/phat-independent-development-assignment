@@ -78,8 +78,8 @@ class PokemonCollection() {
 
             if (pokemon.expPoints >= pokemon.maxExpPoints) {
                 pokemon.level += 1
-                pokemon.maxExpPoints += (pokemon.expPoints * 0.4).roundToInt()
                 pokemon.expPoints -= pokemon.maxExpPoints
+                pokemon.maxExpPoints += (pokemon.expPoints * 0.5).roundToInt()
             }
 
             instance.replaceOne(PokemonDAO::id eq id, pokemon)

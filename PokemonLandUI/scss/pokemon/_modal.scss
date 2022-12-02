@@ -252,6 +252,11 @@
 					li:not(:last-child) {
 						margin-right: u.rem(15);
 					}
+
+                    img {
+                        width: u.rem(50);
+                        height: u.rem(50);
+                    }
 				}
 			}
 

@@ -4,6 +4,7 @@ const SERVER_API_ROUTES = {
 	signupRoute: `${SERVER_API_ORIGIN_URL}/signup`,
 	profileRoute: `${SERVER_API_ORIGIN_URL}/profile`,
 	itemRoute: `${SERVER_API_ORIGIN_URL}/item`,
+	useItemRoute: `${SERVER_API_ORIGIN_URL}/item/use`,
 	pokemonRoute: `${SERVER_API_ORIGIN_URL}/pokemon`,
 };
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";
