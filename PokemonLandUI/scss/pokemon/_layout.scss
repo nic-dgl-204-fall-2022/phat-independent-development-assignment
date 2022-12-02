@@ -22,3 +22,21 @@
     }
 
 }
+
+.pokemon-status {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: calc(-1 * u.rem(60));
+	left: calc(-1 * u.rem(50));
+
+	&__desc {
+		display: block;
+		position: absolute;
+		color: #fff;
+		font-weight: bold;
+		font-size: u.rem(20);
+	}
+}

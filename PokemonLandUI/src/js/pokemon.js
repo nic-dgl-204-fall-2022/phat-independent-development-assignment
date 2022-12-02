@@ -15,6 +15,20 @@ function createPokemonCard(pokemon) {
 	levelElement.textContent = `Lv.${pokemon.level}`;
 	levelContainer.appendChild(levelElement);
 
+	// Status
+	const statusContainer = document.createElement("div");
+	statusContainer.className = "pokemon-status";
+	if (pokemon.status === "WILD") {
+		const statusImg = document.createElement("img");
+		statusImg.src = "../../dist/img/pokemon-status/sniper-gray.png";
+		statusImg.alt = "Wild status background";
+		const wildText = document.createElement("span");
+		wildText.className = "pokemon-status__desc";
+		wildText.textContent = "Wild";
+		statusContainer.appendChild(statusImg);
+		statusContainer.appendChild(wildText);
+	}
+
 	// Image
 	const imgContainer = document.createElement("div");
 	imgContainer.className = "card__pokemon_img";
@@ -39,6 +53,7 @@ function createPokemonCard(pokemon) {
 	// Card Content
 	const cardContentElement = document.createElement("div");
 	cardContentElement.className = "card__content";
+	cardContentElement.appendChild(statusContainer);
 	cardContentElement.appendChild(levelContainer);
 	cardContentElement.appendChild(imgContainer);
 	cardContentElement.appendChild(powerContainer);
@@ -73,6 +88,20 @@ function createPokemonStats(pokemon, hasUseItemBtn = false) {
 	pkmLevel.textContent = `Lv.${pokemon.level}`;
 	pkmLevelContainer.appendChild(pkmLevel);
 
+	// Status
+	const statusContainer = document.createElement("div");
+	statusContainer.className = "pokemon-status";
+	if (pokemon.status === "WILD") {
+		const statusImg = document.createElement("img");
+		statusImg.src = "../../dist/img/pokemon-status/sniper-gray.png";
+		statusImg.alt = "Wild status background";
+		const wildText = document.createElement("span");
+		wildText.className = "pokemon-status__desc";
+		wildText.textContent = "Wild";
+		statusContainer.appendChild(statusImg);
+		statusContainer.appendChild(wildText);
+	}
+
 	//Image
 	const pkmImgContainer = document.createElement("div");
 	pkmImgContainer.className = "card__pokemon_img";
@@ -97,6 +126,7 @@ function createPokemonStats(pokemon, hasUseItemBtn = false) {
 	// Card Content
 	const statsCardContent = document.createElement("div");
 	statsCardContent.className = "card__content";
+	statsCardContent.appendChild(statusContainer);
 	statsCardContent.appendChild(pkmLevelContainer);
 	statsCardContent.appendChild(pkmImgContainer);
 	statsCardContent.appendChild(pkmPowerContainer);
