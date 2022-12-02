@@ -62,7 +62,8 @@ val pikachu = PokemonDAO(
     power = 25000,
     level = 16,
     maxExpPoints = 1500,
-    status = PokemonStatus.OWNED,
+    status = PokemonStatus.WILD,
+    captureRate = 0,
     imgName = "pikachu.svg"
 )
 val raichu = PokemonDAO(
@@ -72,7 +73,8 @@ val raichu = PokemonDAO(
     power = 45000,
     level = 32,
     maxExpPoints = 3500,
-    status = PokemonStatus.OWNED,
+    status = PokemonStatus.WILD,
+    captureRate = 0,
     imgName = "raichu.svg"
 )
 val ivysaur = PokemonDAO(

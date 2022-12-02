@@ -69,8 +69,10 @@ class UserCollection() {
                 ),
                 pokemon = listOf(
                     "89cd54fa-6744-4cb0-b42b-50ceadb5a28e",
-                    "b6800af1-6076-4cf9-a74d-266d78eb7fec",
-                    "52830674-de5f-4951-8f09-8803454d4b5c"
+                    "13b55d90-fb4e-4a36-b4e9-044d4ddccf07",
+                    "ec51b4d0-9e72-40be-a130-3062a5e37dd3",
+                    "9a688086-4dfe-48a8-9d97-929b95fb7aaf",
+                    "82cdda8a-fc69-488b-945e-8210dae43a82"
                 )
             )
             instance.insertOne(user)
