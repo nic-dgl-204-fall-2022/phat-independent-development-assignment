@@ -1,9 +1,9 @@
-const SERVER_API_ORIGIN_URL = "http://0.0.0.0:8080/api/";
+const SERVER_API_ORIGIN_URL = "http://0.0.0.0:8080/api";
 const SERVER_API_ROUTES = {
 	loginRoute: `${SERVER_API_ORIGIN_URL}/login`,
 	signupRoute: `${SERVER_API_ORIGIN_URL}/signup`,
+	profileRoute: `${SERVER_API_ORIGIN_URL}/profile`,
 };
-
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";
 const CLIENT_PAGES = {
 	loginPage: `${CLIENT_ORIGIN_URL}/login.html`,
@@ -13,7 +13,7 @@ const CLIENT_PAGES = {
 };
 const JWT_STORAGE_NAME = "pkm-jwt";
 
-// Auth Guard
+// Check if user already logged in
 function isLoggedIn() {
 	const jwtToken = localStorage.getItem(JWT_STORAGE_NAME);
 	if (jwtToken && JSON.parse(jwtToken).token != null) {
@@ -33,6 +33,7 @@ function getJwtToken() {
 	if (!isLoggedIn) {
 		return null;
 	}
+
 	const jwtToken = localStorage.getItem(JWT_STORAGE_NAME);
 	if (jwtToken && JSON.parse(jwtToken).token != null) {
 		return JSON.parse(jwtToken).token;
@@ -51,6 +52,11 @@ function setJwtToken(token, saveInLocalStorage = false) {
 	} else {
 		sessionStorage.setItem(JWT_STORAGE_NAME, JSON.stringify({ token }));
 	}
+}
+// Remove Jwt Token
+function removeStorages() {
+    localStorage.clear()
+    sessionStorage.clear()
 }
 
 // Redirect to
@@ -103,7 +109,12 @@ function closeAllModals() {
 		modal.classList.remove("show");
 	});
 }
-
 closeModalButtons.forEach((button) => {
 	button.addEventListener("click", closeAllModals);
 });
+
+// ==== Pokemon ====
+let pokemonIdList = [];
+
+// ==== Item ====
+let itemIdList = [];

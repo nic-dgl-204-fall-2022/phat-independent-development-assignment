@@ -47,7 +47,7 @@
     <main>
       <div class="container">
         <!-- Profile Form -->
-        <form action="#!" method="get">
+        <form id="profile-form" action="#!" method="get">
           <div class="form">
             <div class="form__header">
               <h3>Profile</h3>
@@ -64,21 +64,21 @@
                   </div>
 
                   <div class="profile__info__card__level">
-                    <span>Lv.20</span>
+                    <span id="level">Lv.0</span>
                   </div>
 
                   <div class="profile__info__card__name">
-                    <p>phattran2905</p>
+                    <p id="username">Unknown</p>
                   </div>
                 </div>
 
                 <div class="profile__info__experience">
-                  <p>EXP: <span class="profile__info__experience--current">1500</span> / <span>3000</span></p>
+                  <p>EXP: <span id="exp" class="profile__info__experience--current">0</span> / <span id="max-exp">0</span></p>
                   <div class="profile__info__experience__bars"></div>
                 </div>
                 <div class="profile__info__coins">
                   <i class="fa-solid fa-coins"></i>
-                  <span>300</span>
+                  <span id="coins">0</span>
                 </div>
               </div>
               <div class="form__container__fields">
@@ -90,7 +90,7 @@
                   <label for="email" class="form__label">Email</label>
                   <input type="email" id="email" class="form__input" placeholder="email@email.com"
                     value="phat.tran2905@gmail.com">
-                  <p class="form__error show">Email already existed.</p>
+                  <!-- <p class="form__error show">Email already existed.</p> -->
                 </div>
                 <div class="form__input-group">
                   <label for="phone" class="form__label">Phone</label>
