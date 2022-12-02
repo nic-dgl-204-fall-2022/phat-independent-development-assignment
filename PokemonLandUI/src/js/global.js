@@ -1,6 +1,7 @@
 const SERVER_API_ORIGIN_URL = "http://0.0.0.0:8080/api/";
 const SERVER_API_ROUTES = {
 	loginRoute: `${SERVER_API_ORIGIN_URL}/login`,
+	signupRoute: `${SERVER_API_ORIGIN_URL}/signup`,
 };
 
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";

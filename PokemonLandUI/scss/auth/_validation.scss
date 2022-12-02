@@ -1,11 +1,15 @@
 @use "../globals" as g;
 
 .validation {
-	display: flex;
+	display: none;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-end;
 	margin-right: 3.375rem;
+
+	&.show {
+		display: flex;
+	}
 
 	&__img {
 		width: 250px;
@@ -13,13 +17,18 @@
 
 	&__error {
 		display: none;
-        width: min(100%, 430px);
+		width: min(100%, 430px);
 		padding: 1rem 2rem;
 		border: 2px solid g.$black;
 		border-radius: 1rem;
 		margin: 0 auto 2rem auto;
 		align-self: center;
 		position: relative;
+
+        &.show {
+            display: block;
+        }
+
 		&::after {
 			content: "";
 			width: 0;
@@ -37,9 +46,14 @@
 			font-weight: bold;
 			color: g.$primary-color;
 		}
+	}
 
-        &.show {
-            display: block;
-        }
+	&__success {
+		@extend .validation__error;
+
+		&__message {
+			@extend .validation__error__message;
+			color: g.$success-color;
+		}
 	}
 }
