@@ -1,5 +1,6 @@
 // Remove the class 'selected' for all the Pokeball
 function unselectAllPokeball() {
+	const selectPokeballBtns = document.querySelectorAll(".items-list__item.pokeball");
 	selectPokeballBtns.forEach((button) => {
 		button.classList.remove("selected");
 	});
@@ -73,35 +74,97 @@ function createPokemonStatsCard(pokemon) {
 function displayWildPokemon(wildPokemon) {
 	const wildPkmStatsCard = createPokemonStatsCard(wildPokemon);
 	const pkmStatsContainer = document.querySelector("#pokemon-stats");
-	// pkmStatsContainer.innerHTML = ``;
-	console.log(pkmStatsContainer);
+	pkmStatsContainer.innerHTML = ``;
 	pkmStatsContainer.appendChild(wildPkmStatsCard);
 }
 
+function createPkbItem(pokeball) {
+	// Select box
+	const selectBoxContainer = document.createElement("div");
+	selectBoxContainer.className = "items-list__item__select-box";
+	const selectIcon = document.createElement("i");
+	selectIcon.className = "fa-solid fa-check";
+	selectBoxContainer.appendChild(selectIcon);
+
+	// Img Holder
+	const imgContainer = document.createElement("div");
+	imgContainer.className = "items-list__item__img-holder";
+	const pkmImg = document.createElement("img");
+	pkmImg.src = `../../dist/img/items/${pokeball.imgName}`;
+	pkmImg.alt = pokeball.name;
+	imgContainer.appendChild(pkmImg);
+
+	// Details
+	const detailContainer = document.createElement("div");
+	detailContainer.className = "items-list__item__details";
+	const detailName = document.createElement("p");
+	detailName.className = "items-list__item__details__name";
+	detailName.textContent = pokeball.name;
+	const detailAffect = document.createElement("p");
+	for (const [key, value] of Object.entries(pokeball.affect)) {
+		detailAffect.innerHTML = `${key}: <span>${value}%</span>`;
+	}
+	const pkmAmount = document.createElement("p");
+	pkmAmount.className = "items-list__item__details__quantity";
+	pkmAmount.innerHTML = `Amount: <span>${pokeball.amount}</span>`;
+	detailContainer.appendChild(detailName);
+	detailContainer.appendChild(detailAffect);
+	detailContainer.appendChild(pkmAmount);
+
+	// Button wrapper
+	const buttonWrapper = document.createElement("button");
+	buttonWrapper.id = pokeball.id;
+	buttonWrapper.className = "items-list__item pokeball";
+	buttonWrapper.appendChild(selectBoxContainer);
+	buttonWrapper.appendChild(imgContainer);
+	buttonWrapper.appendChild(detailContainer);
+    buttonWrapper.addEventListener("click", () => {
+        unselectAllPokeball();
+        buttonWrapper.classList.add("selected");
+    });
+
+	return buttonWrapper;
+}
+
+function displayPokeballItems(pokeballItems) {
+	const pokemonList = document.getElementById("pokeball-list");
+	pokemonList.innerHTML = ``;
+	pokeballItems.forEach((pkbItem) => {
+		const pkbButtonItem = createPkbItem(pkbItem);
+		pokemonList.appendChild(pkbButtonItem);
+	});
+}
+
 async function main() {
+	// Check jwt token
+	const loggedIn = isLoggedIn();
+	if (!loggedIn) {
+		redirectTo(CLIENT_PAGES.loginPage);
+		return;
+	}
+
 	// Get PokemonID from query params
 	const { pokemonId } = new Proxy(new URLSearchParams(window.location.search), {
 		get: (searchParams, prop) => searchParams.get(prop),
 	});
 
+	const jwtToken = getJwtToken();
 	const wildPokemon = await findPokemonId(pokemonId);
 	displayWildPokemon(wildPokemon);
 
+	const itemList = await getItems();
+	const ownedItems = await getOwnedItemIds(jwtToken);
+	const usableItems = await getUsableItems(ownedItems, itemList);
+	const pokeballItems = usableItems.filter((item) => item.type === "Pokeball");
+    displayPokeballItems(pokeballItems)
+
 	const catchBlock = document.getElementById("catch");
 	const usePokeballBtn = document.getElementById("use-pokeball-btn");
-	const selectPokeballBtns = document.querySelectorAll(".items-list__item.pokeball");
 	const pokeballElements = document.querySelectorAll(".pokeball");
+    
 	// Results
 	const resultSuccessBlock = document.getElementById("result-success");
 	const resultFailBlock = document.getElementById("result-fail");
-
-	// Add class 'selected' for a Pokeball
-	selectPokeballBtns.forEach((button) => {
-		button.addEventListener("click", () => {
-			unselectAllPokeball();
-			button.classList.add("selected");
-		});
-	});
 
 	// Show the result
 	usePokeballBtn.addEventListener("click", () => {
