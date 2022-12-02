@@ -101,6 +101,7 @@ function createPkbItem(pokeball) {
 	detailName.className = "items-list__item__details__name";
 	detailName.textContent = pokeball.name;
 	const detailAffect = document.createElement("p");
+	detailAffect.className = "items-list__item__details__affect";
 	for (const [key, value] of Object.entries(pokeball.affect)) {
 		detailAffect.innerHTML = `${key}: <span>${value}%</span>`;
 	}
@@ -118,10 +119,10 @@ function createPkbItem(pokeball) {
 	buttonWrapper.appendChild(selectBoxContainer);
 	buttonWrapper.appendChild(imgContainer);
 	buttonWrapper.appendChild(detailContainer);
-    buttonWrapper.addEventListener("click", () => {
-        unselectAllPokeball();
-        buttonWrapper.classList.add("selected");
-    });
+	buttonWrapper.addEventListener("click", () => {
+		unselectAllPokeball();
+		buttonWrapper.classList.add("selected");
+	});
 
 	return buttonWrapper;
 }
@@ -156,12 +157,12 @@ async function main() {
 	const ownedItems = await getOwnedItemIds(jwtToken);
 	const usableItems = await getUsableItems(ownedItems, itemList);
 	const pokeballItems = usableItems.filter((item) => item.type === "Pokeball");
-    displayPokeballItems(pokeballItems)
+	displayPokeballItems(pokeballItems);
 
 	const catchBlock = document.getElementById("catch");
 	const usePokeballBtn = document.getElementById("use-pokeball-btn");
 	const pokeballElements = document.querySelectorAll(".pokeball");
-    
+
 	// Results
 	const resultSuccessBlock = document.getElementById("result-success");
 	const resultFailBlock = document.getElementById("result-fail");
