@@ -30,23 +30,6 @@ function unselectAllPokemon() {
 	});
 }
 
-// Tab links
-pokeballTabLink.addEventListener("click", (e) => {
-	closeAllTabs();
-	pokeballTab.classList.add("show");
-	e.target.parentNode.classList.add("active");
-});
-mysticTabLink.addEventListener("click", (e) => {
-	closeAllTabs();
-	mysticTab.classList.add("show");
-	e.target.parentNode.classList.add("active");
-});
-consumableTabLink.addEventListener("click", (e) => {
-	closeAllTabs();
-	consumableTab.classList.add("show");
-	e.target.parentNode.classList.add("active");
-});
-
 function createItemElement(pokeball) {
 	// Image
 	const itemImgContainer = document.createElement("div");
@@ -205,7 +188,7 @@ function displayItemInModal(item) {
 
 	// Wrapper
 	const wrapperElement = document.getElementById("item-modal-content");
-    wrapperElement.innerHTML = ``
+	wrapperElement.innerHTML = ``;
 	wrapperElement.appendChild(leftColContainer);
 	wrapperElement.appendChild(rightColContainer);
 	//     <div class="left-col">
@@ -270,9 +253,30 @@ async function main() {
 	const usableItems = await getUsableItems(ownedItemIds, itemList);
 	const pokeballItems = usableItems.filter((i) => i.type === "Pokeball");
 	addPokeBallItems(pokeballItems);
+    document.getElementById("item-amount").textContent = pokeballItems.length
 	const mysticItems = usableItems.filter((i) => i.type === "MysticItems");
 	addMysticItems(mysticItems);
 	const consumableItems = usableItems.filter((i) => i.type === "ConsumableItems");
 	addConsumableItems(consumableItems);
+
+	// Tab links
+	pokeballTabLink.addEventListener("click", (e) => {
+		closeAllTabs();
+		pokeballTab.classList.add("show");
+		e.target.parentNode.classList.add("active");
+        document.getElementById("item-amount").textContent = pokeballItems.length
+	});
+	mysticTabLink.addEventListener("click", (e) => {
+		closeAllTabs();
+		mysticTab.classList.add("show");
+		e.target.parentNode.classList.add("active");
+        document.getElementById("item-amount").textContent = mysticItems.length
+	});
+	consumableTabLink.addEventListener("click", (e) => {
+		closeAllTabs();
+		consumableTab.classList.add("show");
+		e.target.parentNode.classList.add("active");
+        document.getElementById("item-amount").textContent = consumableItems.length
+	});
 }
 main();
