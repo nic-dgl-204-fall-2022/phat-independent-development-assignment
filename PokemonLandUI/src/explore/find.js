@@ -96,13 +96,17 @@ async function findAndDisplayWildPokemon() {
 		// Check jwt token
 		const loggedIn = isLoggedIn();
 		if (!loggedIn) {
-			return redirectTo(CLIENT_PAGES.loginPage);
+			redirectTo(CLIENT_PAGES.loginPage);
+            return
 		}
 
 		const jwtToken = getJwtToken();
 		const wildPokemon = await findWildPokemon(jwtToken);
 		displayWildPokemon(wildPokemon);
+        document.getElementById("catch-btn").href = `./catch.html?pokemonId=${wildPokemon.id}`
+        document.getElementById("battle-btn").href = `./battle.html?pokemonId=${wildPokemon.id}`
 		foundBlock.classList.add("show");
+        return wildPokemon
 	}, 3000);
 }
 

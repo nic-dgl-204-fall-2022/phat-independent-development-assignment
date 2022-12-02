@@ -96,3 +96,24 @@ const findWildPokemon = async (jwtToken) => {
 		console.log(error);
 	}
 };
+
+// Find Pokemon By Id
+const findPokemonId = async(pokemonId) => {
+    try {
+		const rawResponse = await fetch(`${SERVER_API_ROUTES.pokemonRoute}/${pokemonId}`, {
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+		});
+
+		const content = await rawResponse.json();
+		if (content.message == "OK" && content.statusCode.toString() === "200") {
+			const responseData = JSON.parse(content.data);
+			return responseData;
+		}
+    } catch (error) {
+        console.log(error)
+    }
+}

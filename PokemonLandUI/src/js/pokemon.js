@@ -168,11 +168,11 @@ function createPokemonStats(pokemon, hasUseItemBtn = false) {
 	} else if (pokemon.status === "WILD") {
         const catchBtn = document.createElement("a");
         catchBtn.className = "pokemon-stats__group-button__button";
-        catchBtn.href = "./explore/catch.html";
+        catchBtn.href = `./explore/catch.html?pokemonId=${pokemon.id}`;
         catchBtn.textContent = "Catch";
         const battleBtn = document.createElement("a");
         battleBtn.className = "pokemon-stats__group-button__button";
-        battleBtn.href = "./explore/battle.html";
+        battleBtn.href = `./explore/battle.html?pokemonId=${pokemon.id}`;
         battleBtn.textContent = "Battle";
 		useItemContainer.appendChild(catchBtn);
 		useItemContainer.appendChild(battleBtn);

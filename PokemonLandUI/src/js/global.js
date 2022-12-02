@@ -14,6 +14,9 @@ const CLIENT_PAGES = {
 	signupPage: `${CLIENT_ORIGIN_URL}/signup.html`,
 	profilePage: `${CLIENT_ORIGIN_URL}/profile.html`,
 	pokemonPage: `${CLIENT_ORIGIN_URL}/pokemon.html`,
+	findPkmPage: `${CLIENT_ORIGIN_URL}/explore/find.html`,
+	catchPkmPage: `${CLIENT_ORIGIN_URL}/explore/catch.html`,
+	battlePkmPage: `${CLIENT_ORIGIN_URL}/explore/battle.html`,
 };
 const JWT_STORAGE_NAME = "pkm-jwt";
 let currentScroll = 0
