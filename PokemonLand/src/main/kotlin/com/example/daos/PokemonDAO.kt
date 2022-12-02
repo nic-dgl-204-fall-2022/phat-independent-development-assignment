@@ -47,7 +47,8 @@ class PokemonCollection() {
             power = 15000,
             level = 10,
             maxExpPoints = 1000,
-            status = PokemonStatus.OWNED
+            status = PokemonStatus.OWNED,
+            imgName = "pichu.svg"
         )
         val pikachu = PokemonDAO(
             "b6800af1-6076-4cf9-a74d-266d78eb7fec",
@@ -56,7 +57,8 @@ class PokemonCollection() {
             power = 25000,
             level = 16,
             maxExpPoints = 1500,
-            status = PokemonStatus.OWNED
+            status = PokemonStatus.OWNED,
+            imgName = "pikachu.svg"
         )
         val raichu = PokemonDAO(
             "52830674-de5f-4951-8f09-8803454d4b5c",
@@ -65,7 +67,8 @@ class PokemonCollection() {
             power = 45000,
             level = 32,
             maxExpPoints = 3500,
-            status = PokemonStatus.OWNED
+            status = PokemonStatus.OWNED,
+            imgName = "raichu.svg"
         )
         val charmander = PokemonDAO(
             "13b55d90-fb4e-4a36-b4e9-044d4ddccf07",
@@ -74,7 +77,8 @@ class PokemonCollection() {
             power = 15000,
             level = 10,
             maxExpPoints = 1000,
-            status = PokemonStatus.OWNED
+            status = PokemonStatus.OWNED,
+            imgName = "charmander.svg"
         )
         val bulbasaur =
             PokemonDAO(
@@ -84,7 +88,8 @@ class PokemonCollection() {
                 power = 15000,
                 level = 10,
                 maxExpPoints = 1000,
-                status = PokemonStatus.OWNED
+                status = PokemonStatus.OWNED,
+                imgName = "bulbasaur.svg"
             )
         val squirtle = PokemonDAO(
             "9a688086-4dfe-48a8-9d97-929b95fb7aaf",
@@ -93,7 +98,8 @@ class PokemonCollection() {
             power = 15000,
             level = 10,
             maxExpPoints = 1000,
-            status = PokemonStatus.OWNED
+            status = PokemonStatus.OWNED,
+            imgName = "squirtle.svg"
         )
         val caterpie = PokemonDAO(
             "82cdda8a-fc69-488b-945e-8210dae43a82",
@@ -102,7 +108,8 @@ class PokemonCollection() {
             power = 10000,
             level = 10,
             maxExpPoints = 1000,
-            status = PokemonStatus.OWNED
+            status = PokemonStatus.OWNED,
+            imgName = "caterpie.svg"
         )
 
         val pichuEvolutions = listOf(
@@ -213,6 +220,7 @@ val wildPokemon = mutableListOf<PokemonDAO>(
         maxExpPoints = 4000,
         status = PokemonStatus.WILD,
         captureRate = 0,
+        imgName = "venusaur.svg"
     ),
     PokemonDAO(
         uuid4().toString(),
@@ -223,6 +231,18 @@ val wildPokemon = mutableListOf<PokemonDAO>(
         maxExpPoints = 1500,
         status = PokemonStatus.WILD,
         captureRate = 0,
+        imgName = "ivysaur.svg"
+    ),
+    PokemonDAO(
+        uuid4().toString(),
+        "Wartortle",
+        listOf("Water"),
+        power = 20000,
+        level = 18,
+        maxExpPoints = 2000,
+        status = PokemonStatus.WILD,
+        captureRate = 0,
+        imgName = "wartortle.svg"
     ), PokemonDAO(
         uuid4().toString(),
         "Charizard",
@@ -230,7 +250,19 @@ val wildPokemon = mutableListOf<PokemonDAO>(
         power = 50000,
         level = 50,
         maxExpPoints = 5500,
-        status = PokemonStatus.WILD
+        captureRate = 0,
+        status = PokemonStatus.WILD,
+        imgName = "charizard.svg"
+    ),PokemonDAO(
+        uuid4().toString(),
+        "Blastoise",
+        listOf("Water"),
+        power = 55000,
+        level = 50,
+        maxExpPoints = 6500,
+        captureRate = 0,
+        status = PokemonStatus.WILD,
+        imgName = "blastoise.svg"
     ), PokemonDAO(
         uuid4().toString(),
         "Metapod",
@@ -238,7 +270,9 @@ val wildPokemon = mutableListOf<PokemonDAO>(
         power = 15000,
         level = 15,
         maxExpPoints = 1500,
-        status = PokemonStatus.WILD
+        captureRate = 0,
+        status = PokemonStatus.WILD,
+        imgName = "metapod.svg"
     ), PokemonDAO(
         uuid4().toString(),
         "Butterfree",
@@ -246,14 +280,18 @@ val wildPokemon = mutableListOf<PokemonDAO>(
         level = 20,
         power = 20000,
         maxExpPoints = 2000,
-        status = PokemonStatus.WILD
+        captureRate = 0,
+        status = PokemonStatus.WILD,
+        imgName = "butterfree.svg"
     ), PokemonDAO(
         uuid4().toString(),
-        "Rattata",
-        listOf("Normal"),
-        power = 10000,
-        level = 10,
-        maxExpPoints = 1000,
-        status = PokemonStatus.WILD
+        "Charmeleon",
+        listOf("Fire"),
+        power = 20000,
+        level = 19,
+        maxExpPoints = 1900,
+        captureRate = 0,
+        status = PokemonStatus.WILD,
+        imgName = "charmeleon.svg"
     )
 )
