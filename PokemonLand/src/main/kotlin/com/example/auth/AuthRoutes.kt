@@ -24,12 +24,22 @@ fun Route.signup() {
 
             val result = signUpInput.signup()
 
-            call.respond(
-                hashMapOf(
-                    "message" to "OK",
-                    "statusCode" to "201"
+            if (result.done) {
+                call.respond(
+                    hashMapOf(
+                        "message" to "OK",
+                        "statusCode" to "201"
+                    )
                 )
-            )
+            } else {
+                call.respond(
+                    hashMapOf(
+                        "message" to "OK",
+                        "statusCode" to "400",
+                        "error" to result.error
+                    )
+                )
+            }
         } catch (e: Exception) {
             call.respond(
                 hashMapOf(
@@ -51,12 +61,18 @@ fun Route.login() {
                 return@post call.respond(message)
             }
 
-            val result = loginInput.login()
+            val result = loginInput.login() ?: return@post call.respond(
+                hashMapOf(
+                    "message" to "OK",
+                    "statusCode" to "500",
+                    "error" to "Can not generate jwt token."
+                )
+            )
 
             call.respond(
                 hashMapOf(
                     "message" to "OK",
-                    "statusCode" to HttpStatusCode.OK.value.toString(),
+                    "statusCode" to "200",
                     "token" to result
                 )
             )
