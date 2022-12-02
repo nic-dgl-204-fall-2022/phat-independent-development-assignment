@@ -97,41 +97,7 @@
         </div>
 
         <div class="modal__content">
-          <div class="pokemon-stats">
-            <!-- Card -->
-            <div class="pokemon-stats__card card">
-              <div class="card__content">
-                <div class="card__level">
-                  <span>Lv.</span>
-                </div>
-
-                <div class="card__pokemon_img">
-                  <img src="../../dist/img/pokemon/pikachu.svg" alt="Pikachu">
-                </div>
-
-                <div class="card__power">
-                  <i class="fa-solid fa-bolt"></i>
-                  <span>Power:</span>
-                  <span>10,000</span>
-                </div>
-              </div>
-
-              <div class="card__footer">
-                <p>Pikachu</p>
-              </div>
-            </div><!-- End Card-->
-
-            <div class="pokemon-stats__experience">
-              <p>EXP: <span>1,500</span>/3,000</p>
-              <div class="pokemon-stats__experience__bars"></div>
-            </div>
-
-            <div class="pokemon-stats__group-button">
-              <a id="open-use-items-modal-btn" class="pokemon-stats__group-button__button" href="#">Use Items</a>
-              <a id="open-evolvement-modal-btn" class="pokemon-stats__group-button__button disabled" href="#">Evolve</a>
-            </div>
-          </div>
-
+          <div id="pokemon-modal-stats" class="pokemon-stats-container"></div>
           <!-- Pokemon Info -->
           <div class="pokemon-info">
             <div class="pokemon-info__row">
@@ -225,35 +191,7 @@
           <div class="modal__content">
 
             <!-- Pokemon Stats -->
-            <div class="pokemon-stats">
-              <!-- Card -->
-              <div class="pokemon-stats__card card">
-                <div class="card__content">
-                  <div class="card__level">
-                    <span>Lv.16</span>
-                  </div>
-
-                  <div class="card__pokemon_img">
-                    <img src="../../dist/img/pikachu.svg" alt="Pikachu">
-                  </div>
-
-                  <div class="card__power">
-                    <i class="fa-solid fa-bolt"></i>
-                    <span>Power:</span>
-                    <span>10,000</span>
-                  </div>
-                </div>
-
-                <div class="card__footer">
-                  <p>Pikachu</p>
-                </div>
-              </div><!-- End Card-->
-
-              <div class="pokemon-stats__experience">
-                <p>EXP: <span>1,500</span>/3,000</p>
-                <div class="pokemon-stats__experience__bars with-expected"></div>
-              </div>
-            </div><!-- End Pokemon Stats -->
+            <div class="pokemon-stats-container"></div><!-- End Pokemon Stats -->
 
             <!-- Consumable -->
             <!-- Items -->

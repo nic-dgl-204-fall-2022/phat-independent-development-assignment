@@ -20,7 +20,6 @@ function createPokemonCard(pokemon) {
 	imgContainer.className = "card__pokemon_img";
 	const pokemonImg = document.createElement("img");
 	pokemonImg.src = `../../dist/img/pokemon/${pokemon.imgName}`;
-	// pokemonImg.src = `../../dist/img/charmander.svg`;
 	pokemonImg.alt = pokemon.name;
 	imgContainer.appendChild(pokemonImg);
 
@@ -66,6 +65,88 @@ function createPokemonCard(pokemon) {
 	return tabItemElement;
 }
 
+function createPokemonStats(pokemon, hasUseItemBtn = false) {
+	// Level
+	const pkmLevelContainer = document.createElement("div");
+	pkmLevelContainer.className = "card__level";
+	const pkmLevel = document.createElement("span");
+	pkmLevel.textContent = `Lv.${pokemon.level}`;
+	pkmLevelContainer.appendChild(pkmLevel);
+
+	//Image
+	const pkmImgContainer = document.createElement("div");
+	pkmImgContainer.className = "card__pokemon_img";
+	const pkmImg = document.createElement("img");
+	pkmImg.src = `../../dist/img/pokemon/${pokemon.imgName}`;
+	pkmImg.alt = pokemon.name;
+	pkmImgContainer.appendChild(pkmImg);
+
+	// Power
+	const pkmPowerContainer = document.createElement("div");
+	pkmPowerContainer.className = "card__power";
+	const pkmPowerIcon = document.createElement("i");
+	pkmPowerIcon.className = "fa-solid fa-bolt";
+	const pkmPowerTitle = document.createElement("span");
+	pkmPowerTitle.textContent = "Power:";
+	const pkmPowerPoint = document.createElement("span");
+	pkmPowerPoint.textContent = pokemon.power;
+	pkmPowerContainer.appendChild(pkmPowerIcon);
+	pkmPowerContainer.appendChild(pkmPowerTitle);
+	pkmPowerContainer.appendChild(pkmPowerPoint);
+
+	// Card Content
+	const statsCardContent = document.createElement("div");
+	statsCardContent.className = "card__content";
+	statsCardContent.appendChild(pkmLevelContainer);
+	statsCardContent.appendChild(pkmImgContainer);
+	statsCardContent.appendChild(pkmPowerContainer);
+
+	// Card Footer
+	const footerCardContainer = document.createElement("div");
+	footerCardContainer.className = "card__footer";
+	const pkmName = document.createElement("p");
+	pkmName.textContent = pokemon.name;
+	footerCardContainer.appendChild(pkmName);
+
+	// Card
+	const statsCard = document.createElement("div");
+	statsCard.className = "pokemon-stats__card card";
+	statsCard.appendChild(statsCardContent);
+	statsCard.appendChild(footerCardContainer);
+
+	// Exp
+	const expContainer = document.createElement("div");
+	expContainer.className = "pokemon-stats__experience";
+	const expText = document.createElement("p");
+	expText.innerHTML = `<span>${pokemon.expPoints}</span> / ${pokemon.maxExpPoints}`;
+	expContainer.appendChild(expText);
+
+	// Use items button
+	const useItemContainer = document.createElement("div");
+	useItemContainer.className = "pokemon-stats__group-button";
+	const useItemBtn = document.createElement("a");
+	useItemBtn.id = "open-use-items-modal-btn";
+	useItemBtn.className = "pokemon-stats__group-button__button";
+	useItemBtn.href = "#";
+	useItemBtn.textContent = "Use Items";
+	useItemBtn.addEventListener("click", (e) => {
+		closeAllModals();
+		document.getElementById("use-items-modal")?.classList.add("show");
+	});
+	useItemContainer.appendChild(useItemBtn);
+
+	// Pokemon Stats Element
+	const pkmStatsContainer = document.createElement("div");
+	pkmStatsContainer.className = "pokemon-stats";
+	pkmStatsContainer.appendChild(statsCard);
+	pkmStatsContainer.appendChild(expContainer);
+	if (hasUseItemBtn) {
+		pkmStatsContainer.appendChild(useItemContainer);
+	}
+
+	return pkmStatsContainer;
+}
+
 async function main() {
 	// ==== Pokemon ====
 	let pokemonIdList = [];
@@ -95,10 +176,6 @@ async function main() {
 	});
 
 	// ====== Event Handlers ======
-	const backToPokemonModalButton = document.getElementById("back-to-pokemon-modal-btn");
-	const pokemonCards = document.querySelectorAll(".card.hoverable");
-	const pokemonModal = document.getElementById("pokemon-modal");
-
 	// Tabs
 	const ownedTabLink = document.getElementById("tab-owned-link");
 	const wildTabLink = document.getElementById("tab-wild-link");
@@ -133,6 +210,12 @@ async function main() {
 		pokemonAmount.textContent = ownedPokemon.length;
 	});
 
+	// ==== Modals ====
+	// Pokemon modal
+	const backToPokemonModalButton = document.getElementById("back-to-pokemon-modal-btn");
+	const pokemonCards = document.querySelectorAll(".card.hoverable");
+	const pokemonModal = document.getElementById("pokemon-modal");
+
 	// Handle back buttons
 	backToPokemonModalButton.addEventListener("click", (e) => {
 		closeAllModals();
@@ -141,18 +224,35 @@ async function main() {
 
 	// Open Pokemon Modal
 	pokemonCards.forEach((element) => {
-		element.addEventListener("click", (e) => {
+		element.addEventListener("click", () => {
 			pokemonModal.classList.add("show");
+			const pokemonId = element.parentNode.id;
+			const pokemon = pokemonList.find((pkm) => pkm.id === pokemonId);
+
+			if (pokemon === -1) {
+				return;
+			}
+
+			const pkmStatsContainer = document.querySelectorAll(".pokemon-stats-container");
+			// Clear previous pokemon stats
+			pkmStatsContainer.forEach((e) => (e.innerHTML = ""));
+			// Add pokemon stats to modals
+			pkmStatsContainer.forEach((e) => {
+				const hasUseItemBtn = e.id === "pokemon-modal-stats";
+				const pkmStatsCard = createPokemonStats(pokemon, hasUseItemBtn);
+
+				e.appendChild(pkmStatsCard);
+			});
 		});
 	});
 
-	// Open Use items Modal
-	const openUseItemsModalButton = document.getElementById("open-use-items-modal-btn");
-	const useItemsModal = document.getElementById("use-items-modal");
-	openUseItemsModalButton.addEventListener("click", (e) => {
-		closeAllModals();
-		useItemsModal.classList.add("show");
-	});
+	// Use items Modal
+	// const useItemsModal = document.getElementById("use-items-modal");
+	// const openUseItemsModalButton = document.getElementById("open-use-items-modal-btn");
+	// openUseItemsModalButton.addEventListener("click", (e) => {
+	// 	closeAllModals();
+	// 	useItemsModal.classList.add("show");
+	// });
 
 	// Show content for items
 	const openConsumableBtn = document.getElementById("open-consumable-items");
