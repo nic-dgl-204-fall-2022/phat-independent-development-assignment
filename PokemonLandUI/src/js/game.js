@@ -117,3 +117,30 @@ const findPokemonId = async(pokemonId) => {
         console.log(error)
     }
 }
+
+// Catch wild pokemon
+const catchWildPokemon = async(jwtToken, pokemonId, pokeballId) => {
+    try {
+		const rawResponse = await fetch(SERVER_API_ROUTES.catchPokemonRoute, {
+			method: "PUT",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${jwtToken}`,
+			},
+            body: JSON.stringify({
+                "pokemonId": pokemonId,
+                "itemId": pokeballId
+            })
+		});
+
+		const content = await rawResponse.json();
+		if (content.message == "OK" && content.statusCode.toString() === "200") {
+            console.log(content.data)
+			const responseData = JSON.parse(content.data);
+			return responseData;
+		}
+    } catch (error) {
+        console.log(error)
+    }
+}

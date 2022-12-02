@@ -7,6 +7,8 @@ const SERVER_API_ROUTES = {
 	useItemRoute: `${SERVER_API_ORIGIN_URL}/item/use`,
 	pokemonRoute: `${SERVER_API_ORIGIN_URL}/pokemon`,
 	findPokemonRoute: `${SERVER_API_ORIGIN_URL}/explore/find`,
+	catchPokemonRoute: `${SERVER_API_ORIGIN_URL}/explore/catch`,
+	battlePokemonRoute: `${SERVER_API_ORIGIN_URL}/explore/battle`,
 };
 const CLIENT_ORIGIN_URL = window.location.origin + "/src";
 const CLIENT_PAGES = {

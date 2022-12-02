@@ -136,6 +136,58 @@ function displayPokeballItems(pokeballItems) {
 	});
 }
 
+function displayFailedResult(wildPokemon) {
+	const catchBlock = document.getElementById("catch");
+	const resultFailBlock = document.getElementById("result-fail");
+	resultFailBlock.classList.add("show");
+
+	const resultSuccessBlock = document.getElementById("result-success");
+	resultSuccessBlock.classList.remove("show");
+	catchBlock.classList.remove("show");
+
+	// Display wild pokemon information in the card
+	const pkmLevel = document.getElementById("failed-pkm-level");
+	pkmLevel.textContent = `Lv.${wildPokemon.level}`;
+	const pkmImg = document.getElementById("failed-pkm-img");
+	pkmImg.src = `../../dist/img/pokemon/${wildPokemon.imgName}`;
+	const pkmPower = document.getElementById("failed-pkm-power");
+	pkmPower.textContent = wildPokemon.power;
+	const pkmName = document.getElementById("failed-pkm-name");
+	pkmName.textContent = wildPokemon.name;
+}
+
+function displaySuccessResult(wildPokemon) {
+	const catchBlock = document.getElementById("catch");
+	const resultSuccessBlock = document.getElementById("result-success");
+	resultSuccessBlock.classList.add("show");
+
+	const resultFailBlock = document.getElementById("result-fail");
+	resultFailBlock.classList.remove("show");
+	catchBlock.classList.remove("show");
+
+	// Display wild pokemon information in the card
+	const pkmLevel = document.getElementById("success-pkm-level");
+	pkmLevel.textContent = `Lv.${wildPokemon.level}`;
+	const pkmImg = document.getElementById("success-pkm-img");
+	pkmImg.src = `../../dist/img/pokemon/${wildPokemon.imgName}`;
+	const pkmPower = document.getElementById("success-pkm-power");
+	pkmPower.textContent = wildPokemon.power;
+	const pkmName = document.getElementById("success-pkm-name");
+	pkmName.textContent = wildPokemon.name;
+}
+
+async function usePokeball(jwtToken, wildPokemon) {
+    const pokeball = document.querySelector(".items-list__item.pokeball.selected")
+	let result = await catchWildPokemon(jwtToken, wildPokemon.id, pokeball.id);
+console.log(pokeball.id)
+console.log(result)
+	if (result.captured) {
+		displaySuccessResult(wildPokemon);
+	} else {
+		displayFailedResult(wildPokemon);
+	}
+}
+
 async function main() {
 	// Check jwt token
 	const loggedIn = isLoggedIn();
@@ -151,6 +203,10 @@ async function main() {
 
 	const jwtToken = getJwtToken();
 	const wildPokemon = await findPokemonId(pokemonId);
+    // Redirect if it is not a wild Pokemon
+    if(wildPokemon.status !== "WILD") {
+        return redirectTo(CLIENT_PAGES.pokemonPage)
+    }
 	displayWildPokemon(wildPokemon);
 
 	const itemList = await getItems();
@@ -159,42 +215,13 @@ async function main() {
 	const pokeballItems = usableItems.filter((item) => item.type === "Pokeball");
 	displayPokeballItems(pokeballItems);
 
-	const catchBlock = document.getElementById("catch");
+	// Catch Pokemon
 	const usePokeballBtn = document.getElementById("use-pokeball-btn");
-	const pokeballElements = document.querySelectorAll(".pokeball");
+	usePokeballBtn.addEventListener("click", () => usePokeball(jwtToken, wildPokemon));
 
-	// Results
-	const resultSuccessBlock = document.getElementById("result-success");
-	const resultFailBlock = document.getElementById("result-fail");
-
-	// Show the result
-	usePokeballBtn.addEventListener("click", () => {
-		catchBlock.classList.remove("show");
-
-		let successfulResult = false;
-		// Display the success result if the first Pokeball is selected.
-		pokeballElements.forEach((pokeball) => {
-			if (pokeball.classList.contains("selected")) {
-				if (pokeball.id === "pokeball-2") {
-					successfulResult = true;
-				} else {
-					successfulResult = false;
-				}
-			}
-		});
-
-		if (successfulResult) {
-			resultSuccessBlock.classList.add("show");
-
-			resultFailBlock.classList.remove("show");
-			catchBlock.classList.remove("show");
-		} else {
-			resultFailBlock.classList.add("show");
-
-			resultSuccessBlock.classList.remove("show");
-			catchBlock.classList.remove("show");
-		}
-	});
+	// Try again button
+	const catchAgainBtn = document.getElementById("catch-again-btn");
+	catchAgainBtn.addEventListener("click", () => window.location.reload());
 }
 
 main();
