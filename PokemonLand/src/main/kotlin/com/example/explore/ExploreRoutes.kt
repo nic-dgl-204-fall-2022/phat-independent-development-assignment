@@ -34,7 +34,7 @@ fun Route.catchWildPokemon() {
 
         call.respond(
             ObjectResponse(
-                data = result
+                data = result.json
             ).json
         );
     }

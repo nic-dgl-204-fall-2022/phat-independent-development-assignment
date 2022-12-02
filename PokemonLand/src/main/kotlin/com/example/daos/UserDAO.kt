@@ -6,6 +6,7 @@ import com.example.item.AffectAttributes
 import com.example.item.ItemCollection
 import com.example.item.rewardItems
 import com.example.models.BattleResultModel
+import com.example.models.CatchResultModel
 import com.example.models.UseItemModel
 import com.example.models.ItemModel
 import com.example.util.Database
@@ -100,7 +101,7 @@ class UserCollection() {
 
         if (user?.expPoints != null && expPoints > 0) {
             val exp = user.expPoints + expPoints
-            if(exp >= user.maxExpPoints) {
+            if (exp >= user.maxExpPoints) {
                 user.level = user.level.plus(1)
                 user.expPoints = exp - user.maxExpPoints
                 user.maxExpPoints += (user.maxExpPoints * 0.4).toInt()
@@ -164,7 +165,8 @@ class UserCollection() {
         }
     }
 
-    fun catchWildPokemon(userId: String, pokemonId: String, itemId: String): String {
+    fun catchWildPokemon(userId: String, pokemonId: String, itemId: String): CatchResultModel {
+        val result = CatchResultModel(message = "The pokemon has not captured yet.")
         val user = instance.findOne(UserDAO::id eq userId)
         val item = ItemCollection().getItemById(itemId)
 
@@ -185,13 +187,16 @@ class UserCollection() {
 
                     if (pokemon.status == PokemonStatus.OWNED) {
                         getActivityRewards(userId, Activity.CATCH)
-                        return "Congratulations, you have a new pokemon."
+                        // Update result
+                        result.captured = true
+                        result.message = "Congratulations, you have a new pokemon."
+
                     }
                 }
             }
         }
 
-        return "The pokemon has not captured yet."
+        return result
     }
 
     fun battle(userId: String, pokemonId: String, wildPokemonId: String): BattleResultModel {
@@ -254,6 +259,6 @@ class UserCollection() {
         // Add items
         instance.updateOne(UserDAO::id eq user.id, setValue(UserDAO::items, user.items))
 
-        return randomReward.map { ItemModel(it.id, 1)}
+        return randomReward.map { ItemModel(it.id, 1) }
     }
 }
