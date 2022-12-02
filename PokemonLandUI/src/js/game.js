@@ -74,3 +74,25 @@ const getUsableItems = (ownedItemIds, items) => {
 		})
 		.filter((i) => i); // Clear undefined values
 };
+
+// Find Wild pokemon
+const findWildPokemon = async (jwtToken) => {
+	try {
+		const rawResponse = await fetch(SERVER_API_ROUTES.findPokemonRoute, {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${jwtToken}`,
+			},
+		});
+
+		const content = await rawResponse.json();
+		if (content.message == "OK" && content.statusCode.toString() === "200") {
+			const responseData = JSON.parse(content.data);
+			return responseData;
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};

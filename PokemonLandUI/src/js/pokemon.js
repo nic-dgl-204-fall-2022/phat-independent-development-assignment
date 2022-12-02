@@ -399,7 +399,7 @@ async function main() {
 				});
 			}
 		});
-		console.log(useItems);
+		
 		try {
 			const rawResponse = await fetch(SERVER_API_ROUTES.useItemRoute, {
 				method: "POST",

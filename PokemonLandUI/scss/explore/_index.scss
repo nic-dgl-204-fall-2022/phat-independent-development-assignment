@@ -1,12 +1,25 @@
 @use "../globals" as g;
 @use "../util" as u;
 
+@keyframes bouncing {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
 .loading {
 	display: none;
 	justify-content: center;
 	align-items: center;
 	grid-gap: u.rem(10);
 	margin: u.rem(16) 0;
+    
 
 	&.show {
 		display: flex;
@@ -14,7 +27,18 @@
 
 	img {
 		width: u.rem(30);
+        animation-name: bouncing;
+        animation-iteration-count: infinite;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+
+        @for $i from 1 through 3 {
+            &:nth-child(#{$i}) {
+                animation-delay: $i * 0.1s;
+            }
+        }
 	}
+
 }
 
 .pokemon-status {
