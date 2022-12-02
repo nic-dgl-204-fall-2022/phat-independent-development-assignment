@@ -16,6 +16,7 @@ const CLIENT_PAGES = {
 	pokemonPage: `${CLIENT_ORIGIN_URL}/pokemon.html`,
 };
 const JWT_STORAGE_NAME = "pkm-jwt";
+let currentScroll = 0
 
 // Check if user already logged in
 function isLoggedIn() {
@@ -112,6 +113,8 @@ function closeAllModals() {
 	modals.forEach((modal) => {
 		modal.classList.remove("show");
 	});
+    // Scroll back to previous coordinates
+    window.scrollTo({ top: currentScroll, behavior: 'smooth' });
 }
 closeModalButtons.forEach((button) => {
 	button.addEventListener("click", closeAllModals);

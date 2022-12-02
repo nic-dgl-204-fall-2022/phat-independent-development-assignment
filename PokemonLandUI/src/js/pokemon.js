@@ -344,6 +344,10 @@ async function main() {
 	// Open Pokemon Modal
 	pokemonCards.forEach((element) => {
 		element.addEventListener("click", () => {
+            // Store current coordinates before scroll to top.
+            currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
 			pokemonModal.classList.add("show");
 			const pokemonId = element.parentNode.id;
 			selectedPokemon = pokemonList.find((pkm) => pkm.id === pokemonId);
@@ -359,7 +363,7 @@ async function main() {
 			pkmStatsContainer.forEach((e) => {
 				const hasUseItemBtn = e.id === "pokemon-modal-stats";
 				const pkmStatsCard = createPokemonStats(selectedPokemon, hasUseItemBtn);
-				console.log(selectedPokemon.type);
+				
 				const pokemonTypeElement = document.getElementById("pokemon-type");
 				pokemonTypeElement.innerHTML = ``;
 				selectedPokemon.type.forEach((type) => {
