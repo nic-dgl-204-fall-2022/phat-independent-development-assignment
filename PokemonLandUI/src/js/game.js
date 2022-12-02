@@ -40,6 +40,28 @@ const getPokemon = async function () {
 	return [];
 };
 
+const getOwnedPokemon = async function () {
+	try {
+		const rawResponse = await fetch(SERVER_API_ROUTES.pokemonRoute, {
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+		});
+
+		const content = await rawResponse.json();
+		if (content.message == "OK" && content.statusCode.toString() === "200") {
+			const pokemon =  JSON.parse(content.data);
+            return pokemon.filter(pkm => pkm.status === "OWNED")
+		}
+	} catch (error) {
+		console.log(error);
+	}
+
+	return [];
+};
+
 const getOwnedItemIds = async (jwtToken) => {
 	try {
 		const rawResponse = await fetch(SERVER_API_ROUTES.profileRoute, {
@@ -114,7 +136,7 @@ const findPokemonId = async(pokemonId) => {
 			return responseData;
 		}
     } catch (error) {
-        console.log(error)
+        return null
     }
 }
 
@@ -131,6 +153,32 @@ const catchWildPokemon = async(jwtToken, pokemonId, pokeballId) => {
             body: JSON.stringify({
                 "pokemonId": pokemonId,
                 "itemId": pokeballId
+            })
+		});
+
+		const content = await rawResponse.json();
+		if (content.message == "OK" && content.statusCode.toString() === "200") {
+			const responseData = JSON.parse(content.data);
+			return responseData;
+		}
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// Battle with wild pokemon
+const battleWithWildPokemon = async (jwtToken, pokemonId, wildPokemonId) => {
+    try {
+		const rawResponse = await fetch(SERVER_API_ROUTES.battlePokemonRoute, {
+			method: "PUT",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${jwtToken}`,
+			},
+            body: JSON.stringify({
+                "pokemonId": pokemonId,
+                "wildPokemonId": wildPokemonId
             })
 		});
 

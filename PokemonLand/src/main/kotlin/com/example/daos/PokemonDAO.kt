@@ -1,17 +1,11 @@
 package com.example.daos
 
 import com.benasher44.uuid.uuid4
-import com.example.item.rewardItems
-import com.example.models.ItemModel
 import com.example.util.Database
-import com.example.util.QueryResult
-import com.example.util.capitalize
 import kotlinx.serialization.Serializable
 import org.litote.kmongo.eq
 import org.litote.kmongo.findOne
 import org.litote.kmongo.getCollection
-import org.litote.kmongo.setValue
-import java.util.*
 import kotlin.math.roundToInt
 
 enum class PokemonStatus {
@@ -20,7 +14,7 @@ enum class PokemonStatus {
 
 @Serializable
 data class PokemonDAO(
-    val id: String,
+    var id: String,
     val name: String,
     val type: List<String>,
     var power: Int = 0,
@@ -53,6 +47,7 @@ class PokemonCollection() {
 
     fun findWildPokemon(): PokemonDAO {
         val wildPokemon = wildPokemon.shuffled().first()
+        wildPokemon.id = uuid4().toString()
         instance.insertOne(wildPokemon)
 
         return wildPokemon

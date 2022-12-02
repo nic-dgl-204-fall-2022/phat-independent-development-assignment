@@ -2327,7 +2327,7 @@ a, a:active, a:visited {
   align-items: center;
   width: 70%;
 }
-.rewards__list__items__item .rewards__item__left .rewards__item__img {
+.rewards__list__items__item .rewards__item__left img {
   width: 3.125em;
   height: 3.125em;
   margin-right: 1.875rem;

@@ -179,8 +179,6 @@ function displaySuccessResult(wildPokemon) {
 async function usePokeball(jwtToken, wildPokemon) {
     const pokeball = document.querySelector(".items-list__item.pokeball.selected")
 	let result = await catchWildPokemon(jwtToken, wildPokemon.id, pokeball.id);
-console.log(pokeball.id)
-console.log(result)
 	if (result.captured) {
 		displaySuccessResult(wildPokemon);
 	} else {
@@ -204,14 +202,14 @@ async function main() {
 	const jwtToken = getJwtToken();
 	const wildPokemon = await findPokemonId(pokemonId);
     // Redirect if it is not a wild Pokemon
-    if(wildPokemon.status !== "WILD") {
-        return redirectTo(CLIENT_PAGES.pokemonPage)
-    }
+	if (wildPokemon?.status !== "WILD") {
+		return redirectTo(CLIENT_PAGES.pokemonPage);
+	}
 	displayWildPokemon(wildPokemon);
 
 	const itemList = await getItems();
 	const ownedItems = await getOwnedItemIds(jwtToken);
-	const usableItems = await getUsableItems(ownedItems, itemList);
+	const usableItems = getUsableItems(ownedItems, itemList);
 	const pokeballItems = usableItems.filter((item) => item.type === "Pokeball");
 	displayPokeballItems(pokeballItems);
 

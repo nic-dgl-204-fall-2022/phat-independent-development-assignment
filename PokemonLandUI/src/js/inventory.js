@@ -191,53 +191,6 @@ function displayItemInModal(item) {
 	wrapperElement.innerHTML = ``;
 	wrapperElement.appendChild(leftColContainer);
 	wrapperElement.appendChild(rightColContainer);
-	//     <div class="left-col">
-	//     <!-- Card-->
-	//     <div class="left-col__card card">
-	//       <div class="card__content">
-	//         <div class="card__item-img">
-	//           <img src="../../dist/img/standard-pokeball-640.png" alt="Pikachu">
-	//         </div>
-
-	//         <div class="card__item-amount"></div>
-	//       </div>
-
-	//       <div class="card__footer">
-	//         <p>Standard Pokeball</p>
-	//       </div>
-	//     </div><!-- End Card-->
-
-	//     <!-- Card  -->
-	//     <div class="left-col__amount">
-	//       <p>Amount <span>5</span></p>
-	//     </div>
-
-	//     <div class="left-col__group-button">
-	//       <a class="left-col__group-button__button" href="./shop.html">Buy</a>
-	//     </div>
-	//   </div>
-
-	//   <!-- Pokeball Info -->
-	//   <div class="right-col">
-	//     <div class="right-col__content">
-	//       <h2>Description</h2>
-	//       <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, ut expedita, animi nobis
-	//         quibusdam sit, iste delectus suscipit excepturi dolorum cupiditate neque non a perspiciatis ducimus unde
-	//         voluptatum minus tenetur assumenda illum ad labore autem hic? Dolore sapiente placeat, blanditiis
-	//         possimus sit consectetur laudantium nemo modi excepturi est quasi minus explicabo, magnam quam
-	//         perferendis facilis atque magni praesentium facere? Facere blanditiis eveniet hic deserunt aperiam
-	//         temporibus eos, explicabo laborum assumenda? Veniam quia neque est itaque excepturi. Illo, earum dolorem
-	//         architecto esse voluptate, ullam commodi laboriosam ipsam ea labore dolores nihil error, enim maxime
-	//         magnam voluptas voluptatum numquam odit laudantium quam.</p>
-	//       <div class="right-col__affect">
-	//         <h3>Affect</h3>
-	//         <p>
-	//           <i class="fa-solid fa-angles-up"></i>
-	//           Capture Rate <span>+50</span>
-	//         </p>
-	//       </div>
-	//     </div>
-	//   </div><!-- End Pokemon Info -->
 }
 
 async function main() {
@@ -248,9 +201,9 @@ async function main() {
 	}
 
 	const jwtToken = getJwtToken();
-	const ownedItemIds = await getOwnedItemIds(jwtToken);
 	const itemList = await getItems();
-	const usableItems = await getUsableItems(ownedItemIds, itemList);
+	const ownedItemIds = await getOwnedItemIds(jwtToken);
+	const usableItems = getUsableItems(ownedItemIds, itemList);
 	const pokeballItems = usableItems.filter((i) => i.type === "Pokeball");
 	addPokeBallItems(pokeballItems);
     document.getElementById("item-amount").textContent = pokeballItems.length

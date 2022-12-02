@@ -93,13 +93,6 @@ async function findAndDisplayWildPokemon() {
 	setTimeout(async () => {
 		findBlock.classList.remove("show");
 
-		// Check jwt token
-		const loggedIn = isLoggedIn();
-		if (!loggedIn) {
-			redirectTo(CLIENT_PAGES.loginPage);
-            return
-		}
-
 		const jwtToken = getJwtToken();
 		const wildPokemon = await findWildPokemon(jwtToken);
 		displayWildPokemon(wildPokemon);
@@ -117,6 +110,13 @@ function keepFindingWildPokemon() {
 }
 
 async function main() {
+    // Check jwt token
+    const loggedIn = isLoggedIn();
+    if (!loggedIn) {
+        redirectTo(CLIENT_PAGES.loginPage);
+        return
+    }
+
 	const findWildPokemonBtn = document.getElementById("find-wild-pokemon-btn");
 	findWildPokemonBtn.addEventListener("click", findAndDisplayWildPokemon);
 

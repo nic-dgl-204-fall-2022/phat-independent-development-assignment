@@ -302,11 +302,11 @@
                     align-items: center;
                     width: 70%;
 
-					.rewards__item__img {
-						width: u.em(50);
-						height: u.em(50);
+                    img {
+                        width: u.em(50);
+                        height: u.em(50);
                         margin-right: u.rem(30);
-					}
+                    }
 
 					.rewards__item__name {
 						font-weight: bold;
