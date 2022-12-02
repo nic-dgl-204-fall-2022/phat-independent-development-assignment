@@ -324,7 +324,7 @@ async function main() {
 
 	// Use items Modal
 	const itemList = await getItems();
-	const ownedItems = await getOwnedItems(jwtToken);
+	const ownedItems = await getOwnedItemIds(jwtToken);
 	let usableItems = itemList
 		.map((item) => {
 			const existed = ownedItems.findIndex((i) => i.id === item.id);

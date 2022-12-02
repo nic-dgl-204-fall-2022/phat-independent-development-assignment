@@ -30,7 +30,7 @@ data class ItemDAO(
 
 val rewardItems = listOf(
     StandardPokeball,
-    ElectricMedal,
+    ElectricPokeBall,
     Apple,
     Burger,
     ElectricMedal,

@@ -40,7 +40,7 @@ const getPokemon = async function () {
 	return [];
 };
 
-const getOwnedItems = async (jwtToken) => {
+const getOwnedItemIds = async (jwtToken) => {
 	try {
 		const rawResponse = await fetch(SERVER_API_ROUTES.profileRoute, {
 			method: "GET",
@@ -54,11 +54,23 @@ const getOwnedItems = async (jwtToken) => {
 		const content = await rawResponse.json();
 		if (content.message == "OK" && content.statusCode.toString() === "200") {
 			const responseData = JSON.parse(content.data);
-            return responseData.items;
+			return responseData.items;
 		}
 	} catch (error) {
 		console.log(error);
 	}
 
 	return [];
+};
+
+// Get owned items with full detail
+const getUsableItems = (ownedItemIds, items) => {
+	return items
+		.map((item) => {
+			const existed = ownedItemIds.findIndex((i) => i.id === item.id);
+			if (existed !== -1) {
+				return { ...item, amount: ownedItemIds[existed].amount };
+			}
+		})
+		.filter((i) => i); // Clear undefined values
 };
