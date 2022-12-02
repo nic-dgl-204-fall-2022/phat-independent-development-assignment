@@ -12,18 +12,6 @@ const consumableCards = document.querySelectorAll(".hoverable.consumable-item");
 
 // Modal
 const itemModal = document.getElementById("item-modal");
-const mysticItemModal = document.getElementById("mystic-item-modal");
-const consumableItemModal = document.getElementById("consumable-item-modal");
-const choosePokemonModal = document.getElementById("choose-pokemon-modal");
-
-// Open Choose Pokemon Modal Buttons
-const openPokemonModalBtns = document.querySelectorAll(".open-pokemon-list-modal-btn");
-
-// Back Buttons
-const backToMysticButton = document.getElementById("back-to-mystic-modal-btn");
-
-// Pokemon buttons
-const selectPokemonBtns = document.querySelectorAll(".items-list__item");
 
 function closeAllTabs() {
 	pokeballTab.classList.remove("show");
@@ -57,51 +45,6 @@ consumableTabLink.addEventListener("click", (e) => {
 	closeAllTabs();
 	consumableTab.classList.add("show");
 	e.target.parentNode.classList.add("active");
-});
-
-// Modal
-// Open Pokeball Modal
-pokeballCards.forEach((element) => {
-	element.addEventListener("click", (e) => {
-		pokeballModal.classList.add("show");
-	});
-});
-
-// Open Mystic Item Modal
-mysticCards.forEach((element) => {
-	element.addEventListener("click", (e) => {
-		mysticItemModal.classList.add("show");
-		// Open Consumable Item Modal
-		consumableCards.forEach((element) => {
-			element.addEventListener("click", (e) => {
-				consumableItemModal.classList.add("show");
-			});
-		});
-
-		// Open Choose Pokemon Modal
-		openPokemonModalBtns.forEach((button) => {
-			button.addEventListener("click", () => {
-				closeAllModals();
-				choosePokemonModal.classList.add("show");
-			});
-		});
-
-		// Select Pokemon to use item
-		selectPokemonBtns.forEach((button) => {
-			button.addEventListener("click", (e) => {
-				e.preventDefault();
-				unselectAllPokemon();
-				button.classList.add("selected");
-			});
-		});
-
-		// Back buttons
-		// Back to Mystic modal
-		backToMysticButton.addEventListener("click", (e) => {
-			closeAllModals();
-			mysticItemModal.classList.add("show");
-		});
-	});
 });
 
 function createItemElement(pokeball) {
