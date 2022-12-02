@@ -124,18 +124,29 @@ function createPokemonStats(pokemon, hasUseItemBtn = false) {
 	// Use items button
 	const useItemContainer = document.createElement("div");
 	useItemContainer.className = "pokemon-stats__group-button";
-	const useItemBtn = document.createElement("a");
-	useItemBtn.id = "open-use-items-modal-btn";
-	useItemBtn.className = "pokemon-stats__group-button__button";
-	useItemBtn.href = "#";
-	useItemBtn.textContent = "Use Items";
-	useItemBtn.addEventListener("click", (e) => {
-		closeAllModals();
-		document.getElementById("use-items-modal")?.classList.add("show");
-	});
 	if (pokemon.status === "OWNED") {
+        const useItemBtn = document.createElement("a");
+        useItemBtn.className = "pokemon-stats__group-button__button";
+        useItemBtn.id = "open-use-items-modal-btn";
+        useItemBtn.href = "#";
+        useItemBtn.textContent = "Use Items";
+        useItemBtn.addEventListener("click", (e) => {
+            closeAllModals();
+            document.getElementById("use-items-modal")?.classList.add("show");
+        });
 		useItemContainer.appendChild(useItemBtn);
-	}
+	} else if (pokemon.status === "WILD") {
+        const catchBtn = document.createElement("a");
+        catchBtn.className = "pokemon-stats__group-button__button";
+        catchBtn.href = "./explore/catch.html";
+        catchBtn.textContent = "Catch";
+        const battleBtn = document.createElement("a");
+        battleBtn.className = "pokemon-stats__group-button__button";
+        battleBtn.href = "./explore/battle.html";
+        battleBtn.textContent = "Battle";
+		useItemContainer.appendChild(catchBtn);
+		useItemContainer.appendChild(battleBtn);
+    }
 
 	// Pokemon Stats Element
 	const pkmStatsContainer = document.createElement("div");
