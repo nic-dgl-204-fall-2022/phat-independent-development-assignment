@@ -845,13 +845,13 @@ a, a:active, a:visited {
   grid-column: 1/4;
   justify-content: space-between;
 }
-.modal__content .pokemon-info__row:nth-child(2) .pokemon-info__type div {
-  background-color: #393E7D;
-  padding: 0.5625rem 2.125rem;
-}
 .modal__content .pokemon-info__row:nth-child(2) .pokemon-info__type div span {
   color: #fff;
+  background-color: #393E7D;
   font-weight: bold;
+  padding: 0.5625rem 2.125rem;
+  display: inline-block;
+  margin-left: 1.25rem;
 }
 .modal__content .pokemon-info__caught-by {
   margin-left: 0;

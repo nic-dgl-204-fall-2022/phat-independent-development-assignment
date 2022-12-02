@@ -318,7 +318,14 @@ async function main() {
 			pkmStatsContainer.forEach((e) => {
 				const hasUseItemBtn = e.id === "pokemon-modal-stats";
 				const pkmStatsCard = createPokemonStats(selectedPokemon, hasUseItemBtn);
-
+				console.log(selectedPokemon.type);
+				const pokemonTypeElement = document.getElementById("pokemon-type");
+				pokemonTypeElement.innerHTML = ``;
+				selectedPokemon.type.forEach((type) => {
+					const typeElement = document.createElement("span");
+					typeElement.textContent = type;
+                    pokemonTypeElement.appendChild(typeElement)
+				});
 				e.appendChild(pkmStatsCard);
 			});
 		});

@@ -230,12 +230,14 @@
 				justify-content: space-between;
 
 				.pokemon-info__type div {
-					background-color: g.$secondary-color;
-					padding: u.rem(9) u.rem(34);
 
 					span {
 						color: #fff;
+                        background-color: g.$secondary-color;
 						font-weight: bold;
+                        padding: u.rem(9) u.rem(34);
+                        display: inline-block;
+                        margin-left: u.rem(20);
 					}
 				}
 			}
