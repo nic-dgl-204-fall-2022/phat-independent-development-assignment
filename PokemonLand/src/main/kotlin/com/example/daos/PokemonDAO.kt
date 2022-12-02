@@ -27,7 +27,6 @@ data class PokemonDAO(
     var level: Int = 1,
     var expPoints: Int = 0,
     var maxExpPoints: Int = 0, // Increase 40% after level up
-    var evolutions: List<HashMap<String, String>>? = null,
     val imgName: String? = null,
     var status: PokemonStatus,
     var captureRate: Int? = null,
@@ -40,23 +39,6 @@ class PokemonCollection() {
 
     fun initialize() {
         instance.drop()
-        val pichuEvolutions = listOf(
-            hashMapOf(
-                "pokemonId" to pichu.id,
-                "levelRange" to "1-16"
-            ),
-            hashMapOf(
-                "pokemonId" to pikachu.id,
-                "levelRange" to "16-32"
-            ),
-            hashMapOf(
-                "pokemonId" to raichu.id,
-                "levelRange" to "32+"
-            ),
-        )
-        pichu.evolutions = pichuEvolutions
-        pikachu.evolutions = pichuEvolutions
-        pichu.evolutions = pichuEvolutions
 
         instance.insertMany(
             mutableListOf(
