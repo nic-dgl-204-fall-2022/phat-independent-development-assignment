@@ -36,7 +36,7 @@ function createPokemonStatsCard(wildPokemon) {
 		statusImg.alt = "Wild status background";
 		const wildText = document.createElement("span");
 		wildText.className = "pokemon-status__desc";
-        wildText.textContent = "Wild"
+		wildText.textContent = "Wild";
 		statusContainer.appendChild(statusImg);
 		statusContainer.appendChild(wildText);
 	}
@@ -66,43 +66,57 @@ function createPokemonStatsCard(wildPokemon) {
 }
 
 function displayWildPokemon(wildPokemon) {
-    const pokemonStats = createPokemonStatsCard(wildPokemon)
-    const pokemonStatsContainer = document.getElementById("pokemon-stats")
-    pokemonStatsContainer.appendChild(pokemonStats)
-    wildPokemon.type.forEach(type => {
-        const typeElement = document.createElement("span")
-        typeElement.textContent = type
-        document.getElementById("pokemon-type").appendChild(typeElement)
-    })
+	const pokemonStats = createPokemonStatsCard(wildPokemon);
+	const pokemonStatsContainer = document.getElementById("pokemon-stats");
+	pokemonStatsContainer.innerHTML = ``;
+	pokemonStatsContainer.appendChild(pokemonStats);
+    const typeContainer = document.getElementById("pokemon-type")
+    typeContainer.innerHTML = ``
+	wildPokemon.type.forEach((type) => {
+		const typeElement = document.createElement("span");
+		typeElement.textContent = type;
+		typeContainer.appendChild(typeElement);
+	});
+}
+
+async function findAndDisplayWildPokemon() {
+	const findWildPokemonBtn = document.getElementById("find-wild-pokemon-btn");
+	const loading = document.getElementById("loading");
+	const findBlock = document.getElementById("find");
+	const foundBlock = document.getElementById("found");
+
+	findWildPokemonBtn.classList.add("disabled");
+	findWildPokemonBtn.textContent = "Finding...";
+	loading.classList.add("show");
+
+	// Delay for showing the loading pokeball
+	setTimeout(async () => {
+		findBlock.classList.remove("show");
+
+		// Check jwt token
+		const loggedIn = isLoggedIn();
+		if (!loggedIn) {
+			return redirectTo(CLIENT_PAGES.loginPage);
+		}
+
+		const jwtToken = getJwtToken();
+		const wildPokemon = await findWildPokemon(jwtToken);
+		displayWildPokemon(wildPokemon);
+		foundBlock.classList.add("show");
+	}, 3000);
+}
+
+function keepFindingWildPokemon() {
+	document.getElementById("found").classList.remove("show");
+	document.getElementById("find").classList.add("show");
+	findAndDisplayWildPokemon();
 }
 
 async function main() {
-    const findWildPokemonBtn = document.getElementById("find-wild-pokemon-btn");
-    const loading = document.getElementById("loading");
-    
-    const findBlock = document.getElementById("find");
-    const foundBlock = document.getElementById("found");
-    
-    findWildPokemonBtn.addEventListener("click", (e) => {
-        e.target.classList.add("disabled");
-        e.target.textContent = "Finding...";
-        loading.classList.add("show");
-    
-        // Delay for showing the loading pokeball
-        setTimeout(async () => {
-            findBlock.classList.remove("show");
-    
-            // Check jwt token
-            const loggedIn = isLoggedIn();
-            if (!loggedIn) {
-                return redirectTo(CLIENT_PAGES.loginPage);
-            }
-    
-            const jwtToken = getJwtToken();
-            const wildPokemon = await findWildPokemon(jwtToken);
-            displayWildPokemon(wildPokemon)
-            foundBlock.classList.add("show");
-        }, 3000);
-    });
+	const findWildPokemonBtn = document.getElementById("find-wild-pokemon-btn");
+	findWildPokemonBtn.addEventListener("click", findAndDisplayWildPokemon);
+
+	const keepFindingBtn = document.getElementById("keep-finding-btn");
+	keepFindingBtn.addEventListener("click", keepFindingWildPokemon);
 }
 main();
