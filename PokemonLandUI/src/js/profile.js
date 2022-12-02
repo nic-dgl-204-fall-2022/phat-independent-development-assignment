@@ -38,7 +38,7 @@ async function main() {
 
 		const content = await rawResponse.json();
 		if (content.message == "OK" && content.statusCode.toString() === "200") {
-			const responseData = content.data;
+			const responseData = JSON.parse(content.data);
 			levelElement.textContent = `Lv.${responseData.level}`;
 			usernameElement.textContent = responseData.username;
 			expElement.textContent = responseData.expPoints;

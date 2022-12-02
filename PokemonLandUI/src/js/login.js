@@ -25,11 +25,11 @@ loginForm.addEventListener("submit", async (e) => {
 		const content = await rawResponse.json();
 		if (content.message == "OK" && content.token) {
 			setJwtToken(content.token, remember.checked);
+            return redirectTo(CLIENT_PAGES.profilePage)
 		} else {
 			toggleErrorMessage(true, content.message);
 		}
 
-		return redirectTo(CLIENT_PAGES.profilePage)
 	} catch (error) {
 		console.log(error);
 	}
