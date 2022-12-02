@@ -21,7 +21,7 @@ fun Route.findWildPokemon() {
         val wildPokemon = PokemonCollection().findWildPokemon()
         UserCollection().foundWildPokemon(userId, wildPokemon.id)
 
-        call.respond(wildPokemon);
+        call.respond(ObjectResponse(data = wildPokemon.json));
     }
 }
 
